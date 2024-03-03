@@ -87,3 +87,14 @@
 .empty{
   stroke: gray;
 }
+
+.horizontal-container {
+  display: flex;
+  gap: 30vw;
+}
+
+.contact{
+  position: relative;
+  left:90px;
+  font-size: 1.7vw;
+}
