@@ -50,3 +50,19 @@
   left:90px;
   font-size: 1.7vw;
 }
+
+.schedule{
+  position: relative;
+  top:40px;
+  left:90px;
+  font-size: 1.7vw;
+}
+
+.CalendarIcon{
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+
+  margin-right: 10px;
+  transform: translateY(2px);
+}
