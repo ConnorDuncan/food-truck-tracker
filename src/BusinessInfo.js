@@ -68,8 +68,6 @@ function BusinessInfo() {
         
 
       </body>
-
-
     </div>
   );
 }
