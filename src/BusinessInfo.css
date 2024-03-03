@@ -66,3 +66,24 @@
   margin-right: 10px;
   transform: translateY(2px);
 }
+
+.dishes{
+  position: relative;
+  top:40px;
+  left:90px;
+  font-size: 1.7vw;
+}
+
+.stars{
+  position: relative;
+  top:50px;
+  left:90px;
+}
+
+.filled{
+  fill:black;
+}
+
+.empty{
+  stroke: gray;
+}
