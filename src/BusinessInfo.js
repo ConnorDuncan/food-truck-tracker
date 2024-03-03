@@ -3,6 +3,7 @@ import StarIcon from './StarIcon'
 import CalendarIcon from './CalendarIcon'
 import ClockIcon from './ClockIcon';
 import MapPinIcon from './MapPinIcon';
+import PhoneIcon from './PhoneIcon';
 
 
 function BusinessInfo() {
@@ -62,10 +63,11 @@ function BusinessInfo() {
         </div>
 
         <div className="contact">
+          <PhoneIcon className="PhoneIcon"></PhoneIcon>
           Contect information:
           <br/>
           <br/>
-          Phone: +1 (123) 345-6789
+          Phone: (012) 345-6789
         </div>
         
 

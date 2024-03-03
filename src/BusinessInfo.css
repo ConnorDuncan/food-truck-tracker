@@ -98,3 +98,12 @@
   left:90px;
   font-size: 1.7vw;
 }
+
+.PhoneIcon{
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+
+  margin-right: 10px;
+  transform: translateY(2px);
+}
