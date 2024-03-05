@@ -53,15 +53,34 @@ function BusinessInfo() {
 
           <div className="dishes">
             <h2>Featured Dishes</h2>
-            <img
-              alt="Dish #1"
-              height="260"
-              src="https://img.taste.com.au/qRDdmfsk/w720-h480-cfill-q80/taste/2022/09/healthy-tacos-recipe-181113-1.jpg"
-              //width="160"
-            />
-            <div className="comment">
-              "Savor the perfect blend of flavors and textures in this delicious taco! A tasty delight in every bite!" 🌮😋
+            <div className="image-comment-container">
+              <div className="dish">
+                <img
+                  alt="Dish #1"
+                  height="260"
+                  src="https://img.taste.com.au/qRDdmfsk/w720-h480-cfill-q80/taste/2022/09/healthy-tacos-recipe-181113-1.jpg"
+                  
+                />
+                <div className="comment">
+                  "Savor the perfect blend of flavors and textures in this delicious taco! A tasty delight in every bite!" 🌮😋
+                </div>
+              </div>
+              
+
+              <div className="dish">
+                <img
+                  alt="Dish #2"
+                  src="https://assets.biggreenegg.eu/app/uploads/2019/03/28145521/topimage-classic-hamburger-2019m04-800x534.jpg"
+                  height="260"
+                />
+                <div className="comment">
+                  "good hamburger"
+                </div>
+              </div>
+              
+              
             </div>
+            
           </div>
         </div>
 

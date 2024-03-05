@@ -73,6 +73,7 @@
   left:-100px;
   font-size: 1.7vw;
   
+
 }
 
 .stars{
@@ -111,7 +112,29 @@
 }
 
 .comment{
-  max-width: 900px;
+  position: relative;
+  top:60px;
+  max-width: 500px;
   color: gray;
+  margin-left: 50px;
   
+}
+
+.image-comment-container{
+  
+  max-height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  
+}
+
+.dish{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+.dish img {
+  border-radius: 20px;
 }
