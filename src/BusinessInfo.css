@@ -70,8 +70,9 @@
 .dishes{
   position: relative;
   top:40px;
-  left:90px;
+  left:-100px;
   font-size: 1.7vw;
+  
 }
 
 .stars{
@@ -90,11 +91,12 @@
 
 .horizontal-container {
   display: flex;
-  gap: 30vw;
+  gap: 20vw;
 }
 
 .contact{
   position: relative;
+  top:-100px;
   left:90px;
   font-size: 1.7vw;
 }
@@ -106,4 +108,10 @@
 
   margin-right: 10px;
   transform: translateY(2px);
+}
+
+.comment{
+  max-width: 900px;
+  color: gray;
+  
 }

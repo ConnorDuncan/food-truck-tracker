@@ -59,6 +59,9 @@ function BusinessInfo() {
               src="https://img.taste.com.au/qRDdmfsk/w720-h480-cfill-q80/taste/2022/09/healthy-tacos-recipe-181113-1.jpg"
               //width="160"
             />
+            <div className="comment">
+              "Savor the perfect blend of flavors and textures in this delicious taco! A tasty delight in every bite!" 🌮😋
+            </div>
           </div>
         </div>
 
