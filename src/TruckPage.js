@@ -43,6 +43,7 @@ function BusinessPage() {
         </div>
       </div>
 
+      <button class="button">Add a new food truck</button>
 
       
     </div>
