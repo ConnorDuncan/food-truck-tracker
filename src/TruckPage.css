@@ -43,7 +43,7 @@
 
 .card_content{
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: space-between;
 }
 
@@ -66,7 +66,7 @@ a {
 }
 /* Define the styles for the link when hovering */
 a:hover {
-  color: green; /* Change text color on hover */
+  text-decoration: underline;
 }
 
 .waiting {

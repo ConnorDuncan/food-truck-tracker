@@ -7,7 +7,7 @@ import ClockIcon from './ClockIcon'
 
 
 
-function BusinessPage() {
+function TruckPage() {
   return (
     <div className="Businesses">
       <header className="Business_header">
@@ -50,4 +50,4 @@ function BusinessPage() {
   );
 }
 
-export default BusinessPage;
+export default TruckPage;
