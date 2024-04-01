@@ -1,0 +1,139 @@
+.info-header {
+  position: relative;
+  top: 10px;
+  left: 90px;
+  font-size: 2vw;
+}
+
+.location{
+  position: relative;
+  color: gray;
+  top:-20px;
+  left: 90px;
+  font-size: 1.7vw;
+  
+
+}
+
+.MapPinIcon {
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+  margin-right: 10px;
+  transform: translateY(1px);
+  
+}
+
+.ClockIcon{
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+  margin-right: 10px;
+  transform: translateY(2px);
+}
+
+.open{
+  position: relative;
+  color: gray;
+  top:0px;
+  left: 90px;
+  font-size: 1.7vw;
+  
+
+  
+}
+
+.Intro{
+  position: relative;
+  max-width: 800px;
+  top:30px;
+  left:90px;
+  font-size: 1.7vw;
+}
+
+.schedule{
+  position: relative;
+  top:40px;
+  left:90px;
+  font-size: 1.7vw;
+}
+
+.CalendarIcon{
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+
+  margin-right: 10px;
+  transform: translateY(2px);
+}
+
+.dishes{
+  position: relative;
+  top:40px;
+  left:-100px;
+  font-size: 1.7vw;
+  
+
+}
+
+.stars{
+  position: relative;
+  top:50px;
+  left:90px;
+}
+
+.filled{
+  fill:black;
+}
+
+.empty{
+  stroke: gray;
+}
+
+.horizontal-container {
+  display: flex;
+  gap: 20vw;
+}
+
+.contact{
+  position: relative;
+  top:-100px;
+  left:90px;
+  font-size: 1.7vw;
+}
+
+.PhoneIcon{
+  position: relative;
+  width: 1.7vw;
+  height: 1.6vw;
+
+  margin-right: 10px;
+  transform: translateY(2px);
+}
+
+.comment{
+  position: relative;
+  top:60px;
+  max-width: 500px;
+  color: gray;
+  margin-left: 50px;
+}
+
+.image-comment-container{
+  
+  max-height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  
+}
+
+.dish{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+.dish img {
+  border-radius: 20px;
+}
