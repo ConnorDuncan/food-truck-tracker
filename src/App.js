@@ -1,26 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './Navbar.js'
 import Home from './pages/Home'
 import BusinessInfo from './pages/BusinessInfo'
-import Map from './pages/Map'
-import CustomerLogin from './pages/CustomerLogin'
-import BusinessLogin from './pages/BusinessLogin'
-import BusinessRegister from './pages/BusinessRegister'
-import MyBusinesses from './pages/MyBusinesses'
+import { useState, useEffect } from 'react'
 
 function App() {
+  const [output, setOutput] = useState(0)
+  useEffect(() => {
+    fetch('/flask/verify')
+    .then(res => res.json())
+    .then(data => { setOutput(data.test) })
+  })
+
   return (
     <div>
+      <h1>Output: {output}</h1>
+      <Navbar/>
       <Router>
         <Routes>
           <Route path='/' element={<Home />}/>
+          <Route path='/home' element={<Home />}/>
           <Route path='/business-info' element={<BusinessInfo />}/>
         </Routes>
-        {/* <Route path="/home" element = {<Home />} />
-        <Route path="/customer/login" element = {<CustomerLogin />} />
-        <Route path="/map" element = {<Map />} />
-        <Route path="/business/login" element = {<BusinessLogin />} />
-        <Route path="/business/register" element = {<BusinessRegister />} />
-        <Route path="/my-businesses" element = {<MyBusinesses />} /> */}
       </Router>
     </div>
   );

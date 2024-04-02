@@ -1,9 +1,9 @@
 import './BusinessInfo.css';
-import StarIcon from '../StarIcon'
-import CalendarIcon from '../CalendarIcon'
-import ClockIcon from '../ClockIcon';
-import MapPinIcon from '../MapPinIcon';
-import PhoneIcon from '../PhoneIcon';
+import StarIcon from '../components/StarIcon'
+import CalendarIcon from '../components/CalendarIcon'
+import ClockIcon from '../components/ClockIcon';
+import MapPinIcon from '../components/MapPinIcon';
+import PhoneIcon from '../components/PhoneIcon';
 
 
 function BusinessInfo() {
