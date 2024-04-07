@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 function App() {
   const [output, setOutput] = useState(0)
   useEffect(() => {
-    fetch('/flask/verify')
+    fetch('http://127.0.0.1:5000/flask/verify')
     .then(res => res.json())
     .then(data => { setOutput(data.test) })
   })
