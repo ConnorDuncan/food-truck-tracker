@@ -7,10 +7,13 @@ import BusinessRegister from './pages/BusinessRegister'
 import MyBusinesses from './pages/MyBusinesses'
 import { Outlet } from 'react-router-dom'
 import './App.css';
+import { AuthProvider } from './components/AuthContext'
 
 function App() {
   return (
-    <div className='App'><Outlet></Outlet></div>
+    <AuthProvider>
+      <div className='App'><Outlet></Outlet></div>
+    </AuthProvider>
   );
 }
 

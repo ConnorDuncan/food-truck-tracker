@@ -1,34 +1,38 @@
-import { signOut } from '@firebase/auth';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from '@firebase/auth';
 import { auth } from '../firebase';
-import './Home.css'; // Assuming you're storing your CSS in Home.css
+import { useAuth } from '../components/AuthContext';
+import './Home.css';
 
 const Home = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const { currentUser } = useAuth();
     const navigate = useNavigate();
+
     const handleLogout = async () => {
-        try{
+        try {
             await signOut(auth);
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
             navigate("/login");
-        }
-        catch(error){
+        } catch (error) {
             console.log(error);
         }
+    };
+
+    // Show loading or null if currentUser is not yet defined
+    if (!currentUser) {
+        return <div>Loading user information...</div>;
     }
 
     return (
         <div className="container">
             <h1>Google Authentication Demo</h1>
-            <hr></hr>
-            <h2>Welcome {user.displayName}</h2>
-            <p>{user.email}</p>
-            {user && (<img src={user.photoURL} alt="User" />)}
+            <hr />
+            <h2>Welcome {currentUser.displayName || 'User'}</h2>
+            <p>{currentUser.email || 'No email available'}</p>
+            {currentUser.photoURL && <img src={currentUser.photoURL} alt="User" />}
             <button onClick={handleLogout}>Logout</button>
         </div>
-    )
-}
+    );
+};
 
 export default Home;
