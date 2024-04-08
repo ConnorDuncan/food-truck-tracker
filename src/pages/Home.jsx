@@ -29,8 +29,10 @@ const Home = () => {
             <hr />
             <h2>Welcome {currentUser.displayName || 'User'}</h2>
             <p>{currentUser.email || 'No email available'}</p>
+            <p>Unique ID: {currentUser.uid}</p>
             {currentUser.photoURL && <img src={currentUser.photoURL} alt="User" />}
             <button onClick={handleLogout}>Logout</button>
+            
         </div>
     );
 };

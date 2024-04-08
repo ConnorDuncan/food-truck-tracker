@@ -14,6 +14,7 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             setCurrentUser(result.user); // Update context state
+            console.log(result.user);
             navigate("/");
         } catch (error) {
             console.log(error);
