@@ -5,22 +5,12 @@ import CustomerLogin from './pages/CustomerLogin'
 import BusinessLogin from './pages/BusinessLogin'
 import BusinessRegister from './pages/BusinessRegister'
 import MyBusinesses from './pages/MyBusinesses'
+import { Outlet } from 'react-router-dom'
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route index element = {<Home />} />
-          <Route path="/home" element = {<Home />} />
-          <Route path="/customer/login" element = {<CustomerLogin />} />
-          <Route path="/map" element = {<Map />} />
-          <Route path="/business/login" element = {<BusinessLogin />} />
-          <Route path="/business/register" element = {<BusinessRegister />} />
-          <Route path="/my-businesses" element = {<MyBusinesses />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <div className='App'><Outlet></Outlet></div>
   );
 }
 

@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .container img {
+    max-width: 100%; /* Makes sure the image is responsive */
+    height: auto; /* Maintains the aspect ratio */
+    margin: 20px 0; /* Adds some space around the image */
+  }
+  
