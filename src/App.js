@@ -1,25 +1,32 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
+import Navbar from './Navbar.js'
 import Home from './pages/Home'
-import Map from './pages/Map'
-import CustomerLogin from './pages/CustomerLogin'
-import BusinessLogin from './pages/BusinessLogin'
-import BusinessRegister from './pages/BusinessRegister'
-import MyBusinesses from './pages/MyBusinesses'
+import BusinessInfo from './pages/BusinessInfo'
+import { useState, useEffect } from 'react'
+import { AuthProvider } from './components/AuthContext'
 
 function App() {
+  const [output, setOutput] = useState(0)
+  const arg = 'testing'
+  // useEffect(() => {
+  //   fetch(`http://127.0.0.1:5000/flask/verify?img=${arg}`)
+  //   .then(res => res.json())
+  //   .then(data => { setOutput(data.test) })
+  // })
+
   return (
     <div>
-      <BrowserRouter>
+      <AuthProvider>
+      <div className='App'><Outlet></Outlet></div>
+      </AuthProvider>
+      <Navbar/>
+      <Router>
         <Routes>
-          <Route index element = {<Home />} />
-          <Route path="/home" element = {<Home />} />
-          <Route path="/customer/login" element = {<CustomerLogin />} />
-          <Route path="/map" element = {<Map />} />
-          <Route path="/business/login" element = {<BusinessLogin />} />
-          <Route path="/business/register" element = {<BusinessRegister />} />
-          <Route path="/my-businesses" element = {<MyBusinesses />} />
+          <Route path='/' element={<Home />}/>
+          <Route path='/home' element={<Home />}/>
+          <Route path='/business-info' element={<BusinessInfo />}/>
         </Routes>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
