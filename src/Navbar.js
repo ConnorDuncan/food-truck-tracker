@@ -11,13 +11,13 @@ const Navbar = () => {
             </a>
             <h1>VendorVista</h1>
             <div className='links'>
-                <a href='/' style={{
+                <a href='/home' style={{
                     color: 'white', 
                     backgroundColor: '#f1356d',
                     borderRadius: '500px',
                     padding: '16px'
                     }}>Home</a>
-                <a href='/' style={{
+                <a href='/business-info' style={{
                     color: 'white', 
                     backgroundColor: '#f1356d',
                     borderRadius: '500px',

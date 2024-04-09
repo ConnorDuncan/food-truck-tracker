@@ -1,12 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, send_file, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
+import random
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/flask/verify')
 def verify():
+    img = request.args.get('img')
     list = []
     client = OpenAI(
         api_key='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'
@@ -31,4 +33,4 @@ def verify():
     max_tokens=50,
     )
 
-    return (response.choices[0] in list)
+    return jsonify({'test': response.choices[0]})

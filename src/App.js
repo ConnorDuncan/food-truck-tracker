@@ -1,20 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
 import Navbar from './Navbar.js'
 import Home from './pages/Home'
 import BusinessInfo from './pages/BusinessInfo'
 import { useState, useEffect } from 'react'
+import { AuthProvider } from './components/AuthContext'
 
 function App() {
   const [output, setOutput] = useState(0)
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/flask/verify')
-    .then(res => res.json())
-    .then(data => { setOutput(data.test) })
-  })
+  const arg = 'testing'
+  // useEffect(() => {
+  //   fetch(`http://127.0.0.1:5000/flask/verify?img=${arg}`)
+  //   .then(res => res.json())
+  //   .then(data => { setOutput(data.test) })
+  // })
 
   return (
     <div>
-      <h1>Output: {output}</h1>
+      <AuthProvider>
+      <div className='App'><Outlet></Outlet></div>
+      </AuthProvider>
       <Navbar/>
       <Router>
         <Routes>
