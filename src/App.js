@@ -3,7 +3,6 @@ import Navbar from './Navbar.js'
 import Home from './pages/Home'
 import BusinessInfo from './pages/BusinessInfo'
 import Map from './pages/Map'
-import Test from './pages/Test'
 import { useState, useEffect } from 'react'
 import { AuthProvider } from './components/AuthContext'
 
@@ -38,7 +37,7 @@ function App() {
           <Route path='/' element={<Home />}/>
           <Route path='/home' element={<Home />}/>
           <Route path='/business-info' element={<BusinessInfo />}/>
-          <Route path='/map' element={<Test />}/>
+          <Route path='/map' element={<Map />}/>
         </Routes>
       </Router>
     </div>
