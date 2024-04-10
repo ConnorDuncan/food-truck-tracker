@@ -1,41 +1,51 @@
 import React from 'react';
+import { useState, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: '80vw',
+  height: '80vh',
 };
-const center = {
-  lat: 7.2905715, // default latitude
-  lng: 80.6337262, // default longitude
-};
+// const center = {
+//   lat: 7.2905715, // default latitude
+//   lng: 80.6337262, // default longitude
+// };
 
 const Test = () => {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q',
-    libraries,
-  });
+    const [center, setCenter] = useState(null)
 
-  if (loadError) {
-    return <div>Error loading maps</div>;
-  }
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+        });
+        } else console.log("Geolocation is not supported by this browser.");
+    }, []);
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: 'AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q',
+        libraries,
+    });
 
-  if (!isLoaded) {
-    return <div>Loading maps</div>;
-  }
+    if (loadError) {
+        return <div>Error loading maps</div>;
+    }
 
-  return (
-    <div>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={10}
-        center={center}
-      >
-        <Marker position={center} />
-      </GoogleMap>
-    </div>
-  );
+    if (!isLoaded) {
+        return <div>Loading maps</div>;
+    }
+
+    return (
+        <div>
+        <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={10}
+            center={center}
+        >
+            <Marker position={center} />
+        </GoogleMap>
+        </div>
+    );
 };
 
 export default Test;
