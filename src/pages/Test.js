@@ -39,7 +39,7 @@ const Test = () => {
         <div>
         <GoogleMap
             mapContainerStyle={mapContainerStyle}
-            zoom={10}
+            zoom={18}
             center={center}
         >
             <Marker position={center} />
