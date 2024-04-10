@@ -20,7 +20,7 @@ const Map = () => {
     }, []);
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: 'AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q',
-        libraries,
+        libraries
     });
 
     if (loadError) {
