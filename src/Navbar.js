@@ -17,6 +17,12 @@ const Navbar = () => {
                     borderRadius: '500px',
                     padding: '16px'
                     }}>Home</a>
+                <a href='/map' style={{
+                    color: 'white', 
+                    backgroundColor: '#f1356d',
+                    borderRadius: '500px',
+                    padding: '16px'
+                    }}>Map</a>
                 <a href='/business-info' style={{
                     color: 'white', 
                     backgroundColor: '#f1356d',

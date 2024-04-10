@@ -1,47 +1,47 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import GoogleMapReact from 'google-map-react';
 
-const libraries = ['places'];
-const mapContainerStyle = {
-  width: '80vw',
-  height: '80vh',
-};
-
-const Map = () => {
+export default function Map(){
     const [center, setCenter] = useState(null)
 
     useEffect(() => {
-        if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-        });
-        } else console.log("Geolocation is not supported by this browser.");
-    }, []);
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q',
-        libraries
-    });
+            if ("geolocation" in navigator) {
+                const watchId = navigator.geolocation.watchPosition((position) => {
+                    setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                    console.log(position.coords.latitude)
+                    console.log(position.coords.longitude )
+                    console.log(center)
+                },
+                (error) => {
+                    console.error('Error occurred while getting geolocation:', error);
+                });
 
-    if (loadError) {
-        return <div>Error loading maps</div>;
-    }
-
-    if (!isLoaded) {
-        return <div>Loading maps</div>;
-    }
-
+                return () => {
+                    navigator.geolocation.clearWatch(watchId);
+                  };
+            } else console.log("Geolocation is not supported by this browser.");
+        }, []);
+  
     return (
-        <div>
-        <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            zoom={18}
+      <div style={{ height: '100vh', width: '100%' }}>
+        {!center && <h1>Map is loading...</h1>}
+        {center &&
+        <GoogleMapReact
+            bootstrapURLKeys={{ key: "AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q" }}
+            defaultZoom={17}
             center={center}
         >
-            <Marker position={center} />
-        </GoogleMap>
-        </div>
+            <img
+                lat={34}
+                lng={-117}
+                href='/'
+                alt='logo'
+                src='/logo.png'
+                height='50'
+            />
+        </GoogleMapReact>
+}
+      </div>
     );
-};
-
-export default Map;
+}
