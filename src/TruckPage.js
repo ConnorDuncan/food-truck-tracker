@@ -2,6 +2,9 @@ import './TruckPage.css'
 import TruckIcon from './FoodTruckIcon'
 import CheckCircleIcon from './CheckCircleIcon'
 import ClockIcon from './ClockIcon'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import update from './UpdateInfo';
 
 /*This page should appears when users login successfully using business accounts*/
 
@@ -9,7 +12,8 @@ import ClockIcon from './ClockIcon'
 
 function TruckPage() {
   return (
-    <div className="Businesses">
+
+      <div className="Businesses">
       <header className="Business_header">
         <h1 className="Title">
           Your Food Trucks
@@ -27,7 +31,9 @@ function TruckPage() {
           <div className='check_circle'>
             <CheckCircleIcon/>
           </div>
-          <a href="/detail_page">view details</a>
+
+          <a href="/UpdateInfo/Taco Time">view details</a>
+
         </div>
       </div>
 
@@ -39,14 +45,15 @@ function TruckPage() {
           <div className='clock_icon'>
             <ClockIcon/>
           </div>
-          <a href="/detail_page">view details</a>
+          <a href="/UpdateInfo/Burger Bliss">view details</a>
         </div>
       </div>
 
       <button class="button">Add a new food truck</button>
 
-      
-    </div>
+      </div>
+
+    
   );
 }
 
