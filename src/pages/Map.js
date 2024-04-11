@@ -1,17 +1,14 @@
-import React from 'react';
 import { useState, useEffect } from 'react'
-import GoogleMapReact from 'google-map-react';
+import GoogleMap from 'google-maps-react-markers'
 
-export default function Map(){
+const Map = () => {
     const [center, setCenter] = useState(null)
 
-    useEffect(() => {
+    try {
+        useEffect(() => {
             if ("geolocation" in navigator) {
                 const watchId = navigator.geolocation.watchPosition((position) => {
                     setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                    console.log(position.coords.latitude)
-                    console.log(position.coords.longitude )
-                    console.log(center)
                 },
                 (error) => {
                     console.error('Error occurred while getting geolocation:', error);
@@ -19,29 +16,33 @@ export default function Map(){
 
                 return () => {
                     navigator.geolocation.clearWatch(watchId);
-                  };
+                    };
             } else console.log("Geolocation is not supported by this browser.");
-        }, []);
-  
+        });
+    } catch (error) { console.log(error) }
+
     return (
-      <div style={{ height: '100vh', width: '100%' }}>
+        <>
         {!center && <h1>Map is loading...</h1>}
         {center &&
-        <GoogleMapReact
-            bootstrapURLKeys={{ key: "AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q" }}
+        <GoogleMap
+            apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
+            defaultCenter={center}
             defaultZoom={17}
-            center={center}
+            mapMinHeight="100vh"
         >
-            <img
-                lat={34}
-                lng={-117}
-                href='/'
-                alt='logo'
-                src='/logo.png'
-                height='50'
-            />
-        </GoogleMapReact>
+        <img
+            lat={34.4162656}
+            lng={-119.8445736}
+            href='/'
+            alt='logo'
+            src='/logo.png'
+            height='50'
+        />
+        </GoogleMap>
+        }
+        </>
+    )
 }
-      </div>
-    );
-}
+
+export default Map
