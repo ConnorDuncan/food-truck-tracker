@@ -32,8 +32,8 @@ const Map = () => {
             mapMinHeight="100vh"
         >
         <img
-            lat={34.4162656}
-            lng={-119.8445736}
+            lat={center['lat']}
+            lng={center['lng']}
             href='/'
             alt='logo'
             src='/logo.png'
