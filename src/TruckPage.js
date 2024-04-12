@@ -50,6 +50,7 @@ function TruckPage() {
       </div>
 
       <button class="button">Add a new food truck</button>
+      
 
       </div>
 
