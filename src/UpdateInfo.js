@@ -29,12 +29,16 @@ function UpdateInfo(){
 
   const handleSave = () => {
     if (openTime && closeTime) {
-      alert('Selected open time:', openTime);
-      console.log('Selected close time:', closeTime);
+      const openTimeString = openTime.toLocaleTimeString([], { hour: 'numeric', hour12: true });
+      const closeTimeString = closeTime.toLocaleTimeString([], { hour: 'numeric', hour12: true });
+
+      alert(`Selected open time: ${openTimeString}\nSelected close time: ${closeTimeString}`);
+
       // Add logic here to save the selected times to backend or perform other actions
-    } else {
-      console.log('Please select both open and close times');
-      // Add error handling if either open or close time is not selected
+    } else if(openTime){
+      alert('Please select a close time');
+    }else{
+      alert('Please select an open time');
     }
   };
 
