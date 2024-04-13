@@ -3,14 +3,15 @@ import TruckIcon from './FoodTruckIcon'
 import CheckCircleIcon from './CheckCircleIcon'
 import ClockIcon from './ClockIcon'
 import React from 'react';
-import { Link } from 'react-router-dom';
-import update from './UpdateInfo';
+
 
 /*This page should appears when users login successfully using business accounts*/
 
 
 
 function TruckPage() {
+  const TruckName_1 = "Taco Time"
+  const TruckName_2 = "Burger Bliss"
   return (
 
       <div className="Businesses">
@@ -26,30 +27,34 @@ function TruckPage() {
       <div className="card">
         <div className='card_content'>
           <TruckIcon/>
-          Taco Time
+          {TruckName_1}
           <div class="verified">Verified</div>
           <div className='check_circle'>
             <CheckCircleIcon/>
           </div>
 
-          <a href="/UpdateInfo/Taco Time">view details</a>
+          <a href={`/UpdateInfo/${TruckName_1}`}>view details</a>
 
         </div>
       </div>
 
       <div className="card">
         <div className='card_content'>
+          
           <TruckIcon/>
-          Burger Bliss
+          {TruckName_2}
           <div class="waiting">Waiting for Verification</div>
           <div className='clock_icon'>
             <ClockIcon/>
           </div>
-          <a href="/UpdateInfo/Burger Bliss">view details</a>
+          <a href={`/UpdateInfo/${TruckName_2}`}>view details</a>
+
         </div>
       </div>
 
-      <button class="button">Add a new food truck</button>
+      <button class="button" onClick={() => window.location.href='./AddTruck'}>Add a new food truck</button>
+
+      
       
 
       </div>
@@ -57,5 +62,6 @@ function TruckPage() {
     
   );
 }
+
 
 export default TruckPage;

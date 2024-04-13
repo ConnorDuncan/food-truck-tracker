@@ -5,6 +5,7 @@ import TruckPage from './TruckPage';
 import reportWebVitals from './reportWebVitals';
 import UpdateInfo from './UpdateInfo'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AddTruck from './AddTruck';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +15,8 @@ root.render(
 
         <Route path="/" element={<TruckPage />} />
         <Route path="/UpdateInfo/:truckName" element={<UpdateInfo />} />
+        <Route path="/AddTruck" element={<AddTruck />} />
+
 
       </Routes>
     
