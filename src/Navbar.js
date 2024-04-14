@@ -1,37 +1,21 @@
+import './Navbar.css';
+
 const Navbar = () => {
-    return (  
-        <nav className='navbar'>
-            <a href='/'>
-                <img
-                    href='/'
-                    alt='logo'
-                    src='/logo.png'
-                    height='120'
-                />
-            </a>
-            <h1>VendorVista</h1>
-            <div className='links'>
-                <a href='/home' style={{
-                    color: 'white', 
-                    backgroundColor: '#f1356d',
-                    borderRadius: '500px',
-                    padding: '16px'
-                    }}>Home</a>
-                <a href='/map' style={{
-                    color: 'white', 
-                    backgroundColor: '#f1356d',
-                    borderRadius: '500px',
-                    padding: '16px'
-                    }}>Map</a>
-                <a href='/business-info' style={{
-                    color: 'white', 
-                    backgroundColor: '#f1356d',
-                    borderRadius: '500px',
-                    padding: '16px'
-                    }}>Log out</a>
-            </div>
-        </nav>
+    return (
+      <nav className="navbar">
+        <a href="/" className="logo"> 
+          <img src="/logo.png" alt="logo" height="50" /> 
+        </a>
+  
+        <h1>VendorVista</h1>
+  
+        <div className="links">
+          <a href="/home" className="nav-link">Home</a>
+          <a href="/map" className="nav-link">Map</a>
+          <a href="/business-info" className="nav-link">Log out</a>
+        </div>
+      </nav>
     );
-}
+  };
  
 export default Navbar;
