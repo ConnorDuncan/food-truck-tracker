@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import './UpdateInfo.css'
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import ClockIcon from './ClockIcon';
+import ClockIcon from './ClockIcon.js';
 
 function UpdateInfo(){
   const { truckName } = useParams();
