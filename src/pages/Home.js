@@ -8,9 +8,14 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const { setCurrentUser } = useAuth();
     const navigate = useNavigate();
+    const { currentUser } = useAuth();
 
     const handleSignIn = async (path) => {
         try {
+            if(currentUser) {
+                navigate(path);
+                return;
+            }
             const result = await signInWithPopup(auth, provider);
             setCurrentUser(result.user); // Update context state
             console.log('Logged in user:', result.user);
