@@ -1,8 +1,35 @@
 import React from 'react';
 import './Home.css'
+import { signInWithPopup } from '@firebase/auth';
+import { auth, provider } from '../firebase';
+import { useAuth } from '../components/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
+const Home = () => {
 
-function Home() {
+    const { setCurrentUser } = useAuth();
+    const navigate = useNavigate();
+
+    const handleSigninWithGoogleBusiness = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            setCurrentUser(result.user); // Update context state
+            console.log(result.user);
+            navigate("/business/login");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const handleSigninWithGoogleCustomer = async () => {
+      try {
+          const result = await signInWithPopup(auth, provider);
+          setCurrentUser(result.user); // Update context state
+          console.log(result.user);
+          navigate("/customer/login");
+      } catch (error) {
+          console.log(error);
+      }
+  };
 
     const faqs = [
         {
@@ -25,8 +52,8 @@ function Home() {
       <h1>Welcome to Vendor Vista!</h1>
       <p>Find your favorite food trucks or track your business.</p>
       <div className="buttons">
-        <button className="business-button">Business Login</button>
-        <button className="customer-button">Customer Login</button>
+        <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button>
+        <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button>
       </div>
 
       <div className='intro'>
