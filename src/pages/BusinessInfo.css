@@ -1,139 +1,83 @@
+
+
+.BusinessName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: left;
+}
+
 .info-header {
-  position: relative;
-  top: 10px;
-  left: 90px;
-  font-size: 2vw;
+  background-color: #f0f0f0;
+  padding: 10px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
 }
 
-.location{
-  position: relative;
-  color: gray;
-  top:-20px;
-  left: 90px;
-  font-size: 1.7vw;
+.info-header h1 {
+  margin: 0;
+}
+
+.location, .open, .Intro, .contact {
+  margin-top: 15px;
+}
+
+.MapPinIcon, .ClockIcon, .PhoneIcon, .CalendarIcon {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.star {
   
-
-}
-
-.MapPinIcon {
-  position: relative;
-  width: 1.7vw;
-  height: 1.6vw;
-  margin-right: 10px;
-  transform: translateY(1px);
+  margin-top: 30px;
   
-}
-
-.ClockIcon{
-  position: relative;
-  width: 1.7vw;
-  height: 1.6vw;
-  margin-right: 10px;
-  transform: translateY(2px);
-}
-
-.open{
-  position: relative;
-  color: gray;
-  top:0px;
-  left: 90px;
-  font-size: 1.7vw;
-  
-
-  
-}
-
-.Intro{
-  position: relative;
-  max-width: 800px;
-  top:30px;
-  left:90px;
-  font-size: 1.7vw;
-}
-
-.schedule{
-  position: relative;
-  top:40px;
-  left:90px;
-  font-size: 1.7vw;
-}
-
-.CalendarIcon{
-  position: relative;
-  width: 1.7vw;
-  height: 1.6vw;
-
-  margin-right: 10px;
-  transform: translateY(2px);
-}
-
-.dishes{
-  position: relative;
-  top:40px;
-  left:-100px;
-  font-size: 1.7vw;
-  
-
-}
-
-.stars{
-  position: relative;
-  top:50px;
-  left:90px;
-}
-
-.filled{
-  fill:black;
-}
-
-.empty{
-  stroke: gray;
 }
 
 .horizontal-container {
   display: flex;
-  gap: 20vw;
-}
-
-.contact{
-  position: relative;
-  top:-100px;
-  left:90px;
-  font-size: 1.7vw;
-}
-
-.PhoneIcon{
-  position: relative;
-  width: 1.7vw;
-  height: 1.6vw;
-
-  margin-right: 10px;
-  transform: translateY(2px);
-}
-
-.comment{
-  position: relative;
-  top:60px;
-  max-width: 500px;
-  color: gray;
-  margin-left: 50px;
-}
-
-.image-comment-container{
-  
-  max-height: 300px;
+  justify-content: space-around;
+  margin-top: 20px;
   overflow-y: scroll;
-  margin-bottom: 5px;
-  
 }
 
-.dish{
+.schedule, .dishes {
+  width: 45%;
+}
+
+.dishes {
   display: flex;
-  flex-direction: row;
-  margin-bottom: 30px;
-  border-radius: 10px;
+  flex-direction: column;
+}
+
+.image-comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 300px;
+}
+
+.dish {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .dish img {
-  border-radius: 20px;
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+.comment {
+  font-style: italic;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
