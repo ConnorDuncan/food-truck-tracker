@@ -15,7 +15,7 @@ export default () => {
 
     return (
         <div className="container">
-            <h1>Google Authentication Demo</h1>
+            <h1>Google Authentication Demo (Business)</h1>
             <hr />
             <h2>Welcome {currentUser.displayName || 'User'}</h2>
             <p>{currentUser.email || 'No email available'}</p>
