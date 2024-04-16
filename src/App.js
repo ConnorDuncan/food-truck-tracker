@@ -8,6 +8,7 @@ import { AuthProvider } from './components/AuthContext'
 import BusinessLogin from './pages/BusinessLogin'
 import CustomerLogin from './pages/CustomerLogin'
 import Protected from './components/Protected.jsx'
+import NotFound from './pages/FourOhFour.js'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path='/customer/login' element={<Protected/>}>
               <Route path='/customer/login' element={<CustomerLogin/>}/>
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </AuthProvider>
