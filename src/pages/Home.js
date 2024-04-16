@@ -1,35 +1,28 @@
 import React from 'react';
-import './Home.css'
+import './Home.css';
 import { signInWithPopup } from '@firebase/auth';
 import { auth, provider } from '../firebase';
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-
     const { setCurrentUser } = useAuth();
     const navigate = useNavigate();
 
-    const handleSigninWithGoogleBusiness = async () => {
+    const handleSignIn = async (path) => {
         try {
             const result = await signInWithPopup(auth, provider);
             setCurrentUser(result.user); // Update context state
-            console.log(result.user);
-            navigate("/business/login");
+            console.log('Logged in user:', result.user);
+            navigate(path);
         } catch (error) {
-            console.log(error);
+            console.error('Login error:', error);
+            alert(`Failed to sign in: ${error.message}`); // Provide user feedback
         }
     };
-    const handleSigninWithGoogleCustomer = async () => {
-      try {
-          const result = await signInWithPopup(auth, provider);
-          setCurrentUser(result.user); // Update context state
-          console.log(result.user);
-          navigate("/customer/login");
-      } catch (error) {
-          console.log(error);
-      }
-  };
+
+    const handleSigninWithGoogleBusiness = () => handleSignIn("/business/login");
+    const handleSigninWithGoogleCustomer = () => handleSignIn("/customer/login");
 
     const faqs = [
         {
@@ -47,34 +40,32 @@ const Home = () => {
         // Add more FAQs as needed
       ];
 
-  return (
-    <div className="home-page">
-      <h1>Welcome to Vendor Vista!</h1>
-      <p>Find your favorite food trucks or track your business.</p>
-      <div className="buttons">
-        <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button>
-        <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button>
-      </div>
+    return (
+        <div className="home-page">
+            <h1>Welcome to Vendor Vista!</h1>
+            <p>Find your favorite food trucks or track your business.</p>
+            <div className="buttons">
+                <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button>
+                <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button>
+            </div>
 
-      <div className='intro'>
-      Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
-      </div>
+            <div className='intro'>
+                Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
+            </div>
 
-      <div className='faq'>
-        <h2>Frequently Asked Questions</h2>
-
-        <ul>
-          {faqs.map((faq, index) => (
-            <li key={index}>
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-
-  );
+            <div className='faq'>
+                <h2>Frequently Asked Questions</h2>
+                <ul>
+                    {faqs.map((faq, index) => (
+                        <li key={index}>
+                            <h3>{faq.question}</h3>
+                            <p>{faq.answer}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
 }
 
 export default Home;

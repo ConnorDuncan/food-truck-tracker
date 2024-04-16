@@ -20,8 +20,9 @@ const Navbar = () => {
         <a href="/" className="logo"> 
           <img src="/logo.png" alt="logo" height="50" /> 
         </a>
-  
-        <h1>VendorVista</h1>
+        <div>
+          <a href="/" style={{ fontSize: '30px' }} >VendorVista</a>
+        </div>
   
         <div className="links">
           <a href="/home" className="nav-link">Home</a>
