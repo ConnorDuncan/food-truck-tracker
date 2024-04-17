@@ -4,6 +4,7 @@ import CalendarIcon from '../components/CalendarIcon'
 import ClockIcon from '../components/ClockIcon';
 import MapPinIcon from '../components/MapPinIcon';
 import PhoneIcon from '../components/PhoneIcon';
+import Stars from '../components/Stars';
 
 
 function BusinessInfo() {
@@ -29,17 +30,7 @@ function BusinessInfo() {
 
         <div className="Intro">This food truck sells tacos, hamburgers, pizzas etc. You can get what you've ordered in just 2 minutes!</div>
 
-        <div className="grid gap-2">
-          <div className="stars">
-            <StarIcon className="filled" />
-            <StarIcon className="filled" />
-            <StarIcon className="filled" />
-            <StarIcon className="empty" />
-            <StarIcon className="empty" />
-          </div>
-        </div>
-        
-
+        <Stars className='star'/>
         
         <div className="horizontal-container">
           <div className="schedule">
@@ -85,10 +76,11 @@ function BusinessInfo() {
         </div>
 
         <div className="contact">
-          <PhoneIcon className="PhoneIcon"></PhoneIcon>
+          
           Contect information:
           <br/>
           <br/>
+          <PhoneIcon className="PhoneIcon"></PhoneIcon>
           Phone: (012) 345-6789
         </div>
         
