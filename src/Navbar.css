@@ -1,0 +1,11 @@
+.nav-link {
+    text-decoration: none;
+    color: orange;
+    margin-right: 20px;
+    padding: 8px 10px;
+    transition: color 0.3s ease; /* Transition only the color */
+  }
+
+  .nav-link:hover {
+    color: #FF5733; /* Change text color on hover */
+  }
