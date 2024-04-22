@@ -9,6 +9,7 @@ import BusinessLogin from './pages/BusinessLogin'
 import CustomerLogin from './pages/CustomerLogin'
 import Protected from './components/Protected.jsx'
 import NotFound from './pages/FourOhFour.js'
+import TruckPage from './TruckPage.js'
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Route path='/home' element={<Home />}/>
             <Route path='/business/info' element={<Protected/>}>
               <Route path='/business/info' element={<BusinessInfo />}/>
+            </Route>
+            <Route path='/business/list' element={<Protected/>}>
+              <Route path='/business/list' element={<TruckPage />}/>
             </Route>
             <Route path='/map' element={<Map/>}/>
             <Route path='/business/login' element={<Protected/>}>
