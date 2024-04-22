@@ -1,0 +1,83 @@
+
+
+.BusinessName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: left;
+}
+
+.info-header {
+  background-color: #f0f0f0;
+  padding: 10px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.info-header h1 {
+  margin: 0;
+}
+
+.location, .open, .Intro, .contact {
+  margin-top: 15px;
+}
+
+.MapPinIcon, .ClockIcon, .PhoneIcon, .CalendarIcon {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.star {
+  
+  margin-top: 30px;
+  
+}
+
+.horizontal-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  overflow-y: scroll;
+}
+
+.schedule, .dishes {
+  width: 45%;
+}
+
+.dishes {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 300px;
+}
+
+.dish {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.dish img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+.comment {
+  font-style: italic;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}

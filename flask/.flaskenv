@@ -1,0 +1,2 @@
+FLASK_APP=verify.py
+FLASK_DEBUG=1
