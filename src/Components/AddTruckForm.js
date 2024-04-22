@@ -1,39 +1,68 @@
 import React, { useState } from 'react';
 import '../TruckPage.css'
+// import ref
+
+// function submitForm() {
+//   var businessName = document.getElementById("businessName").value;
+//   var location = document.getElementById("location").value;
+//   var foodType = document.getElementById("foodType").value;
+//   var maxCapacity = document.getElementById("maxCapacity").value;
+//   // var businessName = document.getElementById("businessName").value;
+//   // var businessName = document.getElementById("businessName").value;
+// }
+
+
+// 3 steps for having state w/ react:
+// 1)  import useState hook from react
+// 2) define state variable and update f'n with the useState hook
+// 3) define a f'n that changes state variable with the update f'n
 
 const AddTruckForm = () => {
+  //useState hook to declare a state variable inside your component (returns an array with state value and variable update handling f'n)
   const [businessName, setBusinessName] = useState('');
   const [location, setLocation] = useState('');
   const [foodType, setFoodType] = useState('');
   const [maxCapacity, setMaxCapacity] = useState('');
-  // const [menu, setMenu] = useState('');
+  const [menu, setMenu] = useState(null);
+  const [license, setLicense] = useState(null);
 
+
+  
+  // define functions that update state variable with the f'n inside the useState hook
   const handleBusinessNameChange = (e) => {
     setBusinessName(e.target.value);
   };
-
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
-
   const handleFoodTypeChange = (e) => {
     setFoodType(e.target.value);
   };
-
   const handleMaxCapacityChange = (e) => {
     setMaxCapacity(e.target.value);
   };
-
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0]; // Get the first file selected by the user
-    // Process the file (e.g., upload to server, display preview, etc.)
-    console.log('Uploaded file:', file);
+  const handleMenuChange = (e) => {
+    const file = e.target.files[0];
+    setMenu(file);
   };
-
+  const handleLicenseChange = (e) => {
+    const file = e.target.files[0];
+    setLicense(file);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add form submission logic here
   };
+
+  // connect to Firebase DB 
+  function createDoc(newDataObj) {
+    console.log("MADE!");
+    ref.doc().set(newDataObj).catch((err) => {
+      alert(err)
+      console.error(err);
+    })
+    
+  }
 
   return (
     <div className="Businesses">
@@ -80,22 +109,27 @@ const AddTruckForm = () => {
         <label htmlFor="menu">Menu:</label>
           <input
             type="file"
-            // id="menu"
-            // value={menu}
-            onChange={handleFileUpload}
+            id="menu"
+            value={menu}
+            onClick={handleMenuChange}
             />
         </div>
         <div className="card">
         <label htmlFor="license">License:</label>
           <input
             type="file"
-            // id="menu"
-            // value={menu}
-            onChange={handleFileUpload}
+            id="license"
+            value={license}
+            onClick={handleLicenseChange}
             />
         </div>
       </form>
-      <button class="button">Submit</button>
+      <button 
+      class="button"
+      onClick={()=>{createDoc({businessName, location, foodType, maxCapacity, menu, license})}}
+      >
+        Submit
+      </button>
     </div>
   );
 };

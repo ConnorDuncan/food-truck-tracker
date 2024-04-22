@@ -19,7 +19,6 @@ PLAN:
 
     // local upload: upload PDF/PNG of menu
     // local upload: upload license
-    // continue to payment deposit 
     // new page: thanks for verifying page, you'll get an email as soon as we verify you
 }
 */
