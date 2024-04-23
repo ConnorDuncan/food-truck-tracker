@@ -26,8 +26,8 @@ const Home = () => {
         }
     };
 
-    const handleSigninWithGoogleBusiness = () => handleSignIn("/business/login");
-    const handleSigninWithGoogleCustomer = () => handleSignIn("/customer/login");
+    const handleSigninWithGoogleBusiness = () => handleSignIn("/business/list");
+    const handleSigninWithGoogleCustomer = () => handleSignIn("/map");
 
     const faqs = [
         {
