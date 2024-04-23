@@ -4,6 +4,10 @@ import { signInWithPopup } from '@firebase/auth';
 import { auth, provider } from '../firebase';
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import 'mdui/mdui.css';
+import 'mdui';
+import 'mdui/components/button.js';
+
 
 const Home = () => {
     const { setCurrentUser } = useAuth();
@@ -50,8 +54,10 @@ const Home = () => {
             <h1>Welcome to Vendor Vista!</h1>
             <p>Find your favorite food trucks or track your business.</p>
             <div className="buttons">
-                <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button>
-                <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button>
+                {/* <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button> */}
+                <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
+                {/* <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button> */}
+                <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
             </div>
 
             <div className='intro'>
