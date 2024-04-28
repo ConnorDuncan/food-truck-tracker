@@ -9,12 +9,7 @@ import 'mdui/components/circular-progress.js';
 
 const Map = () => {
     const [center, setCenter] = useState(null)
-    const [priceRange, setPriceRange] = useState('All');
 
-    const handlePriceChange = (value) => {
-        setPriceRange(value);
-    };
- 
     useEffect(() => {
         try {
             if ("geolocation" in navigator) {
@@ -44,11 +39,11 @@ const Map = () => {
             <div style={{ width: "30%", padding: "20px" }}>
             
             <h2>Price Range</h2>
-            <mdui-segmented-button-group selects="multiple" style={{display: 'flex', justifyContent: 'center',width: '300px'}}>
-            <mdui-segmented-button value="All" onClick={() => handlePriceChange('All')}>All</mdui-segmented-button>
-            <mdui-segmented-button value="$" onClick={() => handlePriceChange('$')}>$</mdui-segmented-button>
-            <mdui-segmented-button value="$$" onClick={() => handlePriceChange('$$')}>$$</mdui-segmented-button>
-            <mdui-segmented-button value="$$$" onClick={() => handlePriceChange('$$$')}>$$$</mdui-segmented-button>
+            <mdui-segmented-button-group selects="multiple" style={{display: 'flex', justifyContent: 'center',width: '350px'}}>
+            <mdui-segmented-button value="All">All</mdui-segmented-button>
+            <mdui-segmented-button value="$">$</mdui-segmented-button>
+            <mdui-segmented-button value="$$">$$</mdui-segmented-button>
+            <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
             </mdui-segmented-button-group>
 
             
