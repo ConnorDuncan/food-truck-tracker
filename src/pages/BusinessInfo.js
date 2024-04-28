@@ -6,6 +6,10 @@ import MapPinIcon from '../components/MapPinIcon';
 import PhoneIcon from '../components/PhoneIcon';
 import Stars from '../components/Stars';
 
+import 'mdui/mdui.css';
+import 'mdui';
+import 'mdui/components/card.js';
+
 
 function BusinessInfo() {
   return (
@@ -18,29 +22,54 @@ function BusinessInfo() {
 
       <body>
         
-        <div className="location">
+
+        <mdui-card style={{width: '600px', height: '150px', marginTop: '30px'}}>
+
+        <div className="location" style={{ marginLeft: '10px' }}>
           <MapPinIcon className="MapPinIcon" />
           Street
         </div>
 
-        <div className="open">
+        <div className="open" style={{ marginLeft: '10px' }}>
           <ClockIcon className="ClockIcon"></ClockIcon>
           Open today from 10:00 am to 5:00 pm
         </div>
 
-        <div className="Intro">This food truck sells tacos, hamburgers, pizzas etc. You can get what you've ordered in just 2 minutes!</div>
+        {/* <dix className="Intro" style={{ marginLeft: '10px' }}>
+          This food truck sells tacos, hamburgers, pizzas etc. You can get what you've ordered in just 2 minutes!
+        </dix> */}
 
-        <Stars className='star'/>
+        </mdui-card>
         
         <div className="horizontal-container">
-          <div className="schedule">
-            <h2>Schedule</h2>
-            <CalendarIcon className="CalendarIcon" />
-            Workday: 10:00 am to 7:00 pm
-            <br/>
-            <CalendarIcon className="CalendarIcon" />
-            Weekend: 11:00 am to 7:00 pm
+
+        <mdui-card variant="elevated" style={{width: '600px', height: '250px', marginTop: '30px'}}>
+
+
+            <h2 style={{ marginLeft: '10px'}}>Schedule</h2>
+
+            <div className="open" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>  
+              <div>Workday: 10:00 am to 7:00 pm</div>
+              <CalendarIcon className="CalendarIcon" />
+            </div>
+
+            <div className="open" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>  
+              <div>Weekend: 10:00 am to 7:00 pm</div>
+              <CalendarIcon className="CalendarIcon" />
+            </div>
+
+
+          <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
+            <div>(012) 345-6789</div>
+            <div><PhoneIcon className="PhoneIcon"></PhoneIcon></div>
           </div>
+          <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
+            <div>(012) 345-6789</div>
+            <div><PhoneIcon className="PhoneIcon"></PhoneIcon></div>
+          </div>
+
+        </mdui-card>
+        
 
           <div className="dishes">
             <h2>Featured Dishes</h2>
@@ -75,14 +104,14 @@ function BusinessInfo() {
           </div>
         </div>
 
-        <div className="contact">
-          
-          Contect information:
-          <br/>
-          <br/>
-          <PhoneIcon className="PhoneIcon"></PhoneIcon>
-          Phone: (012) 345-6789
+          <div className='currRate'>
+          Current Rate is: 4.8/5   Based on 99999 reviews
         </div>
+
+        <Stars className='star'/>
+        
+
+        
         
 
       </body>
