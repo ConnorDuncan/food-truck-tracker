@@ -9,8 +9,12 @@ import BusinessLogin from './pages/BusinessLogin'
 import CustomerLogin from './pages/CustomerLogin'
 import Protected from './components/Protected.jsx'
 import NotFound from './pages/FourOhFour.js'
+import firebase from './firebase.js'
 
 function App() {
+  const ref = firebase.firestore().collection("food-trucks")
+  console.log(ref);
+  
   return (
     <div>
       <AuthProvider>
