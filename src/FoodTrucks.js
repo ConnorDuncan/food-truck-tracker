@@ -9,8 +9,16 @@ import useFoodTrucks from './useFoodTrucks';  // Importing the custom hook
 const FoodTrucks = () => {
     const { trucks, loading } = useFoodTrucks();
 
-    if (loading) return <p>Loading...</p>; // Display loading message while fetching
-
+    if (loading){ return (<div className="Businesses">
+    <header className="Business_header">
+        <h1 className="Title">Your Food Trucks</h1>
+        <p className="Description">
+            Here are the trucks you own, including those that are waiting for verification
+        </p>
+    </header>
+    
+    </div>
+    );}
     return (
         <div className="Businesses">
             <header className="Business_header">
