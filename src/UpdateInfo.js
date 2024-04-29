@@ -13,7 +13,7 @@ function UpdateInfo() {
 
   useEffect(() => {
     const fetchTruckData = async () => {
-      const docRef = doc(db, "userToTruck", truckId);
+      const docRef = doc(db, "food-trucks", truckId);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -44,7 +44,7 @@ function UpdateInfo() {
 
   return (
     <div>
-      <h1 className='title'>Update {truckId}</h1>
+      <h1 className='title'>Update {truckBusinessName}</h1>
       <div className='Description'>Input the updated information, and then click the "save" button</div>
 
       <div className='cate'>
