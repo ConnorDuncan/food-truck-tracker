@@ -1,4 +1,3 @@
-// src/FoodTrucks.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './TruckPage.css';
@@ -10,7 +9,7 @@ import useFoodTrucks from './useFoodTrucks';  // Importing the custom hook
 const FoodTrucks = () => {
     const { trucks, loading } = useFoodTrucks();
 
-    if (loading) return;
+    if (loading) return <p>Loading...</p>; // Display loading message while fetching
 
     return (
         <div className="Businesses">
@@ -21,11 +20,11 @@ const FoodTrucks = () => {
                 </p>
             </header>
             
-            {trucks.map((truck) => (
+            {trucks.length > 0 ? trucks.map((truck) => (
                 <div key={truck.id} className="card">
                     <div className='card_content'>
                         <TruckIcon />
-                        {truck.name}
+                        <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
                         {truck.verified ?
                             <>
                                 <div className="verified">Verified</div>
@@ -40,10 +39,10 @@ const FoodTrucks = () => {
                                 </div>
                             </>
                         }
-                        <Link to={`/UpdateInfo/${truck.name}`}>view details</Link>
+                        <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
                     </div>
                 </div>
-            ))}
+            )) : <p>No trucks available.</p>}  {/* Show message if no trucks are found */}
 
             <button className="button">Add a new food truck</button>
         </div>

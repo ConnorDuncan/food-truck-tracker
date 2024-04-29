@@ -9,6 +9,7 @@ import CustomerLogin from './pages/CustomerLogin';
 import Protected from './components/Protected.jsx';
 import NotFound from './pages/FourOhFour.js';
 import FoodTrucks from './FoodTrucks.js';  // Make sure this is the component, not useFoodTrucks hook
+import UpdateInfo from './UpdateInfo.js';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
             </Route>
             <Route path='/customer/login' element={<Protected />}>
               <Route index element={<CustomerLogin />} />
+            </Route>
+            <Route path="/business/UpdateInfo/:truckId" element={<Protected />}>
+              <Route index element={<UpdateInfo />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
