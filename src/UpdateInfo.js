@@ -1,124 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import './UpdateInfo.css'
-import 'react-datepicker/dist/react-datepicker.css';
-import DatePicker from 'react-datepicker';
-import ClockIcon from './ClockIcon';
+import './UpdateInfo.css';
+import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
+import { db } from './firebase';
 
-function UpdateInfo(){
-  const { truckName } = useParams();
+function UpdateInfo() {
+  const { truckId } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedFoodType, setSelectedFoodType] = useState('');
+  const [truckCapacity, setTruckCapacity] = useState('');
+  const [truckBusinessName, setTruckBusinessName] = useState('');
 
-  const [openTime, setOpenTime] = useState(null); // State to store selected open time
-  const [closeTime, setCloseTime] = useState(null); // State to store selected close time
-  const [selectedFoodType, setSelectedFoodType] = useState(''); // State to store selected food type
+  useEffect(() => {
+    const fetchTruckData = async () => {
+      const docRef = doc(db, "userToTruck", truckId);
+      const docSnap = await getDoc(docRef);
 
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setTruckBusinessName(data.business_name); // Use the actual field name from Firestore
+        setIsOpen(data.open); // Adjusted for boolean 'open' field
+        setSelectedFoodType(data.food_type); // Use the actual field name from Firestore
+        setTruckCapacity(data.max_capacity); // Use the actual field name from Firestore
+      } else {
+        console.log('No such truck!');
+      }
+    };
 
-  const handleOpenTimeChange = (time) => {
-    setOpenTime(time);
-  };
-
-  const handleCloseTimeChange = (time) => {
-    setCloseTime(time);
-  };
+    fetchTruckData();
+  }, [truckId]);
 
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
 
-  const foodTypes = ['Burger', 'Chinese Food', 'Pizza', 'Taco', 'Sushi', 'Salad', 'Sandwich', 'Pasta'];
-
-  const handleSave = () => {
-    if (openTime && closeTime) {
-      const openTimeString = openTime.toLocaleTimeString([], { hour: 'numeric', hour12: true });
-      const closeTimeString = closeTime.toLocaleTimeString([], { hour: 'numeric', hour12: true });
-
-      alert(`Selected open time: ${openTimeString}\nSelected close time: ${closeTimeString}`);
-
-      // Add logic here to save the selected times to backend or perform other actions
-    } else if(openTime){
-      alert('Please select a close time');
-    }else{
-      alert('Please select an open time');
-    }
+  const handleSave = async () => {
+    // Here you can add logic to update the truck's data in Firestore
+    console.log('Save button clicked');
+    // Save logic...
   };
+
+  const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
 
   return (
     <div>
-      <h1 class = 'title'>{truckName}</h1>
-      <div class = 'Description'>Input the updated information, and then click the "save" button</div>
-      
+      <h1 className='title'>Update {truckId}</h1>
+      <div className='Description'>Input the updated information, and then click the "save" button</div>
 
-      <div class='cate'>
-        <p classname = 'inputlabel'>Name of Your Truck</p>
-        <input classname = 'infoinput' placeholder={truckName}/>
+      <div className='cate'>
+        <p className='inputlabel'>Name of Your Truck</p>
+        <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} />
       </div>
-      
+
       <div className='cate'>
         <p>Select Food Type</p>
         <select value={selectedFoodType} onChange={handleFoodTypeChange}>
-          <option value="">Select Food Type</option> {/*should be the previously saved food type*/}
+          <option value="">Select Food Type</option>
           {foodTypes.map((foodType) => (
-            <option key={foodType} value={foodType}>
-              {foodType}
-            </option>
+            <option key={foodType} value={foodType}>{foodType}</option>
           ))}
         </select>
       </div>
-      
-      <div className='cate'>
-        <div className='clockIcon'>
-          <ClockIcon/>
-        </div>
-        
-        <p>Open Time</p>
-        <DatePicker
-          selected={openTime}
-          onChange={handleOpenTimeChange}
-          showTimeSelect
-          showTimeSelectOnly 
-          timeIntervals={15}
-          dateFormat="h:mm aa"
-          placeholderText="Select Time" //should be the previously saved open time*/
-        />
-      </div>
 
       <div className='cate'>
-        <div className='clockIcon'>
-          <ClockIcon/>
-        </div>
-        <p>Close Time</p>
-        <DatePicker
-          selected={closeTime}
-          onChange={handleCloseTimeChange}
-          showTimeSelect
-          showTimeSelectOnly 
-          timeIntervals={15}
-          dateFormat="h:mm aa" 
-          placeholderText="Select Time" //should be the previously saved close time
-        />
+        <label>
+          <p>Is the truck open?</p>
+          <input 
+            type="checkbox" 
+            checked={isOpen} 
+            onChange={(e) => setIsOpen(e.target.checked)} 
+          />
+        </label>
       </div>
 
       <div className='cate'>
         <p>Max Capacity of Customers</p>
-        <input classname = 'infoinput' placeholder="10"/> {/*the placeholder should be the previously saved number*/}
+        <input 
+          className='infoinput' 
+          type="number" 
+          value={truckCapacity} 
+          onChange={(e) => setTruckCapacity(e.target.value)} 
+        />
       </div>
-      
       
       <div className='buttonContainer'>
-
-        <div className='buttonContainer'>
-          <button className='backButton' onClick={() => window.history.back()}>
-             Back
-          </button>
-        </div>
-
-        <div className='buttonContainer'>
-          <button className='saveButton' onClick={handleSave}>Save</button>
-        </div>
+        <button className='backButton' onClick={() => window.history.back()}>Back</button>
+        <button className='saveButton' onClick={handleSave}>Save</button>
       </div>
-
-      
-
     </div>
   );
 };

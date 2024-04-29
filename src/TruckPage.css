@@ -1,100 +1,141 @@
 .Businesses{
-    text-align: center;
+  text-align: center;
 }
 
 .Title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
-  
+
 @media (min-width: 640px) {
-    .Title {
-      font-size: 3rem;
-    }
+  .Title {
+    font-size: 3rem;
+  }
 }
-  
+
 @media (min-width: 768px) {
-    .Title {
-      font-size: 4rem;
-    }
+  .Title {
+    font-size: 4rem;
+  }
 }
 
 .Description{
-    color: gray
+  color: gray;
 }
 
 /* Styles for Card component */
 .card {
-    max-width: 30%;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 0.375rem;
-    border: 1px solid #e2e8f0;
-    background-color: #ffffff;
-    color: #4a5568;
-    box-shadow: 0 2px 2px 0 rgba(1, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    margin-bottom: 40px;
+max-width: 350px;
+width: 100%;
+margin: 20px auto;
+border-radius: 0.375rem;
+border: 1px solid #e2e8f0;
+background-color: #ffffff;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+gap: 0.75rem;
+padding: 1.5rem;
+align-items: stretch;
+margin-bottom: 2rem;
 }
 
-.card_content{
-    display: flex;
-    align-items: left;
-    justify-content: space-between;
+.card_content {
+display: flex;
+align-items: center;
+justify-content: start;
+gap: 1rem;
 }
 
-.verified {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #34d399;
+.card_content h2 {
+font-size: 1.25rem;
+margin-right: auto;
 }
 
-.check_circle{
-  height: 1.25rem;
-  width: 1.25rem;
-  color: #34d399;
+.verified, .waiting {
+margin-right: 0.5rem;
 }
 
-a {
-  text-decoration: none; /* Remove underline */
-  color: black; /* Set initial text color */
-  transition: color 0.3s; /* Smooth color transition */
-}
-/* Define the styles for the link when hovering */
-a:hover {
-  text-decoration: underline;
+.check_circle, .clock_icon {
+flex-shrink: 0;
 }
 
-.waiting {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #f59e0b;
+.card_content a {
+margin-left: 0.5rem;
+white-space: nowrap;
 }
 
-.clock_icon{
-    height: 1.25rem;
-    width: 1.25rem;
-    color: #f59e0b;
+.status-text {
+display: flex;
+align-items: center;
+gap: 0.25rem;
+}
+
+.status-icon {
+height: 1.25rem;
+width: 1.25rem;
 }
 
 .button {
-  display: inline-block;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #1fa781;
-  color: white;
-  text-align: center;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+display: inline-block;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+background-color: #1fa781;
+color: white;
+text-align: center;
+font-size: 16px;
+cursor: pointer;
+text-decoration: none;
+transition: background-color 0.3s ease;
+align-self: center;
+margin-top: 1rem;
 }
 
 .button:hover {
-  background-color: #1667a5;
+background-color: #1667a5;
+}
+
+a {
+text-decoration: none;
+color: black;
+transition: color 0.3s;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+.card {
+  max-width: none;
+}
+
+.card_content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card_content a {
+  margin-top: 0.5rem;
+}
+}
+
+/* Icon colors */
+.verified {
+  color: #34d399; /* Green color for 'Verified' */
+}
+
+.waiting {
+  color: #f59e0b; /* Orange color for 'Waiting for Verification' */
+}
+
+/* Specific icon colors */
+.check_circle {
+  color: #34d399; /* Green color for 'Verified' icon */
+}
+
+.clock_icon {
+  color: #f59e0b; /* Orange color for 'Waiting for Verification' icon */
 }
