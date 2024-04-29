@@ -52,7 +52,7 @@ const FoodTrucks = () => {
                 </div>
             )) : <p>No trucks available.</p>}  {/* Show message if no trucks are found */}
 
-            <button className="button">Add a new food truck</button>
+            <Link className="button" to={'/business/AddTruck'}>Add a new food truck</Link>
         </div>
     );
 };
