@@ -9,3 +9,12 @@
   .nav-link:hover {
     color: #FF5733; /* Change text color on hover */
   }
+
+  .navbar .WebName{
+    font-size: 40px;
+    color: purple;
+  }
+
+  .navbar .WebName:hover {
+    color: purple;
+  }
