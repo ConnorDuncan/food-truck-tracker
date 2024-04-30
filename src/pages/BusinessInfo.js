@@ -6,12 +6,48 @@ import MapPinIcon from '../components/MapPinIcon';
 import PhoneIcon from '../components/PhoneIcon';
 import Stars from '../components/Stars';
 
+
+//import MDUI components
 import 'mdui/mdui.css';
 import 'mdui';
 import 'mdui/components/card.js';
 
 
+//import map
+import { useState, useEffect } from 'react'
+import GoogleMap from 'google-maps-react-markers'
+
+
+
+  
+
+
 function BusinessInfo() {
+
+  const [center, setCenter] = useState(null)
+
+  useEffect(() => {
+      try {
+          if ("geolocation" in navigator) {
+              const watchId = navigator.geolocation.watchPosition((position) => {
+                  setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+              },
+              (error) => {
+                  console.error('Error occurred while getting geolocation:', error);
+              });
+
+              return () => {
+                  navigator.geolocation.clearWatch(watchId);
+              };
+          } else {
+              console.log("Geolocation is not supported by this browser.");
+          }
+      } catch (error) {
+          console.log(error);
+      }
+  }, []);
+
+
   return (
     <div className="BusinessName">
       <header className="info-header">
@@ -22,7 +58,7 @@ function BusinessInfo() {
 
       <body>
         
-
+      <div className="horizontal-container">
         <mdui-card style={{width: '600px', height: '150px', marginTop: '30px'}}>
 
         <div className="location" style={{ marginLeft: '10px' }}>
@@ -41,10 +77,76 @@ function BusinessInfo() {
 
         </mdui-card>
         
+        {/* {!center && (
+        <>  
+            <div style={{position: 'absolute', top: '35%', left: '70%', transform: 'translate(-50%, -50%)'}}>
+                <h2>Just a moment...</h2>
+                <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>
+            </div>
+        </>
+        )}
+     
+        {center &&
+        <div style={{ width: "50%", borderRadius: "10%", overflow: "hidden" , marginLeft: "5%"}}>
+            <GoogleMap
+                apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
+                defaultCenter={center}
+                defaultZoom={13}
+                mapMinHeight="35vh"
+                options={{ minZoom: 17 }}
+            >
+                <img
+                    lat={center['lat']}
+                    lng={center['lng']}
+                    href='/'
+                    alt='logo'
+                    src='/logo.png'
+                    height='50'
+                />
+            </GoogleMap>
+        </div>
+        } */}
+
+      <div style={{ width: "50%", borderRadius: "10%", overflow: "hidden" }}>
+        {!center && (
+          <div style={{ position: "relative", height: "35vh" }}>
+          <h2 style={{ position: "absolute", top: "40%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            Just a moment...
+          </h2>
+          <mdui-circular-progress style={{ position: "absolute", top: "60%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                </div>
+              )}
+              {center && (
+          <GoogleMap
+            apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
+            defaultCenter={center}
+            defaultZoom={13}
+            mapMinHeight="35vh"
+            options={{ minZoom: 17 }}
+          >
+            <img
+              lat={center.lat}
+              lng={center.lng}
+              href="/"
+              alt="logo"
+              src="/logo.png"
+              height="50"
+            />
+          </GoogleMap>
+        )}
+      </div>
+
+    </div>
+        <div className='currRate'>
+          Current Rate is: 4.8/5   Based on 99999 reviews
+        </div>
+
+        <Stars className='star'/>
         <div className="horizontal-container">
 
-        <mdui-card variant="elevated" style={{width: '600px', height: '250px', marginTop: '30px'}}>
+        <mdui-card variant="elevated" style={{width: '600px', height: '250px'}}>
 
+            
 
             <h2 style={{ marginLeft: '10px'}}>Schedule</h2>
 
@@ -58,6 +160,8 @@ function BusinessInfo() {
               <CalendarIcon className="CalendarIcon" />
             </div>
 
+
+        
 
           <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
             <div>(012) 345-6789</div>
@@ -104,11 +208,7 @@ function BusinessInfo() {
           </div>
         </div>
 
-          <div className='currRate'>
-          Current Rate is: 4.8/5   Based on 99999 reviews
-        </div>
-
-        <Stars className='star'/>
+        
         
 
         
