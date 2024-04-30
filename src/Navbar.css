@@ -8,6 +8,7 @@
 
   .nav-link:hover {
     color: #FF5733; /* Change text color on hover */
+    text-decoration: none;
   }
 
   .navbar .WebName{
@@ -17,4 +18,5 @@
 
   .navbar .WebName:hover {
     color: purple;
+    text-decoration: none;
   }

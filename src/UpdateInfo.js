@@ -6,6 +6,8 @@ import { db } from './firebase';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
 import { storage } from './firebase';
 import './loadingSpinner.css';
+//import MDUI icon
+import 'mdui/components/card.js';
 function UpdateInfo() {
   const navigate = useNavigate();
   const { truckId } = useParams();

@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './TruckPage.css';
+import './FoodTrucks.css';
 import TruckIcon from './FoodTruckIcon';
 import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';  // Importing the custom hook
+import { useNavigate } from 'react-router-dom';
+import 'mdui/components/button.js';
 
 const FoodTrucks = () => {
+    const navigate = useNavigate();
     const { trucks, loading } = useFoodTrucks();
+
+    const navigateToPage = () => {
+        navigate('/business/AddTruck');
+    };
 
     if (loading){ return (<div className="Businesses">
     <header className="Business_header">
@@ -27,10 +34,10 @@ const FoodTrucks = () => {
                     Here are the trucks you own, including those that are waiting for verification
                 </p>
             </header>
-            
+            <div className="truck-container">
             {trucks.length > 0 ? trucks.map((truck) => (
-                <div key={truck.id} className="card">
-                    <div className='card_content'>
+                <mdui-card style={{width: '700px', height: '150px', marginBottom: '20px'}}>
+                <div key={truck.id} className="card-content">
                         <TruckIcon />
                         <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
                         {truck.verified ?
@@ -48,11 +55,11 @@ const FoodTrucks = () => {
                             </>
                         }
                         <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
-                    </div>
                 </div>
-            )) : <p>No trucks available.</p>}  {/* Show message if no trucks are found */}
-
-            <Link className="button" to={'/business/AddTruck'}>Add a new food truck</Link>
+                </mdui-card>
+            )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
+            </div>
+            <mdui-button variant="tonal" onClick={navigateToPage}>Add a Food Truck</mdui-button>
         </div>
     );
 };
