@@ -5,11 +5,16 @@ import TruckIcon from './FoodTruckIcon';
 import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';  // Importing the custom hook
-
+import { useNavigate } from 'react-router-dom';
 import 'mdui/components/button.js';
 
 const FoodTrucks = () => {
+    const navigate = useNavigate();
     const { trucks, loading } = useFoodTrucks();
+
+    const navigateToPage = () => {
+        navigate('/business/AddTruck');
+    };
 
     if (loading){ return (<div className="Businesses">
     <header className="Business_header">
@@ -30,33 +35,31 @@ const FoodTrucks = () => {
                 </p>
             </header>
             <div className="truck-container">
-                {trucks.length > 0 ? trucks.map((truck) => (
-                    <mdui-card style={{width: '700px', height: '150px', marginBottom: '20px'}}>
-                        <div key={truck.id} className="card-content">
-                            <TruckIcon />
-                            <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
-                            {truck.verified ?
-                                <>
-                                    <div className="verified">Verified</div>
-                                    <div className='check_circle'>
-                                        <CheckCircleIcon />
-                                    </div>
-                                </> :
-                                <>
-                                    <div className="waiting">Waiting for Verification</div>
-                                    <div className='clock_icon'>
-                                        <ClockIcon />
-                                    </div>
-                                </>
-                            }
-                            <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
-                        </div>
-
-                    </mdui-card>
-                    
-                )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
+            {trucks.length > 0 ? trucks.map((truck) => (
+                <mdui-card style={{width: '700px', height: '150px', marginBottom: '20px'}}>
+                <div key={truck.id} className="card-content">
+                        <TruckIcon />
+                        <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
+                        {truck.verified ?
+                            <>
+                                <div className="verified">Verified</div>
+                                <div className='check_circle'>
+                                    <CheckCircleIcon />
+                                </div>
+                            </> :
+                            <>
+                                <div className="waiting">Waiting for Verification</div>
+                                <div className='clock_icon'>
+                                    <ClockIcon />
+                                </div>
+                            </>
+                        }
+                        <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
+                </div>
+                </mdui-card>
+            )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
             </div>
-            <mdui-button variant="tonal">Add a Food Truck</mdui-button>
+            <mdui-button variant="tonal" onClick={navigateToPage}>Add a Food Truck</mdui-button>
         </div>
     );
 };

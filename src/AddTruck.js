@@ -10,9 +10,7 @@ import './loadingSpinner.css';
 import 'mdui/components/card.js';
 function UpdateInfo() {
   const navigate = useNavigate();
-  const { truckId } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedFoodType, setSelectedFoodType] = useState('');
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
@@ -85,23 +83,8 @@ const handleSubmitLogo = async () => {
 
 
   useEffect(() => {
-    const fetchTruckData = async () => {
-      setIsLoading(true);
-      const docRef = doc(db, "food-trucks", truckId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setTruckBusinessName(data.business_name);
-        setIsOpen(data.open);
-        setSelectedFoodType(data.food_type);
-        setTruckCapacity(data.max_capacity);
-        setIsLoading(false);
-      } else {
-        console.log('No such truck!');
-      }
-    };
-    fetchTruckData();
-  }, [truckId]);
+    
+  }, []);
 
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
@@ -114,18 +97,8 @@ const handleSubmitLogo = async () => {
     // Implement save logic here...
     // Make sure all fields are inputted
     // use the handleSubmit function to submit the photos.
-    if(!foodLicense){
-      alert("No file selected for food license");
-      setIsLoading(false);
-      return;
-    }
-    else if(!menu){
-      alert("No file selected for menu");
-      setIsLoading(false);
-      return;
-    }
-    else if(!logo){
-      alert("No file selected for logo");
+    if(truckBusinessName === ''){
+      alert("Please input business name");
       setIsLoading(false);
       return;
     }
@@ -139,8 +112,18 @@ const handleSubmitLogo = async () => {
       setIsLoading(false);
       return;
     }
-    else if(truckBusinessName === ''){
-      alert("Please input business name");
+    else if(!foodLicense){
+      alert("No file selected for food license");
+      setIsLoading(false);
+      return;
+    }
+    else if(!menu){
+      alert("No file selected for menu");
+      setIsLoading(false);
+      return;
+    }
+    else if(!logo){
+      alert("No file selected for logo");
       setIsLoading(false);
       return;
     }
@@ -166,8 +149,8 @@ const handleSubmitLogo = async () => {
 
   return (
     <div>
-  <h1 className='title'>Update {truckBusinessName}</h1>
-  <div className='Description'>Input the updated information, and then click the "save" button</div>
+  <h1 className='title'>Create Your Truck</h1>
+  <div className='Description'>Input the information, and then click the "create" button</div>
 
   <div className='cate'>
     <p className='inputlabel'>Name of Your Truck</p>
@@ -194,14 +177,6 @@ const handleSubmitLogo = async () => {
     />
   </div>
 
-  <div className='cate'>
-    <p className='inputlabel'>Is the truck open?</p>
-    <input 
-      type="checkbox" 
-      checked={isOpen} 
-      onChange={(e) => setIsOpen(e.target.checked)} 
-    />
-  </div>
 
   <div className='cate'>
     <p className='inputlabel'>Food License</p>
@@ -222,7 +197,7 @@ const handleSubmitLogo = async () => {
 
   <div className='buttonContainer'>
     <button className='backButton' onClick={() => window.history.back()}>Back</button>
-    <button className='saveButton' onClick={handleSave}>Save</button>
+    <button className='saveButton' onClick={handleSave}>Create</button>
   </div>
 </div>
 

@@ -114,3 +114,15 @@ text-decoration: underline;
 .clock_icon {
   color: #f59e0b; /* Orange color for 'Waiting for Verification' icon */
 }
+
+/* Add general icon class size */
+.icon {
+  width: 24px; 
+  height: 24px; 
+}
+
+/* If icons are inside specific classes, you can target them directly */
+.truck_icon, .check_circle, .clock_icon {
+  width: 24px;
+  height: 24px;
+}
