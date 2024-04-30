@@ -31,7 +31,7 @@ function UpdateInfo() {
         setTruckBusinessName(data.business_name);
         setIsOpen(data.open);
         setSelectedFoodType(data.food_type);
-        setTruckCapacity(data.max_capacity);
+        setTruckCapacity(data.max_capacity.toString());
         setIsLoading(false);
       } else {
         console.log('No such truck!');
@@ -40,9 +40,19 @@ function UpdateInfo() {
     fetchTruckData();
   }, [truckId]);
 
+  const handleFoodLicenseChange = (event) => {
+    setFoodLicense(event.target.files[0]); // Capture the first file
+};
+const handleMenuChange = (event) => {
+  setMenu(event.target.files[0]); // Capture the first file
+};
+const handleLogoChange = (event) => {
+setLogo(event.target.files[0]); // Capture the first file
+};
+
   const handleFileChange = async (file, path) => {
     if (!file) {
-      return;
+      return null;
     }
     const storageRef = ref(storage, `uploads/${path}/${file.name}`);
     try {
@@ -57,59 +67,29 @@ function UpdateInfo() {
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
-  const handleFoodLicenseChange = (event) => {
-    setFoodLicense(event.target.files[0]); // Capture the first file
-};
-const handleMenuChange = (event) => {
-  setMenu(event.target.files[0]); // Capture the first file
-};
-const handleLogoChange = (event) => {
-setLogo(event.target.files[0]); // Capture the first file
-};
 
   const handleSave = async () => {
-    if (!truckBusinessName || !selectedFoodType || !truckCapacity || !foodLicense || !menu || !logo) {
-      alert("All fields must be filled, including uploading all files.");
-      setIsLoading(false);
-      return;
-    }
-
     setIsLoading(true);
-    const licenseUrl = await handleFileChange(foodLicense, 'licenses');
-    const menuUrl = await handleFileChange(menu, 'menus');
-    const logoUrl = await handleFileChange(logo, 'logos');
-    const maxCapacityInt = parseInt(truckCapacity);
+    const updates = {};
+    if (truckBusinessName) updates.business_name = truckBusinessName;
+    if (selectedFoodType) updates.food_type = selectedFoodType;
+    if (truckCapacity) updates.max_capacity = parseInt(truckCapacity);
+    if (isOpen !== undefined) updates.open = isOpen;
 
-    if (!licenseUrl || !menuUrl || !logoUrl || isNaN(maxCapacityInt)) {
-      alert("Failed to update all data correctly.");
-      setIsLoading(false);
-      return;
-    }
+    const licenseUrl = foodLicense ? await handleFileChange(foodLicense, 'licenses') : undefined;
+    const menuUrl = menu ? await handleFileChange(menu, 'menus') : undefined;
+    const logoUrl = logo ? await handleFileChange(logo, 'logos') : undefined;
+
+    if (licenseUrl) updates.license = licenseUrl;
+    if (menuUrl) updates.menu = menuUrl;
+    if (logoUrl) updates.logo = logoUrl;
 
     try {
-      // Update main truck entry
       const truckRef = doc(db, "food-trucks", truckId);
-      await updateDoc(truckRef, {
-        business_name: truckBusinessName,
-        food_type: selectedFoodType,
-        max_capacity: maxCapacityInt,
-        license: licenseUrl,
-        menu: menuUrl,
-        logo: logoUrl,
-        open: isOpen,
-      });
+      await updateDoc(truckRef, updates);
 
-      // Update user-specific truck entry
       const userTruckRef = doc(db, "userToTrucks", currentUser.uid, "listOfTrucks", truckId);
-      await updateDoc(userTruckRef, {
-        business_name: truckBusinessName,
-        food_type: selectedFoodType,
-        max_capacity: maxCapacityInt,
-        license: licenseUrl,
-        menu: menuUrl,
-        logo: logoUrl,
-        open: isOpen,
-      });
+      await updateDoc(userTruckRef, updates);
 
       alert("Truck updated successfully!");
       navigate('/business/list');
@@ -120,7 +100,6 @@ setLogo(event.target.files[0]); // Capture the first file
       setIsLoading(false);
     }
   };
-
   if (isLoading) {
     return (
       <div className="spinner-container">
@@ -134,6 +113,9 @@ setLogo(event.target.files[0]); // Capture the first file
     <div>
       <h1 className='title'>Update {truckBusinessName}</h1>
       <div className='Description'>Input the updated information, and then click the "save" button</div>
+      <div className='Description'>Only upload a single file for each field</div>
+      <div className='Description'>If you don't want to update a field, leave it blank</div>
+
 
       <div className='cate'>
         <p className='inputlabel'>Name of Your Truck</p>
