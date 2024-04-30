@@ -97,18 +97,8 @@ const handleSubmitLogo = async () => {
     // Implement save logic here...
     // Make sure all fields are inputted
     // use the handleSubmit function to submit the photos.
-    if(!foodLicense){
-      alert("No file selected for food license");
-      setIsLoading(false);
-      return;
-    }
-    else if(!menu){
-      alert("No file selected for menu");
-      setIsLoading(false);
-      return;
-    }
-    else if(!logo){
-      alert("No file selected for logo");
+    if(truckBusinessName === ''){
+      alert("Please input business name");
       setIsLoading(false);
       return;
     }
@@ -122,8 +112,18 @@ const handleSubmitLogo = async () => {
       setIsLoading(false);
       return;
     }
-    else if(truckBusinessName === ''){
-      alert("Please input business name");
+    else if(!foodLicense){
+      alert("No file selected for food license");
+      setIsLoading(false);
+      return;
+    }
+    else if(!menu){
+      alert("No file selected for menu");
+      setIsLoading(false);
+      return;
+    }
+    else if(!logo){
+      alert("No file selected for logo");
       setIsLoading(false);
       return;
     }
