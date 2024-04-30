@@ -117,11 +117,43 @@ const handleSubmitLogo = async () => {
     // Implement save logic here...
     // Make sure all fields are inputted
     // use the handleSubmit function to submit the photos.
-    await handleSubmitFoodLicense();
-    await handleSubmitMenu();
-    await handleSubmitLogo();
-    setIsLoading(false);
-    navigate('/business/list')
+    if(!foodLicense){
+      alert("No file selected for food license");
+      setIsLoading(false);
+      return;
+    }
+    else if(!menu){
+      alert("No file selected for menu");
+      setIsLoading(false);
+      return;
+    }
+    else if(!logo){
+      alert("No file selected for logo");
+      setIsLoading(false);
+      return;
+    }
+    else if(selectedFoodType == ''){
+      alert("Please select food type");
+      setIsLoading(false);
+      return;
+    }
+    else if(truckCapacity == ''){
+      alert("Please input max capacity");
+      setIsLoading(false);
+      return;
+    }
+    else if(truckBusinessName == ''){
+      alert("Please input business name");
+      setIsLoading(false);
+      return;
+    }
+    else{ // if all fields are inputted, upload/update the information to firebase
+      await handleSubmitFoodLicense();
+      await handleSubmitMenu();
+      await handleSubmitLogo();
+      setIsLoading(false);
+      navigate('/business/list');
+    }
   };
 
   const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
