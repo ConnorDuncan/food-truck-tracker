@@ -24,11 +24,14 @@
   color: gray;
 }
 
+.Business_header {
+  margin-bottom: 30px; /* Adds space below the header */
+}
+
 .truck-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
-
+  align-items: center;
 }
 
 .card-content {
@@ -37,92 +40,79 @@
   justify-content: space-between;
   margin-left: 5%;
   margin-right: 5%;
-  height: 100%; /* Ensure the card fills its parent container */
-  }
-  
-  .card-content h2 {
+  height: 100%;
+}
+
+.card-content h2 {
   font-size: 1.25rem;
-
-  }
-  
-
+}
 
 .verified, .waiting {
-margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .check_circle, .clock_icon {
-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .card_content a {
-margin-left: 0.5rem;
-white-space: nowrap;
+  margin-left: 0.5rem;
+  white-space: nowrap;
 }
 
 .status-text {
-display: flex;
-align-items: center;
-gap: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .status-icon {
-height: 1.25rem;
-width: 1.25rem;
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
-
 a {
-text-decoration: none;
-color: black;
-transition: color 0.3s;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s;
 }
 
 a:hover {
-text-decoration: underline;
+  text-decoration: underline;
 }
 
 @media (max-width: 640px) {
-.card {
-  max-width: none;
+  .card {
+    max-width: none;
+  }
+
+  .card_content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card_content a {
+    margin-top: 0.5rem;
+  }
 }
 
-.card_content {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.card_content a {
-  margin-top: 0.5rem;
-}
-}
-
-/* Icon colors */
 .verified {
-  color: #34d399; /* Green color for 'Verified' */
+  color: #34d399; /* Green for 'Verified' */
 }
 
 .waiting {
-  color: #f59e0b; /* Orange color for 'Waiting for Verification' */
+  color: #f59e0b; /* Orange for 'Waiting for Verification' */
 }
 
-/* Specific icon colors */
 .check_circle {
-  color: #34d399; /* Green color for 'Verified' icon */
+  color: #34d399; /* Green for 'Verified' icon */
 }
 
 .clock_icon {
-  color: #f59e0b; /* Orange color for 'Waiting for Verification' icon */
+  color: #f59e0b; /* Orange for 'Waiting for Verification' icon */
 }
 
-/* Add general icon class size */
-.icon {
-  width: 24px; 
-  height: 24px; 
-}
-
-/* If icons are inside specific classes, you can target them directly */
-.truck_icon, .check_circle, .clock_icon {
+.icon, .truck_icon, .check_circle, .clock_icon {
   width: 24px;
   height: 24px;
 }
