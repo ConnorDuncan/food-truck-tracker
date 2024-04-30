@@ -1,10 +1,9 @@
-/* LoadingSpinner.css */
 .spinner-container {
     display: flex;
+    flex-direction: column; /* Align spinner and text vertically */
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin-top: -5vh; /* Pull up the spinner by 5% of the viewport height */
 }
 
 .spinner {
@@ -14,6 +13,14 @@
     border-radius: 50%;
     border-left-color: #09f;
     animation: spin 1s ease infinite;
+    margin-bottom: 20px; /* Adds space between the spinner and the text */
+}
+
+.loading-text {
+    color: #666; /* Subtle text color, adjust as needed */
+    text-align: center;
+    max-width: 80%; /* Ensures the text doesn't stretch too wide on larger screens */
+    font-size: 18px; /* Readable text size, adjust based on your design */
 }
 
 @keyframes spin {

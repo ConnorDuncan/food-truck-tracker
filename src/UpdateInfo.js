@@ -16,8 +16,6 @@ function UpdateInfo() {
   const [truckBusinessName, setTruckBusinessName] = useState('');
   const [foodLicense, setFoodLicense] = useState(null);
   const [menu, setMenu] = useState(null);
-  const [file, setFile] = useState(null);
-  const [downloadURL, setDownloadURL] = useState(null);
   const [logo, setLogo] = useState(null);
 
   const handleFoodLicenseChange = (event) => {
@@ -40,12 +38,11 @@ const handleLogoChange = (event) => {
     try {
         const snapshot = await uploadBytes(storageRef, foodLicense);
         const url = await getDownloadURL(snapshot.ref);
-        setDownloadURL(url); // Store the download URL in state
         console.log('File uploaded successfully:', url);
-        alert('File uploaded successfully: ' + url);
+        return url;
     } catch (error) {
         console.error("Error uploading file: ", error);
-        alert('Error uploading file: ' + error.message);
+        return null;
     }
 };
 const handleSubmitMenu = async () => {
@@ -58,12 +55,11 @@ const handleSubmitMenu = async () => {
   try {
       const snapshot = await uploadBytes(storageRef, menu);
       const url = await getDownloadURL(snapshot.ref);
-      setDownloadURL(url); // Store the download URL in state
       console.log('File uploaded successfully:', url);
-      alert('File uploaded successfully: ' + url);
+      return url;
   } catch (error) {
       console.error("Error uploading file: ", error);
-      alert('Error uploading file: ' + error.message);
+      return null;
   }
 };
 
@@ -77,12 +73,11 @@ const handleSubmitLogo = async () => {
   try {
       const snapshot = await uploadBytes(storageRef, logo);
       const url = await getDownloadURL(snapshot.ref);
-      setDownloadURL(url); // Store the download URL in state
       console.log('File uploaded successfully:', url);
-      alert('File uploaded successfully: ' + url);
+      return url;
   } catch (error) {
       console.error("Error uploading file: ", error);
-      alert('Error uploading file: ' + error.message);
+      return null;
   }
 };
 
@@ -132,17 +127,17 @@ const handleSubmitLogo = async () => {
       setIsLoading(false);
       return;
     }
-    else if(selectedFoodType == ''){
+    else if(selectedFoodType === ''){
       alert("Please select food type");
       setIsLoading(false);
       return;
     }
-    else if(truckCapacity == ''){
+    else if(truckCapacity === ''){
       alert("Please input max capacity");
       setIsLoading(false);
       return;
     }
-    else if(truckBusinessName == ''){
+    else if(truckBusinessName === ''){
       alert("Please input business name");
       setIsLoading(false);
       return;
@@ -161,8 +156,9 @@ const handleSubmitLogo = async () => {
   if (isLoading) {
     return (
       <div className="spinner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <div className="spinner"></div>
-      </div>
+            <div className="spinner"></div>
+            <p className="loading-text">Loading, please do not close the page, refresh the page, or click the back button.</p>
+        </div>
     );
   }
 
