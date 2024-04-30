@@ -6,6 +6,8 @@ import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';  // Importing the custom hook
 
+import 'mdui/components/button.js';
+
 const FoodTrucks = () => {
     const { trucks, loading } = useFoodTrucks();
 
@@ -50,9 +52,9 @@ const FoodTrucks = () => {
                         <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
                     </div>
                 </div>
-            )) : <p>No trucks available.</p>}  {/* Show message if no trucks are found */}
+            )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
 
-            <button className="button">Add a new food truck</button>
+            <mdui-button variant="tonal">Add a Food Truck</mdui-button>
         </div>
     );
 };
