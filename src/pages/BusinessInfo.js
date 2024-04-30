@@ -79,8 +79,8 @@ function BusinessInfo() {
         
         {!center && (
         <>  
-            <div style={{position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)'}}>
-                <h1>Just a moment...</h1>
+            <div style={{position: 'absolute', top: '35%', left: '70%', transform: 'translate(-50%, -50%)'}}>
+                <h2>Just a moment...</h2>
                 <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>
             </div>
         </>
