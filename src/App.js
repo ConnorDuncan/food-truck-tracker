@@ -10,6 +10,7 @@ import Protected from './components/Protected.jsx';
 import NotFound from './pages/FourOhFour.js';
 import FoodTrucks from './FoodTrucks.js';  // Make sure this is the component, not useFoodTrucks hook
 import UpdateInfo from './UpdateInfo.js';
+import AddTruck from './AddTruck.js';
 
 function App() {
   // const ref = firebase.firestore().collection("food-trucks")
@@ -40,6 +41,9 @@ function App() {
               <Route index element={<UpdateInfo />} />
             </Route>
             <Route path="*" element={<NotFound />} />
+            <Route path='/business/AddTruck' element={<Protected />}>
+              <Route index element={<AddTruck />} />
+            </Route>
           </Routes>
         </Router>
       </AuthProvider>

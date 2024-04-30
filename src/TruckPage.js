@@ -49,7 +49,9 @@ function TruckPage() {
         </div>
       </div>
 
-      <button class="button">Add a new food truck</button>
+      <Link to='/business/AddTruck'>
+         <button>Add a new food truck</button>
+      </Link>
       
 
       </div>

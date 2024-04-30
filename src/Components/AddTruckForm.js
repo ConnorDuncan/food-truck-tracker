@@ -54,15 +54,15 @@ const AddTruckForm = () => {
     // Add form submission logic here
   };
 
-  // connect to Firebase DB 
-  function createDoc(newDataObj) {
-    console.log("MADE!");
-    ref.doc().set(newDataObj).catch((err) => {
-      alert(err)
-      console.error(err);
-    })
+  // // connect to Firebase DB 
+  // function createDoc(newDataObj) {
+  //   console.log("MADE!");
+  //   ref.doc().set(newDataObj).catch((err) => {
+  //     alert(err)
+  //     console.error(err);
+  //   })
     
-  }
+  // }
 
   return (
     <div className="Businesses">
@@ -126,7 +126,7 @@ const AddTruckForm = () => {
       </form>
       <button 
       class="button"
-      onClick={()=>{createDoc({businessName, location, foodType, maxCapacity, menu, license})}}
+      // onClick={()=>{createDoc({businessName, location, foodType, maxCapacity, menu, license})}}
       >
         Submit
       </button>
