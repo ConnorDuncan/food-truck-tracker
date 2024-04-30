@@ -18,6 +18,9 @@ function UpdateInfo() {
   const [selectedFoodType, setSelectedFoodType] = useState('');
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
+  const [foodLicenseUrl, setFoodLicenseUrl] = useState('');
+  const [menuUrl, setMenuUrl] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
   const [foodLicense, setFoodLicense] = useState(null);
   const [menu, setMenu] = useState(null);
   const [logo, setLogo] = useState(null);
@@ -31,7 +34,10 @@ function UpdateInfo() {
         setTruckBusinessName(data.business_name);
         setIsOpen(data.open);
         setSelectedFoodType(data.food_type);
-        setTruckCapacity(data.max_capacity.toString());
+        setTruckCapacity(data.max_capacity);
+        setFoodLicenseUrl(data.license);
+        setMenuUrl(data.menu);
+        setLogoUrl(data.logo);
         setIsLoading(false);
       } else {
         console.log('No such truck!');
@@ -40,49 +46,41 @@ function UpdateInfo() {
     fetchTruckData();
   }, [truckId]);
 
-  const handleFoodLicenseChange = (event) => {
-    setFoodLicense(event.target.files[0]); // Capture the first file
-};
-const handleMenuChange = (event) => {
-  setMenu(event.target.files[0]); // Capture the first file
-};
-const handleLogoChange = (event) => {
-setLogo(event.target.files[0]); // Capture the first file
-};
-
-  const handleFileChange = async (file, path) => {
-    if (!file) {
-      return null;
-    }
+  const handleFileChange = async (file, path, setter) => {
+    if (!file) return;
     const storageRef = ref(storage, `uploads/${path}/${file.name}`);
     try {
       const snapshot = await uploadBytes(storageRef, file);
-      return await getDownloadURL(snapshot.ref);
+      const url = await getDownloadURL(snapshot.ref);
+      setter(url);
+      return url;
     } catch (error) {
       console.error("Error uploading file: ", error);
+      alert("Failed to upload file");
       return null;
     }
   };
-
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
-
   const handleSave = async () => {
     setIsLoading(true);
-    const updates = {};
+    let updates = {};
+
     if (truckBusinessName) updates.business_name = truckBusinessName;
     if (selectedFoodType) updates.food_type = selectedFoodType;
-    if (truckCapacity) updates.max_capacity = parseInt(truckCapacity);
+    if (truckCapacity) updates.max_capacity = parseInt(truckCapacity, 10);
     if (isOpen !== undefined) updates.open = isOpen;
 
-    const licenseUrl = foodLicense ? await handleFileChange(foodLicense, 'licenses') : undefined;
-    const menuUrl = menu ? await handleFileChange(menu, 'menus') : undefined;
-    const logoUrl = logo ? await handleFileChange(logo, 'logos') : undefined;
-
-    if (licenseUrl) updates.license = licenseUrl;
-    if (menuUrl) updates.menu = menuUrl;
-    if (logoUrl) updates.logo = logoUrl;
+    if (foodLicense) {
+      updates.license = await handleFileChange(foodLicense, 'licenses', setFoodLicenseUrl);
+    }
+    if (menu) {
+      updates.menu = await handleFileChange(menu, 'menus', setMenuUrl);
+    }
+    if (logo) {
+      updates.logo = await handleFileChange(logo, 'logos', setLogoUrl);
+    }
 
     try {
       const truckRef = doc(db, "food-trucks", truckId);
@@ -100,6 +98,7 @@ setLogo(event.target.files[0]); // Capture the first file
       setIsLoading(false);
     }
   };
+
   if (isLoading) {
     return (
       <div className="spinner-container">
@@ -115,7 +114,6 @@ setLogo(event.target.files[0]); // Capture the first file
       <div className='Description'>Input the updated information, and then click the "save" button</div>
       <div className='Description'>Only upload a single file for each field</div>
       <div className='Description'>If you don't want to update a field, leave it blank</div>
-
 
       <div className='cate'>
         <p className='inputlabel'>Name of Your Truck</p>
@@ -139,16 +137,16 @@ setLogo(event.target.files[0]); // Capture the first file
         <input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.target.checked)} />
       </div>
       <div className='cate'>
-        <p className='inputlabel'>Food License</p>
-        <input type="file" onChange={handleFoodLicenseChange} />
+        {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Food License</a>}
+        <input className='fileUpload' type="file" onChange={(e) => setFoodLicense(e.target.files[0])} />
       </div>
       <div className='cate'>
-        <p className='inputlabel'>Menu</p>
-        <input type="file" onChange={handleMenuChange} />
+        {menuUrl && <a href={menuUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Menu</a>}
+        <input className='fileUpload' type="file" onChange={(e) => setMenu(e.target.files[0])} />
       </div>
       <div className='cate'>
-        <p className='inputlabel'>Logo</p>
-        <input type="file" onChange={handleLogoChange} />
+        {logoUrl && <a href={logoUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Logo</a>}
+        <input className='fileUpload' type="file" onChange={(e) => setLogo(e.target.files[0])} />
       </div>
       <div className='buttonContainer'>
         <button className='backButton' onClick={() => window.history.back()}>Back</button>
