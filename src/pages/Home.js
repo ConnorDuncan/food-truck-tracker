@@ -93,6 +93,7 @@ const Home = () => {
                 Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
             </div>
 
+
             <div className='faq'>
                 <h2>Frequently Asked Questions</h2>
                 <ul>
