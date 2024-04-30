@@ -24,34 +24,28 @@
   color: gray;
 }
 
-/* Styles for Card component */
-.card {
-max-width: 350px;
-width: 100%;
-margin: 20px auto;
-border-radius: 0.375rem;
-border: 1px solid #e2e8f0;
-background-color: #ffffff;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-display: flex;
-flex-direction: column;
-gap: 0.75rem;
-padding: 1.5rem;
-align-items: stretch;
-margin-bottom: 2rem;
+.truck-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+
 }
 
-.card_content {
-display: flex;
-align-items: center;
-justify-content: start;
-gap: 1rem;
-}
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  height: 100%; /* Ensure the card fills its parent container */
+  }
+  
+  .card-content h2 {
+  font-size: 1.25rem;
 
-.card_content h2 {
-font-size: 1.25rem;
-margin-right: auto;
-}
+  }
+  
+
 
 .verified, .waiting {
 margin-right: 0.5rem;
@@ -77,25 +71,6 @@ height: 1.25rem;
 width: 1.25rem;
 }
 
-.button {
-display: inline-block;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-background-color: #1fa781;
-color: white;
-text-align: center;
-font-size: 16px;
-cursor: pointer;
-text-decoration: none;
-transition: background-color 0.3s ease;
-align-self: center;
-margin-top: 1rem;
-}
-
-.button:hover {
-background-color: #1667a5;
-}
 
 a {
 text-decoration: none;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import TruckPage from './TruckPage';
+import FoodTrucks from './FoodTrucks';
 import reportWebVitals from './reportWebVitals';
 import UpdateInfo from './UpdateInfo'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
