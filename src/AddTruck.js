@@ -17,6 +17,7 @@ function AddTruck() {
   const handleCreation = async () => {
     console.log('Create button clicked');
     // Implement save logic here...
+    // Make sure to check all fields are inputted
   };
 
   const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
