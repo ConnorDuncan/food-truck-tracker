@@ -4,6 +4,9 @@ import './UpdateInfo.css';
 import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
 import { db } from './firebase';
 
+//import MDUI icon
+import 'mdui/components/card.js';
+
 function UpdateInfo() {
   const { truckId } = useParams();
   const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './TruckPage.css';
+import './FoodTrucks.css';
 import TruckIcon from './FoodTruckIcon';
 import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
@@ -29,31 +29,33 @@ const FoodTrucks = () => {
                     Here are the trucks you own, including those that are waiting for verification
                 </p>
             </header>
-            
-            {trucks.length > 0 ? trucks.map((truck) => (
-                <div key={truck.id} className="card">
-                    <div className='card_content'>
-                        <TruckIcon />
-                        <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
-                        {truck.verified ?
-                            <>
-                                <div className="verified">Verified</div>
-                                <div className='check_circle'>
-                                    <CheckCircleIcon />
-                                </div>
-                            </> :
-                            <>
-                                <div className="waiting">Waiting for Verification</div>
-                                <div className='clock_icon'>
-                                    <ClockIcon />
-                                </div>
-                            </>
-                        }
-                        <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
-                    </div>
-                </div>
-            )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
+            <div className="truck-container">
+                {trucks.length > 0 ? trucks.map((truck) => (
+                    <mdui-card style={{width: '700px', height: '150px', marginBottom: '20px'}}>
+                        <div key={truck.id} className="card-content">
+                            <TruckIcon />
+                            <h2>{truck.business_name || 'Unnamed Truck'}</h2> {/* Use business_name field */}
+                            {truck.verified ?
+                                <>
+                                    <div className="verified">Verified</div>
+                                    <div className='check_circle'>
+                                        <CheckCircleIcon />
+                                    </div>
+                                </> :
+                                <>
+                                    <div className="waiting">Waiting for Verification</div>
+                                    <div className='clock_icon'>
+                                        <ClockIcon />
+                                    </div>
+                                </>
+                            }
+                            <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
+                        </div>
 
+                    </mdui-card>
+                    
+                )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
+            </div>
             <mdui-button variant="tonal">Add a Food Truck</mdui-button>
         </div>
     );
