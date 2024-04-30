@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
 import { storage } from './firebase';
+import './loadingSpinner.css';
 function UpdateInfo() {
   const navigate = useNavigate();
   const { truckId } = useParams();
@@ -126,7 +127,11 @@ const handleSubmitLogo = async () => {
   const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
 
   if (isLoading) {
-    return null;
+    return (
+      <div className="spinner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <div className="spinner"></div>
+      </div>
+    );
   }
 
   return (
