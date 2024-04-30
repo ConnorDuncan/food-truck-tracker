@@ -1,5 +1,8 @@
 
-
+:root {
+  --mdui-color-primary-light: 103, 80, 164;
+  --mdui-color-primary-dark: 208, 188, 255;
+}
 
 .home-page {
     text-align: center;
@@ -86,4 +89,10 @@
   .faq p {
     font-size: 16px;
     color: #555;
+  }
+
+  .my-custom-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    
   }

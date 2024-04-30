@@ -5,6 +5,7 @@ import { signOut } from '@firebase/auth';
 import {auth} from './firebase';
 import { useAuth } from './components/AuthContext';
 
+
 const Navbar = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -21,11 +22,11 @@ const Navbar = () => {
           <img src="/logo.png" alt="logo" height="50" /> 
         </a>
         <div>
-          <a href="/" style={{ fontSize: '30px' }} >VendorVista</a>
+          <a href="/" className='WebName' >VendorVista</a>
         </div>
   
         <div className="links">
-          <a href="/home" className="nav-link">Home</a>
+          <a href="/" className="nav-link">Home</a>
           <a href="/map" className="nav-link">Map</a>
           <a href="/home" className="nav-link" onClick={handleLogout}>Logout</a>
         </div>
