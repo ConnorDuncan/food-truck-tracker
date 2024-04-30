@@ -1,32 +1,156 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
-
-function AddTruck() {
-  const [isOpen, setIsOpen] = useState(false);
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
+import { storage } from './firebase';
+import './loadingSpinner.css';
+//import MDUI icon
+import 'mdui/components/card.js';
+function UpdateInfo() {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedFoodType, setSelectedFoodType] = useState('');
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
+  const [foodLicense, setFoodLicense] = useState(null);
+  const [menu, setMenu] = useState(null);
+  const [logo, setLogo] = useState(null);
+
+  const handleFoodLicenseChange = (event) => {
+      setFoodLicense(event.target.files[0]); // Capture the first file
+  };
+  const handleMenuChange = (event) => {
+    setMenu(event.target.files[0]); // Capture the first file
+};
+const handleLogoChange = (event) => {
+  setLogo(event.target.files[0]); // Capture the first file
+};
+
+  const handleSubmitFoodLicense = async () => {
+    if (!foodLicense) {
+        alert('No file selected for food license!');
+        return;
+    }
+
+    const storageRef = ref(storage, `uploads/${foodLicense.name}`);
+    try {
+        const snapshot = await uploadBytes(storageRef, foodLicense);
+        const url = await getDownloadURL(snapshot.ref);
+        console.log('File uploaded successfully:', url);
+        return url;
+    } catch (error) {
+        console.error("Error uploading file: ", error);
+        return null;
+    }
+};
+const handleSubmitMenu = async () => {
+  if (!menu) {
+      alert('No file selected!');
+      return;
+  }
+
+  const storageRef = ref(storage, `uploads/${menu.name}`);
+  try {
+      const snapshot = await uploadBytes(storageRef, menu);
+      const url = await getDownloadURL(snapshot.ref);
+      console.log('File uploaded successfully:', url);
+      return url;
+  } catch (error) {
+      console.error("Error uploading file: ", error);
+      return null;
+  }
+};
+
+const handleSubmitLogo = async () => {
+  if (!logo) {
+      alert('No file selected!');
+      return;
+  }
+
+  const storageRef = ref(storage, `uploads/${logo.name}`);
+  try {
+      const snapshot = await uploadBytes(storageRef, logo);
+      const url = await getDownloadURL(snapshot.ref);
+      console.log('File uploaded successfully:', url);
+      return url;
+  } catch (error) {
+      console.error("Error uploading file: ", error);
+      return null;
+  }
+};
+
+
+  useEffect(() => {
+    
+  }, []);
 
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
 
-  const handleCreation = async () => {
-    console.log('Create button clicked');
+
+  const handleSave = async () => {
+    console.log('Save button clicked');
+    setIsLoading(true);
     // Implement save logic here...
-    // Make sure to check all fields are inputted
+    // Make sure all fields are inputted
+    // use the handleSubmit function to submit the photos.
+    if(!foodLicense){
+      alert("No file selected for food license");
+      setIsLoading(false);
+      return;
+    }
+    else if(!menu){
+      alert("No file selected for menu");
+      setIsLoading(false);
+      return;
+    }
+    else if(!logo){
+      alert("No file selected for logo");
+      setIsLoading(false);
+      return;
+    }
+    else if(selectedFoodType === ''){
+      alert("Please select food type");
+      setIsLoading(false);
+      return;
+    }
+    else if(truckCapacity === ''){
+      alert("Please input max capacity");
+      setIsLoading(false);
+      return;
+    }
+    else if(truckBusinessName === ''){
+      alert("Please input business name");
+      setIsLoading(false);
+      return;
+    }
+    else{ // if all fields are inputted, upload/update the information to firebase
+      await handleSubmitFoodLicense();
+      await handleSubmitMenu();
+      await handleSubmitLogo();
+      setIsLoading(false);
+      navigate('/business/list');
+    }
   };
 
   const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
 
+  if (isLoading) {
+    return (
+      <div className="spinner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div className="spinner"></div>
+            <p className="loading-text">Loading, please do not close the page, refresh the page, or click the back button.</p>
+        </div>
+    );
+  }
 
   return (
     <div>
   <h1 className='title'>Create Your Truck</h1>
-  <div className='Description'>Input the updated information, and then click the "create" button</div>
+  <div className='Description'>Input the information, and then click the "create" button</div>
 
   <div className='cate'>
     <p className='inputlabel'>Name of Your Truck</p>
@@ -53,22 +177,31 @@ function AddTruck() {
     />
   </div>
 
+
   <div className='cate'>
-    <p className='inputlabel'>Is the truck open?</p>
-    <input 
-      type="checkbox" 
-      checked={isOpen} 
-      onChange={(e) => setIsOpen(e.target.checked)} 
-    />
+    <p className='inputlabel'>Food License</p>
+    <input type="file" onChange={handleFoodLicenseChange} />
   </div>
+
+  <div className='cate'>
+    <p className='inputlabel'>Menu</p>
+    <input type="file" onChange={handleMenuChange} />
+  </div>
+
+  <div className='cate'>
+    <p className='inputlabel'>Logo</p>
+    <input type="file" onChange={handleLogoChange} />
+  </div>
+
   
+
   <div className='buttonContainer'>
     <button className='backButton' onClick={() => window.history.back()}>Back</button>
-    <button className='saveButton' onClick={handleCreation}>Create</button>
+    <button className='saveButton' onClick={handleSave}>Create</button>
   </div>
 </div>
 
   );
 }
 
-export default AddTruck;
+export default UpdateInfo;
