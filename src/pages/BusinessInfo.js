@@ -77,7 +77,7 @@ function BusinessInfo() {
 
         </mdui-card>
         
-        {!center && (
+        {/* {!center && (
         <>  
             <div style={{position: 'absolute', top: '35%', left: '70%', transform: 'translate(-50%, -50%)'}}>
                 <h2>Just a moment...</h2>
@@ -105,14 +105,48 @@ function BusinessInfo() {
                 />
             </GoogleMap>
         </div>
-        }
+        } */}
+
+      <div style={{ width: "50%", borderRadius: "10%", overflow: "hidden" }}>
+        {!center && (
+          <div style={{ position: "relative", height: "35vh" }}>
+          <h2 style={{ position: "absolute", top: "40%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            Just a moment...
+          </h2>
+          <mdui-circular-progress style={{ position: "absolute", top: "60%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                </div>
+              )}
+              {center && (
+          <GoogleMap
+            apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
+            defaultCenter={center}
+            defaultZoom={13}
+            mapMinHeight="35vh"
+            options={{ minZoom: 17 }}
+          >
+            <img
+              lat={center.lat}
+              lng={center.lng}
+              href="/"
+              alt="logo"
+              src="/logo.png"
+              height="50"
+            />
+          </GoogleMap>
+        )}
+      </div>
 
     </div>
+        <div className='currRate'>
+          Current Rate is: 4.8/5   Based on 99999 reviews
+        </div>
 
+        <Stars className='star'/>
         <div className="horizontal-container">
 
         <mdui-card variant="elevated" style={{width: '600px', height: '250px'}}>
 
+            
 
             <h2 style={{ marginLeft: '10px'}}>Schedule</h2>
 
@@ -126,6 +160,8 @@ function BusinessInfo() {
               <CalendarIcon className="CalendarIcon" />
             </div>
 
+
+        
 
           <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
             <div>(012) 345-6789</div>
@@ -172,11 +208,7 @@ function BusinessInfo() {
           </div>
         </div>
 
-          <div className='currRate'>
-          Current Rate is: 4.8/5   Based on 99999 reviews
-        </div>
-
-        <Stars className='star'/>
+        
         
 
         
