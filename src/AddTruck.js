@@ -98,9 +98,6 @@ const handleSubmitLogo = async () => {
   const handleSave = async () => {
     console.log('Save button clicked');
     setIsLoading(true);
-    // Implement save logic here...
-    // Make sure all fields are inputted
-    // use the handleSubmit function to submit the photos.
     if(truckBusinessName === ''){
       alert("Please input business name");
       setIsLoading(false);
@@ -133,8 +130,10 @@ const handleSubmitLogo = async () => {
     }
     else{ // if all fields are inputted, upload/update the information to firebase
       try{
-        const newTruckRefTwo = doc(collection(db, "food-trucks"));
-        console.log("Creating new document reference: ",newTruckRefTwo.id)
+        const newTruckRef = doc(collection(db, "food-trucks"));
+        const truckId = newTruckRef.id;
+
+        console.log("Creating new document reference: ",truckId);
       const foodLicenseURL = await handleSubmitFoodLicense();
       const menuURL = await handleSubmitMenu();
       const logoURL = await handleSubmitLogo();
@@ -152,7 +151,7 @@ const handleSubmitLogo = async () => {
       }
 
 
-      await setDoc(newTruckRefTwo, {
+      await setDoc(newTruckRef, {
         business_name: truckBusinessName,
         food_type: selectedFoodType,
         max_capacity: max_capacity_int,
@@ -162,18 +161,12 @@ const handleSubmitLogo = async () => {
         open: false,
         verified: false
       });
-      const userRef = doc(db, "userToTrucks", currentUser.uid);
-        const userSnap = await getDoc(userRef);
+      const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
+      const userTruckRef = doc(userTrucksRef, truckId);
+        
   
         // Check if the user document exists
-        if (!userSnap.exists()) {
-          await setDoc(userRef, { numTrucks: 1 }); // If not, create it and initialize numTrucks
-        }
-  
-        const listOfTrucksRef = collection(userRef, "listOfTrucks");
-        const newTruckRef = doc(listOfTrucksRef); // Create a new document reference in the listOfTrucks collection
-  
-        await setDoc(newTruckRef, {
+        await setDoc(userTruckRef, {
           business_name: truckBusinessName,
           food_type: selectedFoodType,
           max_capacity: max_capacity_int,
@@ -184,8 +177,13 @@ const handleSubmitLogo = async () => {
           verified: false
         });
   
-        if (userSnap.exists()) {
-          await updateDoc(userRef, { numTrucks: userSnap.data().numTrucks + 1 }); // Increment numTrucks
+        const userRef = doc(db, "userToTrucks", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+  
+        if (userSnap.exists() && userSnap.data().numTrucks !== undefined) {
+          await updateDoc(userRef, { numTrucks: userSnap.data().numTrucks + 1 });
+        } else {
+          await setDoc(userRef, { numTrucks: 1 });
         }
   
         console.log('New truck added with ID:', newTruckRef.id);
