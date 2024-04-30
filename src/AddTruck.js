@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
 import { storage } from './firebase';
 import './loadingSpinner.css';
 //import MDUI icon
 import 'mdui/components/card.js';
+import {useAuth} from './components/AuthContext';
 function UpdateInfo() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,13 @@ function UpdateInfo() {
   const [foodLicense, setFoodLicense] = useState(null);
   const [menu, setMenu] = useState(null);
   const [logo, setLogo] = useState(null);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+
+  }, []);
+
+
 
   const handleFoodLicenseChange = (event) => {
       setFoodLicense(event.target.files[0]); // Capture the first file
@@ -82,10 +90,6 @@ const handleSubmitLogo = async () => {
 };
 
 
-  useEffect(() => {
-    
-  }, []);
-
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
@@ -94,9 +98,6 @@ const handleSubmitLogo = async () => {
   const handleSave = async () => {
     console.log('Save button clicked');
     setIsLoading(true);
-    // Implement save logic here...
-    // Make sure all fields are inputted
-    // use the handleSubmit function to submit the photos.
     if(truckBusinessName === ''){
       alert("Please input business name");
       setIsLoading(false);
@@ -128,17 +129,78 @@ const handleSubmitLogo = async () => {
       return;
     }
     else{ // if all fields are inputted, upload/update the information to firebase
-      await handleSubmitFoodLicense();
-      await handleSubmitMenu();
-      await handleSubmitLogo();
+      try{
+        const newTruckRef = doc(collection(db, "food-trucks"));
+        const truckId = newTruckRef.id;
+
+        console.log("Creating new document reference: ",truckId);
+      const foodLicenseURL = await handleSubmitFoodLicense();
+      const menuURL = await handleSubmitMenu();
+      const logoURL = await handleSubmitLogo();
+      const max_capacity_int = parseInt(truckCapacity);
+
+      if (!foodLicenseURL || !menuURL || !logoURL) {
+        alert('Failed to upload files.');
+        setIsLoading(false);
+        return;
+      }
+      if (isNaN(max_capacity_int)) {
+        alert("Max capacity must be a number");
+        setIsLoading(false);
+        return;
+      }
+
+
+      await setDoc(newTruckRef, {
+        business_name: truckBusinessName,
+        food_type: selectedFoodType,
+        max_capacity: max_capacity_int,
+        license: foodLicenseURL,
+        menu: menuURL,
+        logo: logoURL,
+        open: false,
+        verified: false
+      });
+      const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
+      const userTruckRef = doc(userTrucksRef, truckId);
+        
+  
+        // Check if the user document exists
+        await setDoc(userTruckRef, {
+          business_name: truckBusinessName,
+          food_type: selectedFoodType,
+          max_capacity: max_capacity_int,
+          license: foodLicenseURL,
+          menu: menuURL,
+          logo: logoURL,
+          open: false,
+          verified: false
+        });
+  
+        const userRef = doc(db, "userToTrucks", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+  
+        if (userSnap.exists() && userSnap.data().numTrucks !== undefined) {
+          await updateDoc(userRef, { numTrucks: userSnap.data().numTrucks + 1 });
+        } else {
+          await setDoc(userRef, { numTrucks: 1 });
+        }
+  
+        console.log('New truck added with ID:', newTruckRef.id);
+      console.log('Truck data uploaded successfully!');
       setIsLoading(false);
       navigate('/business/list');
+      }
+      catch(error){
+        alert("Error uploading: ", error);
+      }
+      setIsLoading(false);
     }
   };
 
   const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
 
-  if (isLoading) {
+  if (isLoading || !currentUser) {
     return (
       <div className="spinner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <div className="spinner"></div>
