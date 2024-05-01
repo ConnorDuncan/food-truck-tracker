@@ -22,8 +22,8 @@ function UpdateInfo() {
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
   const [foodLicense, setFoodLicense] = useState(null);
-  const [menu, setMenu] = useState("No file chosen");
-  const [logo, setLogo] = useState("No file chosen");
+  const [menu, setMenu] = useState(null);
+  const [logo, setLogo] = useState(null);
   const truckBusinessNameRef = useRef(null);
   const truckCapacityRef = useRef(null);
   const selectedFoodTypeRef = useRef(null);
@@ -99,14 +99,7 @@ function UpdateInfo() {
 
   const handleFoodLicenseChange = (event) => {
     setFoodLicense(event.target.files[0]); // Capture the first file
-
-      // const file = event.target.files[0];
-      // if (file) {
-      //   setFoodLicense(file.name);
-      // } else {
-      //   setFoodLicense("No file chosen");
-      // }
-  };
+  }
   const handleMenuChange = (event) => {
     setMenu(event.target.files[0]); // Capture the first file
     
@@ -238,8 +231,6 @@ const handleSubmitLogo = async () => {
   <div className='Description'>Input the information, and then click the "create" button</div>
 
   <div className='cate'>
-    {/* <p className='inputlabel'>Name of Your Truck</p> */}
-    {/* <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} /> */}
     <mdui-text-field label="Name of Your Truck" style = {{width: '20%'}} variant="outlined" value={truckBusinessName} ref={truckBusinessNameRef} />
   </div>
 
@@ -260,13 +251,6 @@ const handleSubmitLogo = async () => {
   </div>
 
   <div className='cate'>
-    {/* <p className='inputlabel'>Max Capacity of Customers</p>
-    <input 
-      className='infoinput' 
-      type="number" 
-      value={truckCapacity} 
-      onChange={(e) => setTruckCapacity(e.target.value)} 
-    /> */}
     <mdui-text-field label="Max Capacity of Customers" style = {{width: '20%'}} variant="outlined" value={truckCapacity} ref={truckCapacityRef} ></mdui-text-field>
     
   </div>
@@ -275,10 +259,10 @@ const handleSubmitLogo = async () => {
 
   <div className='cate'>
     <p className='inputlabel'>Food License</p>
-    <input type="file" onChange={handleFoodLicenseChange} id="foodLicenseInput" />
+    <input type="file" onChange={handleFoodLicenseChange} id="foodLicenseInput" style={{ display: 'none' }}/>
 
     <mdui-button variant="outlined" component="label" onClick={handleLicenseClick}>
-      {foodLicense}
+      {foodLicense ? foodLicense.name : "No file chosen"}
     </mdui-button>
 
   </div>
@@ -287,7 +271,7 @@ const handleSubmitLogo = async () => {
     <p className='inputlabel'>Menu</p>
     <input type="file" onChange={handleMenuChange} id="ManuInput" style={{ display: 'none' }}/>
     <mdui-button variant="outlined" component="label" onClick={handleManuClick}>
-      {menu}
+      {menu ? menu.name : "No file chosen"}
     </mdui-button>
   </div>
 
@@ -296,7 +280,7 @@ const handleSubmitLogo = async () => {
     <input type="file" onChange={handleLogoChange} id="LogoInput" style={{ display: 'none' }}/>
 
     <mdui-button variant="outlined" component="label" onClick={handleLogoClick}>
-      {logo}
+      {logo ? logo.name : "No file chosen"}
     </mdui-button>
   </div>
 
