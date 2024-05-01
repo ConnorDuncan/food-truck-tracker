@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './Home.css';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../firebase';
-import { useAuth } from '../components/AuthContext';
+import { useAuth, onAuthStateChanged } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import 'mdui/mdui.css';
 import 'mdui';
@@ -15,19 +15,25 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      
+
     }, [currentUser]);
 
     const seeIfAccountExists = async (user) => {
         console.log("Entered seeIfAccountExists function.");
         if (!user) return; // Guard clause if user is still null
-        const userDocRef = doc(db, 'userToTrucks', user.uid); // Use passed user object
+        const userDocRef = doc(db, 'userToTrucks', user.uid);
+        const userInfoDocRef = doc(db, 'userToInfo', user.uid);
     
         try {
             const docSnap = await getDoc(userDocRef);
             if (!docSnap.exists()) {
                 console.log("Document does not exist, creating one...");
                 await setDoc(userDocRef, {numTrucks: 0});
+                await setDoc(userInfoDocRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL
+                });
                 console.log("Document created successfully.");
             } else {
                 console.log("Document already exists.");
