@@ -20,8 +20,17 @@
   margin: 0;
 }
 
-.location, .open, .Intro, .contact {
-  margin-top: 15px;
+.location, .open, .contact {
+  margin-top: 25px;
+}
+
+.open{
+  margin-bottom: 25px;
+}
+
+.Intro{
+
+  color: gray;
 }
 
 .MapPinIcon, .ClockIcon, .PhoneIcon, .CalendarIcon {
@@ -29,17 +38,11 @@
   vertical-align: middle;
 }
 
-.star {
-  
-  margin-top: 30px;
-  
-}
 
 .horizontal-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 20px;
-  overflow-y: scroll;
 }
 
 .schedule, .dishes {

@@ -1,0 +1,88 @@
+
+.title{
+    
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+}
+
+.cate{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.cate p {
+    margin-right: 30px;
+}
+
+.fileUpload{
+    margin-left: 30px;
+}
+
+.Description{
+    color: gray;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inputlabel{
+    font-weight: bold;
+}
+
+.infoinput{
+    width: 200px;
+}
+
+
+.buttonContainer {
+    display: flex;
+    
+    margin-top: 20px; /* Adjust top margin as needed */
+}
+
+.saveButton {
+
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.backButton {
+
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
+
+}
+
+.backButton:hover {
+    background-color: #b11111;
+
+}
+
+.clockIcon{
+    margin-right: 10px;
+
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    margin-top: 20px;
+}
