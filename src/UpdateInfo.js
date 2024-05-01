@@ -25,6 +25,7 @@ function UpdateInfo() {
   const [menu, setMenu] = useState(null);
   const [logo, setLogo] = useState(null);
   const [location, setLocation] = useState(null);
+  const [verified, setVerified] = useState(null);
 
   useEffect(() => {
     const fetchTruckData = async () => {
@@ -39,6 +40,7 @@ function UpdateInfo() {
         setFoodLicenseUrl(data.license);
         setMenuUrl(data.menu);
         setLogoUrl(data.logo);
+        setVerified(data.verified);
         setIsLoading(false);
       } else {
         console.log('No such truck!');
@@ -85,6 +87,11 @@ function UpdateInfo() {
   };
   const handleSave = async () => {
     setIsLoading(true);
+    if(isOpen && !verified){
+      alert("Please wait for the truck to be verified before opening.");
+      setIsLoading(false);
+      return null;
+    }
     let updates = {};
 
     if (truckBusinessName) updates.business_name = truckBusinessName;
