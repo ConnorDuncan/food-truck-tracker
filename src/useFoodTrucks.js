@@ -26,7 +26,7 @@ const useFoodTrucks = () => {
           let { numReads = 0 } = userSnapshot.data(); // Default to 0 if not set
     
           if (numReads >= 5000) {
-            console.error("Read limit exceeded");
+            alert("Read limit exceeded");
             return; // Stop further execution if read limit exceeded
           }
     
