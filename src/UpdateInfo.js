@@ -111,9 +111,8 @@ function UpdateInfo() {
   return (
     <div>
       <h1 className='title'>Update {truckBusinessName}</h1>
-      <div className='Description'>Input the updated information, and then click the "save" button</div>
+      <div className='Description'>Update the desired fields, and then click the "save" button</div>
       <div className='Description'>Only upload a single file for each field</div>
-      <div className='Description'>If you don't want to update a field, leave it blank</div>
 
       <div className='cate'>
         <p className='inputlabel'>Name of Your Truck</p>

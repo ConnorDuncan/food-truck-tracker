@@ -159,7 +159,8 @@ const handleSubmitLogo = async () => {
         menu: menuURL,
         logo: logoURL,
         open: false,
-        verified: false
+        verified: false,
+        creator: currentUser.uid
       });
       const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
       const userTruckRef = doc(userTrucksRef, truckId);
@@ -174,7 +175,8 @@ const handleSubmitLogo = async () => {
           menu: menuURL,
           logo: logoURL,
           open: false,
-          verified: false
+          verified: false,
+          creator: currentUser.uid
         });
   
         const userRef = doc(db, "userToTrucks", currentUser.uid);

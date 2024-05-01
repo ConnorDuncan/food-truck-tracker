@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './FoodTrucks.css';
 import TruckIcon from './FoodTruckIcon';
@@ -16,6 +16,9 @@ const FoodTrucks = () => {
         navigate('/business/AddTruck');
     };
 
+    useEffect(() => {
+        
+    })
     if (loading){ return (<div className="Businesses">
     <header className="Business_header">
         <h1 className="Title">Your Food Trucks</h1>
