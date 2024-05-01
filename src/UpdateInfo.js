@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, GeoPoint } from 'firebase/firestore';
 import { db } from './firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
@@ -24,6 +24,7 @@ function UpdateInfo() {
   const [foodLicense, setFoodLicense] = useState(null);
   const [menu, setMenu] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     const fetchTruckData = async () => {
@@ -45,6 +46,25 @@ function UpdateInfo() {
     };
     fetchTruckData();
   }, [truckId]);
+
+
+  const fetchUserLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          resolve(new GeoPoint(latitude, longitude)); // Resolve the GeoPoint
+        }, (error) => {
+          console.error("Error fetching location", error);
+          alert("Unable to fetch location.");
+          resolve(null); // Resolve null if there's an error
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+        resolve(null);
+      }
+    });
+  };
 
   const handleFileChange = async (file, path, setter) => {
     if (!file) return;
@@ -71,6 +91,12 @@ function UpdateInfo() {
     if (selectedFoodType) updates.food_type = selectedFoodType;
     if (truckCapacity) updates.max_capacity = parseInt(truckCapacity, 10);
     if (isOpen !== undefined) updates.open = isOpen;
+    if (isOpen) {
+      const fetchedLocation = await fetchUserLocation();
+      if (fetchedLocation) {
+        updates.location = fetchedLocation;
+      }
+    }
 
     if (foodLicense) {
       updates.license = await handleFileChange(foodLicense, 'licenses', setFoodLicenseUrl);
@@ -113,6 +139,7 @@ function UpdateInfo() {
       <h1 className='title'>Update {truckBusinessName}</h1>
       <div className='Description'>Update the desired fields, and then click the "save" button</div>
       <div className='Description'>Only upload a single file for each field</div>
+      <div className='Description'>If you open your truck, it will be marked "open" at your current location!</div>
 
       <div className='cate'>
         <p className='inputlabel'>Name of Your Truck</p>
