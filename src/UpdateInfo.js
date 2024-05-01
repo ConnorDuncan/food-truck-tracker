@@ -27,25 +27,50 @@ function UpdateInfo() {
   const [location, setLocation] = useState(null);
   const [verified, setVerified] = useState(null);
 
-  useEffect(() => {
-    const fetchTruckData = async () => {
-      const docRef = doc(db, "food-trucks", truckId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setTruckBusinessName(data.business_name);
-        setIsOpen(data.open);
-        setSelectedFoodType(data.food_type);
-        setTruckCapacity(data.max_capacity);
-        setFoodLicenseUrl(data.license);
-        setMenuUrl(data.menu);
-        setLogoUrl(data.logo);
-        setVerified(data.verified);
-        setIsLoading(false);
-      } else {
-        console.log('No such truck!');
+  const canRead = async () => {
+    const userDocRef = doc(db, 'userToInfo', currentUser.uid);
+    const userSnapshot = await getDoc(userDocRef);
+
+    if (userSnapshot.exists()) {
+      let { numReads = 0 } = userSnapshot.data();
+      if (numReads >= 5000) {
+        console.error("Read limit exceeded");
+        return false;
       }
-    };
+
+      // Increment numReads and update in Firestore
+      await updateDoc(userDocRef, { numReads: numReads + 1 });
+      return true;
+    }
+    return false;
+  };
+
+  const fetchTruckData = async () => {
+    if (!(await canRead())) {
+      alert("Read limit exceeded");
+      return;
+    }
+
+    const docRef = doc(db, 'food-trucks', truckId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      setTruckBusinessName(data.business_name);
+      setIsOpen(data.open);
+      setSelectedFoodType(data.food_type);
+      setTruckCapacity(data.max_capacity);
+      setFoodLicenseUrl(data.license);
+      setMenuUrl(data.menu);
+      setLogoUrl(data.logo);
+      setVerified(data.verified);
+      setIsLoading(false);
+    } else {
+      console.log('No such truck!');
+    }
+  };
+
+  useEffect(() => {
     fetchTruckData();
   }, [truckId]);
 

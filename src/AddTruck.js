@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import './loadingSpinner.css';
-//import MDUI icon
-import 'mdui/components/card.js';
-import {useAuth} from './components/AuthContext';
-function UpdateInfo() {
+import { useAuth } from './components/AuthContext';
+
+function AddTruck() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFoodType, setSelectedFoodType] = useState('');
@@ -20,153 +19,161 @@ function UpdateInfo() {
   const [logo, setLogo] = useState(null);
   const { currentUser } = useAuth();
 
-  useEffect(() => {
+  const canRead = async () => {
+    const userDocRef = doc(db, 'userToInfo', currentUser.uid);
+    const userSnapshot = await getDoc(userDocRef);
 
-  }, []);
+    if (userSnapshot.exists()) {
+      let { numReads = 0 } = userSnapshot.data();
+      if (numReads >= 5000) {
+        console.error("Read limit exceeded");
+        return false;
+      }
 
-
+      await updateDoc(userDocRef, { numReads: numReads + 1 });
+      return true;
+    }
+    return false;
+  };
 
   const handleFoodLicenseChange = (event) => {
-      setFoodLicense(event.target.files[0]); // Capture the first file
+    setFoodLicense(event.target.files[0]);
   };
   const handleMenuChange = (event) => {
-    setMenu(event.target.files[0]); // Capture the first file
-};
-const handleLogoChange = (event) => {
-  setLogo(event.target.files[0]); // Capture the first file
-};
+    setMenu(event.target.files[0]);
+  };
+  const handleLogoChange = (event) => {
+    setLogo(event.target.files[0]);
+  };
 
   const handleSubmitFoodLicense = async () => {
     if (!foodLicense) {
-        alert('No file selected for food license!');
-        return;
+      alert('No file selected for food license!');
+      return;
     }
 
     const storageRef = ref(storage, `uploads/${foodLicense.name}`);
     try {
-        const snapshot = await uploadBytes(storageRef, foodLicense);
-        const url = await getDownloadURL(snapshot.ref);
-        console.log('File uploaded successfully:', url);
-        return url;
+      const snapshot = await uploadBytes(storageRef, foodLicense);
+      const url = await getDownloadURL(snapshot.ref);
+      console.log('File uploaded successfully:', url);
+      return url;
     } catch (error) {
-        console.error("Error uploading file: ", error);
-        return null;
+      console.error("Error uploading file: ", error);
+      return null;
     }
-};
-const handleSubmitMenu = async () => {
-  if (!menu) {
+  };
+
+  const handleSubmitMenu = async () => {
+    if (!menu) {
       alert('No file selected!');
       return;
-  }
+    }
 
-  const storageRef = ref(storage, `uploads/${menu.name}`);
-  try {
+    const storageRef = ref(storage, `uploads/${menu.name}`);
+    try {
       const snapshot = await uploadBytes(storageRef, menu);
       const url = await getDownloadURL(snapshot.ref);
       console.log('File uploaded successfully:', url);
       return url;
-  } catch (error) {
+    } catch (error) {
       console.error("Error uploading file: ", error);
       return null;
-  }
-};
+    }
+  };
 
-const handleSubmitLogo = async () => {
-  if (!logo) {
+  const handleSubmitLogo = async () => {
+    if (!logo) {
       alert('No file selected!');
       return;
-  }
+    }
 
-  const storageRef = ref(storage, `uploads/${logo.name}`);
-  try {
+    const storageRef = ref(storage, `uploads/${logo.name}`);
+    try {
       const snapshot = await uploadBytes(storageRef, logo);
       const url = await getDownloadURL(snapshot.ref);
       console.log('File uploaded successfully:', url);
       return url;
-  } catch (error) {
+    } catch (error) {
       console.error("Error uploading file: ", error);
       return null;
-  }
-};
-
+    }
+  };
 
   const handleFoodTypeChange = (event) => {
     setSelectedFoodType(event.target.value);
   };
 
-
   const handleSave = async () => {
     console.log('Save button clicked');
     setIsLoading(true);
-    if(truckBusinessName === ''){
+
+    if (!(await canRead())) {
+      alert("Read limit exceeded");
+      setIsLoading(false);
+      return;
+    }
+
+    if (truckBusinessName === '') {
       alert("Please input business name");
       setIsLoading(false);
       return;
-    }
-    else if(selectedFoodType === ''){
+    } else if (selectedFoodType === '') {
       alert("Please select food type");
       setIsLoading(false);
       return;
-    }
-    else if(truckCapacity === ''){
+    } else if (truckCapacity === '') {
       alert("Please input max capacity");
       setIsLoading(false);
       return;
-    }
-    else if(!foodLicense){
+    } else if (!foodLicense) {
       alert("No file selected for food license");
       setIsLoading(false);
       return;
-    }
-    else if(!menu){
+    } else if (!menu) {
       alert("No file selected for menu");
       setIsLoading(false);
       return;
-    }
-    else if(!logo){
+    } else if (!logo) {
       alert("No file selected for logo");
       setIsLoading(false);
       return;
-    }
-    else{ // if all fields are inputted, upload/update the information to firebase
-      try{
+    } else {
+      try {
         const newTruckRef = doc(collection(db, "food-trucks"));
         const truckId = newTruckRef.id;
 
-        console.log("Creating new document reference: ",truckId);
-      const foodLicenseURL = await handleSubmitFoodLicense();
-      const menuURL = await handleSubmitMenu();
-      const logoURL = await handleSubmitLogo();
-      const max_capacity_int = parseInt(truckCapacity);
+        const foodLicenseURL = await handleSubmitFoodLicense();
+        const menuURL = await handleSubmitMenu();
+        const logoURL = await handleSubmitLogo();
+        const max_capacity_int = parseInt(truckCapacity);
 
-      if (!foodLicenseURL || !menuURL || !logoURL) {
-        alert('Failed to upload files.');
-        setIsLoading(false);
-        return;
-      }
-      if (isNaN(max_capacity_int)) {
-        alert("Max capacity must be a number");
-        setIsLoading(false);
-        return;
-      }
+        if (!foodLicenseURL || !menuURL || !logoURL) {
+          alert('Failed to upload files.');
+          setIsLoading(false);
+          return;
+        }
+        if (isNaN(max_capacity_int)) {
+          alert("Max capacity must be a number");
+          setIsLoading(false);
+          return;
+        }
 
+        await setDoc(newTruckRef, {
+          business_name: truckBusinessName,
+          food_type: selectedFoodType,
+          max_capacity: max_capacity_int,
+          license: foodLicenseURL,
+          menu: menuURL,
+          logo: logoURL,
+          open: false,
+          verified: false,
+          creator: currentUser.uid
+        });
 
-      await setDoc(newTruckRef, {
-        business_name: truckBusinessName,
-        food_type: selectedFoodType,
-        max_capacity: max_capacity_int,
-        license: foodLicenseURL,
-        menu: menuURL,
-        logo: logoURL,
-        open: false,
-        verified: false,
-        creator: currentUser.uid
-      });
-      const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
-      const userTruckRef = doc(userTrucksRef, truckId);
-        
-  
-        // Check if the user document exists
+        const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
+        const userTruckRef = doc(userTrucksRef, truckId);
+
         await setDoc(userTruckRef, {
           business_name: truckBusinessName,
           food_type: selectedFoodType,
@@ -178,25 +185,25 @@ const handleSubmitLogo = async () => {
           verified: false,
           creator: currentUser.uid
         });
-  
+
         const userRef = doc(db, "userToTrucks", currentUser.uid);
         const userSnap = await getDoc(userRef);
-  
+
         if (userSnap.exists() && userSnap.data().numTrucks !== undefined) {
           await updateDoc(userRef, { numTrucks: userSnap.data().numTrucks + 1 });
         } else {
           await setDoc(userRef, { numTrucks: 1 });
         }
-  
+
         console.log('New truck added with ID:', newTruckRef.id);
-      console.log('Truck data uploaded successfully!');
-      setIsLoading(false);
-      navigate('/business/list');
+        console.log('Truck data uploaded successfully!');
+        setIsLoading(false);
+        navigate('/business/list');
+      } catch (error) {
+        console.error("Error uploading: ", error);
+        alert("Error uploading: " + error.message);
+        setIsLoading(false);
       }
-      catch(error){
-        alert("Error uploading: ", error);
-      }
-      setIsLoading(false);
     }
   };
 
@@ -268,4 +275,4 @@ const handleSubmitLogo = async () => {
   );
 }
 
-export default UpdateInfo;
+export default AddTruck;
