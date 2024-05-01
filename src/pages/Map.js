@@ -10,15 +10,6 @@ import 'mdui/components/menu-item.js';
 import 'mdui/components/circular-progress.js';
 import 'mdui/components/button.js';
 
-
-//import MDUI components
-import 'mdui/components/navigation-rail.js';
-import 'mdui/components/navigation-rail-item.js';
-import 'mdui/components/select.js';
-import 'mdui/components/menu-item.js';
-import 'mdui/components/circular-progress.js';
-import 'mdui/components/button.js';
-
 const Map = () => {
     const [center, setCenter] = useState(null);
     const [trucks, setTrucks] = useState([]);
@@ -37,8 +28,8 @@ const Map = () => {
         getTrucks();
     }, [])
 
-    useEffect(() => {
-        try {
+    try {
+        useEffect(() => {
             if ("geolocation" in navigator) {
                 const watchId = navigator.geolocation.watchPosition((position) => {
                     setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
@@ -53,7 +44,6 @@ const Map = () => {
             } else console.log("Geolocation is not supported by this browser.");
         }, []);
     } catch (error) { console.log(error) }
-
 
     console.log(trucks[0]);
     console.log(center);
@@ -70,7 +60,6 @@ const Map = () => {
             <mdui-segmented-button value="$$">$$</mdui-segmented-button>
             <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
             </mdui-segmented-button-group>
-
             
             <h2 style = {{marginTop: '100px'}}>Food Types</h2>
             <mdui-select multiple style = {{width: '100%'}}>
@@ -81,7 +70,6 @@ const Map = () => {
                 <mdui-menu-item value="Hamburger">Hamburger</mdui-menu-item>
                 <mdui-menu-item value="Pizza">Pizza</mdui-menu-item>
             </mdui-select>
-
 
             <mdui-button variant="tonal" style = {{marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center'}}>Save Preferences</mdui-button>
 
@@ -98,9 +86,6 @@ const Map = () => {
 
         {center &&
         <div style={{ width: "100%", overflow: "hidden", justifyContent: 'center', display: 'flex', alignItems: 'center'}}>
-     
-        {center &&
-        <div style={{ width: "60%", borderRadius: "10%", overflow: "hidden" , marginLeft: "5%"}}>
             <GoogleMap
                 apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
                 defaultCenter={center}
@@ -124,7 +109,6 @@ const Map = () => {
                 />) }
                 <img
                     style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}
-
                     lat={center['lat']}
                     lng={center['lng']}
                     href='/'
@@ -134,13 +118,12 @@ const Map = () => {
                 />
 
             {selected && 
-                <h1 onClick={() => setSelected(null)}>
+                <h1 style = {{transition: 'transform 0.3s ease-in-out'}} onClick={() => setSelected(null)}>
                     A truck has been selected
                 </h1>
         }
             </GoogleMap>
         </div> }
-
         </div>
         </>
     )
