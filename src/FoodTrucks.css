@@ -1,0 +1,118 @@
+.Businesses{
+  text-align: center;
+}
+
+.Title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .Title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .Title {
+    font-size: 4rem;
+  }
+}
+
+.Description{
+  color: gray;
+}
+
+.Business_header {
+  margin-bottom: 30px; /* Adds space below the header */
+}
+
+.truck-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  height: 100%;
+}
+
+.card-content h2 {
+  font-size: 1.25rem;
+}
+
+.verified, .waiting {
+  margin-right: 0.5rem;
+}
+
+.check_circle, .clock_icon {
+  flex-shrink: 0;
+}
+
+.card_content a {
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+.status-text {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.status-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .card {
+    max-width: none;
+  }
+
+  .card_content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card_content a {
+    margin-top: 0.5rem;
+  }
+}
+
+.verified {
+  color: #34d399; /* Green for 'Verified' */
+}
+
+.waiting {
+  color: #f59e0b; /* Orange for 'Waiting for Verification' */
+}
+
+.check_circle {
+  color: #34d399; /* Green for 'Verified' icon */
+}
+
+.clock_icon {
+  color: #f59e0b; /* Orange for 'Waiting for Verification' icon */
+}
+
+.icon, .truck_icon, .check_circle, .clock_icon {
+  width: 24px;
+  height: 24px;
+}
