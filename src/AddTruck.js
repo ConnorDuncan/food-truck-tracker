@@ -21,7 +21,7 @@ function UpdateInfo() {
   const [selectedFoodType, setSelectedFoodType] = useState("");
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
-  const [foodLicense, setFoodLicense] = useState("No file chosen");
+  const [foodLicense, setFoodLicense] = useState(null);
   const [menu, setMenu] = useState("No file chosen");
   const [logo, setLogo] = useState("No file chosen");
   const truckBusinessNameRef = useRef(null);
@@ -98,7 +98,8 @@ function UpdateInfo() {
   };
 
   const handleFoodLicenseChange = (event) => {
-      setFoodLicense(event.target.files[0]); // Capture the first file
+    setFoodLicense(event.target.files[0]); // Capture the first file
+
       // const file = event.target.files[0];
       // if (file) {
       //   setFoodLicense(file.name);
@@ -274,7 +275,7 @@ const handleSubmitLogo = async () => {
 
   <div className='cate'>
     <p className='inputlabel'>Food License</p>
-    <input type="file" onChange={handleFoodLicenseChange} id="foodLicenseInput" style={{ display: 'none' }}/>
+    <input type="file" onChange={handleFoodLicenseChange} id="foodLicenseInput" />
 
     <mdui-button variant="outlined" component="label" onClick={handleLicenseClick}>
       {foodLicense}
