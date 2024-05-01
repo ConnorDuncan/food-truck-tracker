@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
 import { doc, getDoc } from 'firebase/firestore';
@@ -6,23 +6,109 @@ import { db } from './firebase';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
 import { storage } from './firebase';
 import './loadingSpinner.css';
+
 //import MDUI icon
 import 'mdui/components/card.js';
+import 'mdui/components/text-field.js';
+import 'mdui/components/select.js';
+import 'mdui/components/menu-item.js';
+import 'mdui/components/chip.js';
+import 'mdui/components/button.js';
+
 function UpdateInfo() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFoodType, setSelectedFoodType] = useState('');
+  const [selectedFoodType, setSelectedFoodType] = useState("");
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
-  const [foodLicense, setFoodLicense] = useState(null);
-  const [menu, setMenu] = useState(null);
-  const [logo, setLogo] = useState(null);
+  const [foodLicense, setFoodLicense] = useState("No file chosen");
+  const [menu, setMenu] = useState("No file chosen");
+  const [logo, setLogo] = useState("No file chosen");
+  const truckBusinessNameRef = useRef(null);
+  const truckCapacityRef = useRef(null);
+  const selectedFoodTypeRef = useRef(null);
+
+  const handleTruckBusinessName = (event) => {
+    const newValue = event.target.value;
+    console.log("Input value changed to:", newValue);
+    setTruckBusinessName(newValue);
+  };
+
+  const handleTruckCapacity = (event) => {
+    const newValue = event.target.value;
+    console.log("Input value changed to:", newValue);
+    setTruckCapacity(newValue);
+  };
+
+  const handleFoodTypeChange = (event) => {
+    //const selectedFoodType = Array.from(event.target.selectedFoodType).map((option) => option.value);
+    const selectedFoodType = event.target.value;
+    console.log("foodtype change:", selectedFoodType);
+    setSelectedFoodType(selectedFoodType[0]);
+
+
+  };
+  
+  useEffect(() => {
+    // Attach event listener after component mounts
+    const selected = selectedFoodTypeRef.current;
+    if (selected) {
+      selected.addEventListener('change', handleFoodTypeChange); 
+
+      return () => {
+        selected.removeEventListener('change', handleFoodTypeChange);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    // Attach event listener after component mounts
+    const textfield = truckBusinessNameRef.current;
+    if (textfield) {
+      textfield.addEventListener('change', handleTruckBusinessName); 
+
+      return () => {
+        textfield.removeEventListener('change', handleTruckBusinessName);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    // Attach event listener after component mounts
+    const textfield = truckCapacityRef.current;
+    if (textfield) {
+      textfield.addEventListener('change', handleTruckCapacity); 
+
+      return () => {
+        textfield.removeEventListener('change', handleTruckCapacity);
+      };
+    }
+  }, []);
+
+  const handleLicenseClick = () => {
+    document.getElementById('foodLicenseInput').click();
+  };
+  
+  const handleManuClick = () => {
+    document.getElementById('ManuInput').click();
+  };
+
+  const handleLogoClick = () => {
+    document.getElementById('LogoInput').click();
+  };
 
   const handleFoodLicenseChange = (event) => {
       setFoodLicense(event.target.files[0]); // Capture the first file
+      // const file = event.target.files[0];
+      // if (file) {
+      //   setFoodLicense(file.name);
+      // } else {
+      //   setFoodLicense("No file chosen");
+      // }
   };
   const handleMenuChange = (event) => {
     setMenu(event.target.files[0]); // Capture the first file
+    
 };
 const handleLogoChange = (event) => {
   setLogo(event.target.files[0]); // Capture the first file
@@ -86,9 +172,7 @@ const handleSubmitLogo = async () => {
     
   }, []);
 
-  const handleFoodTypeChange = (event) => {
-    setSelectedFoodType(event.target.value);
-  };
+  
 
 
   const handleSave = async () => {
@@ -153,51 +237,76 @@ const handleSubmitLogo = async () => {
   <div className='Description'>Input the information, and then click the "create" button</div>
 
   <div className='cate'>
-    <p className='inputlabel'>Name of Your Truck</p>
-    <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} />
+    {/* <p className='inputlabel'>Name of Your Truck</p> */}
+    {/* <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} /> */}
+    <mdui-text-field label="Name of Your Truck" style = {{width: '20%'}} variant="outlined" value={truckBusinessName} ref={truckBusinessNameRef} />
   </div>
 
   <div className='cate'>
-    <p className='inputlabel'>Select Food Type</p>
+    {/* <p className='inputlabel'>Select Food Type</p>
     <select value={selectedFoodType} onChange={handleFoodTypeChange}>
       <option value="">Select Food Type</option>
       {foodTypes.map((foodType) => (
         <option key={foodType} value={foodType}>{foodType}</option>
       ))}
-    </select>
+    </select> */}
+    <mdui-select multiple value={selectedFoodType} label="Select Your Food Types" style={{width: "30%"}} class="example-multiple" ref={selectedFoodTypeRef}>
+      {foodTypes.map((foodType) => (
+        <mdui-menu-item key={foodType} value={foodType}>{foodType}</mdui-menu-item>
+      ))}
+      
+    </mdui-select>
   </div>
 
   <div className='cate'>
-    <p className='inputlabel'>Max Capacity of Customers</p>
+    {/* <p className='inputlabel'>Max Capacity of Customers</p>
     <input 
       className='infoinput' 
       type="number" 
       value={truckCapacity} 
       onChange={(e) => setTruckCapacity(e.target.value)} 
-    />
+    /> */}
+    <mdui-text-field label="Max Capacity of Customers" style = {{width: '20%'}} variant="outlined" value={truckCapacity} ref={truckCapacityRef} ></mdui-text-field>
+    
   </div>
 
+  
 
   <div className='cate'>
     <p className='inputlabel'>Food License</p>
-    <input type="file" onChange={handleFoodLicenseChange} />
+    <input type="file" onChange={handleFoodLicenseChange} id="foodLicenseInput" style={{ display: 'none' }}/>
+
+    <mdui-button variant="outlined" component="label" onClick={handleLicenseClick}>
+      {foodLicense}
+    </mdui-button>
+
   </div>
 
   <div className='cate'>
     <p className='inputlabel'>Menu</p>
-    <input type="file" onChange={handleMenuChange} />
+    <input type="file" onChange={handleMenuChange} id="ManuInput" style={{ display: 'none' }}/>
+    <mdui-button variant="outlined" component="label" onClick={handleManuClick}>
+      {menu}
+    </mdui-button>
   </div>
 
   <div className='cate'>
     <p className='inputlabel'>Logo</p>
-    <input type="file" onChange={handleLogoChange} />
+    <input type="file" onChange={handleLogoChange} id="LogoInput" style={{ display: 'none' }}/>
+
+    <mdui-button variant="outlined" component="label" onClick={handleLogoClick}>
+      {logo}
+    </mdui-button>
   </div>
 
   
 
   <div className='buttonContainer'>
-    <button className='backButton' onClick={() => window.history.back()}>Back</button>
-    <button className='saveButton' onClick={handleSave}>Create</button>
+    {/* <button className='backButton' >Back</button>
+    <button className='saveButton' onClick={handleSave}>Create</button> */}
+    <mdui-button variant="elevated" style={{width: "10%"}} onClick={() => window.history.back()}>Back</mdui-button>
+    <mdui-button variant="tonal" style={{width: "10%"}} onClick={handleSave}>save</mdui-button>
+
   </div>
 </div>
 
