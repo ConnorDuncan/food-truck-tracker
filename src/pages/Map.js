@@ -118,9 +118,15 @@ const Map = () => {
                 />
 
             {selected && 
-                <h1 onClick={() => setSelected(null)}>
-                    A truck has been selected
-                </h1>
+                <div style={{ width: "25%", padding: "2%" }}>
+                    <h2>Price Range</h2>
+                    <mdui-segmented-button-group selects="multiple" style={{display: 'flex', justifyContent: 'center',width: '100%'}}>
+                    <mdui-segmented-button value="All">All</mdui-segmented-button>
+                    <mdui-segmented-button value="$">$</mdui-segmented-button>
+                    <mdui-segmented-button value="$$">$$</mdui-segmented-button>
+                    <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
+                    </mdui-segmented-button-group>
+                </div>
         }
             </GoogleMap>
         </div> }
