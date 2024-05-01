@@ -242,7 +242,7 @@ const handleSubmitLogo = async () => {
         <option key={foodType} value={foodType}>{foodType}</option>
       ))}
     </select> */}
-    <mdui-select multiple value={selectedFoodType} label="Select Your Food Types" style={{width: "30%"}} class="example-multiple" ref={selectedFoodTypeRef}>
+    <mdui-select multiple value={selectedFoodType} label="Select Your Food Types" style={{width: "20%"}} class="example-multiple" ref={selectedFoodTypeRef}>
       {foodTypes.map((foodType) => (
         <mdui-menu-item key={foodType} value={foodType}>{foodType}</mdui-menu-item>
       ))}
