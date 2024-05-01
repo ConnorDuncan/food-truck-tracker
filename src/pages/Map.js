@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import GoogleMap from 'google-maps-react-markers'
-import app from '../components/firebase.js';
+import {app, db, auth, storage} from '../firebase'; 
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
 
 import 'mdui/components/navigation-rail.js';
