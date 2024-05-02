@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
-import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';  
 import { storage } from './firebase';
 import './loadingSpinner.css';
+import {useAuth} from './components/AuthContext';
 
 //import MDUI icon
 import 'mdui/components/card.js';
@@ -14,6 +15,7 @@ import 'mdui/components/select.js';
 import 'mdui/components/menu-item.js';
 import 'mdui/components/chip.js';
 import 'mdui/components/button.js';
+import 'mdui/components/linear-progress.js';
 
 function UpdateInfo() {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ function UpdateInfo() {
   const truckBusinessNameRef = useRef(null);
   const truckCapacityRef = useRef(null);
   const selectedFoodTypeRef = useRef(null);
+  const { currentUser } = useAuth();
 
   const handleTruckBusinessName = (event) => {
     const newValue = event.target.value;
@@ -45,8 +48,6 @@ function UpdateInfo() {
     const selectedFoodType = event.target.value;
     console.log("foodtype change:", selectedFoodType);
     setSelectedFoodType(selectedFoodType[0]);
-
-
   };
   
   useEffect(() => {
@@ -108,22 +109,21 @@ const handleLogoChange = (event) => {
   setLogo(event.target.files[0]); // Capture the first file
 };
 
-  const handleSubmitFoodLicense = async () => {
-    if (!foodLicense) {
-        alert('No file selected for food license!');
-        return;
-    }
-
-    const storageRef = ref(storage, `uploads/${foodLicense.name}`);
-    try {
-        const snapshot = await uploadBytes(storageRef, foodLicense);
-        const url = await getDownloadURL(snapshot.ref);
-        console.log('File uploaded successfully:', url);
-        return url;
-    } catch (error) {
-        console.error("Error uploading file: ", error);
-        return null;
-    }
+const handleSubmitFoodLicense = async () => {
+  if (!foodLicense) {
+      alert('No file selected for food license!');
+      return;
+  }
+  const storageRef = ref(storage, `uploads/${foodLicense.name}`);
+  try {
+      const snapshot = await uploadBytes(storageRef, foodLicense);
+      const url = await getDownloadURL(snapshot.ref);
+      console.log('File uploaded successfully:', url);
+      return url;
+  } catch (error) {
+      console.error("Error uploading file: ", error);
+      return null;
+  }
 };
 const handleSubmitMenu = async () => {
   if (!menu) {
@@ -172,9 +172,6 @@ const handleSubmitLogo = async () => {
   const handleSave = async () => {
     console.log('Save button clicked');
     setIsLoading(true);
-    // Implement save logic here...
-    // Make sure all fields are inputted
-    // use the handleSubmit function to submit the photos.
     if(truckBusinessName === ''){
       alert("Please input business name");
       setIsLoading(false);
@@ -206,11 +203,74 @@ const handleSubmitLogo = async () => {
       return;
     }
     else{ // if all fields are inputted, upload/update the information to firebase
-      await handleSubmitFoodLicense();
-      await handleSubmitMenu();
-      await handleSubmitLogo();
+      try{
+        const newTruckRef = doc(collection(db, "food-trucks"));
+        const truckId = newTruckRef.id;
+
+        console.log("Creating new document reference: ",truckId);
+      const foodLicenseURL = await handleSubmitFoodLicense();
+      const menuURL = await handleSubmitMenu();
+      const logoURL = await handleSubmitLogo();
+      const max_capacity_int = parseInt(truckCapacity);
+
+      if (!foodLicenseURL || !menuURL || !logoURL) {
+        alert('Failed to upload files.');
+        setIsLoading(false);
+        return;
+      }
+      if (isNaN(max_capacity_int)) {
+        alert("Max capacity must be a number");
+        setIsLoading(false);
+        return;
+      }
+
+
+      await setDoc(newTruckRef, {
+        business_name: truckBusinessName,
+        food_type: selectedFoodType,
+        max_capacity: max_capacity_int,
+        license: foodLicenseURL,
+        menu: menuURL,
+        logo: logoURL,
+        open: false,
+        verified: false,
+        creator: currentUser.uid
+      });
+      const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
+      const userTruckRef = doc(userTrucksRef, truckId);
+        
+  
+        // Check if the user document exists
+        await setDoc(userTruckRef, {
+          business_name: truckBusinessName,
+          food_type: selectedFoodType,
+          max_capacity: max_capacity_int,
+          license: foodLicenseURL,
+          menu: menuURL,
+          logo: logoURL,
+          open: false,
+          verified: false,
+          creator: currentUser.uid
+        });
+  
+        const userRef = doc(db, "userToTrucks", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+  
+        if (userSnap.exists() && userSnap.data().numTrucks !== undefined) {
+          await updateDoc(userRef, { numTrucks: userSnap.data().numTrucks + 1 });
+        } else {
+          await setDoc(userRef, { numTrucks: 1 });
+        }
+  
+        console.log('New truck added with ID:', newTruckRef.id);
+      console.log('Truck data uploaded successfully!');
       setIsLoading(false);
       navigate('/business/list');
+      }
+      catch(error){
+        alert("Error uploading: ", error);
+      }
+      setIsLoading(false);
     }
   };
 
@@ -219,7 +279,8 @@ const handleSubmitLogo = async () => {
   if (isLoading) {
     return (
       <div className="spinner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div className="spinner"></div>
+            {/* <div className="spinner"></div> */}
+            <mdui-linear-progress></mdui-linear-progress>
             <p className="loading-text">Loading, please do not close the page, refresh the page, or click the back button.</p>
         </div>
     );
