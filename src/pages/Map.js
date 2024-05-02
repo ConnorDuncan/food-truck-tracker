@@ -37,7 +37,7 @@ const Map = () => {
             numReads = userSnapshot.data().numReads || 0;
         }
 
-        if (numReads >= 5000) {
+        if (numReads >= 1000) {
             console.error("Read limit exceeded");
             return false;
         }

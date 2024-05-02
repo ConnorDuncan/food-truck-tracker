@@ -33,7 +33,7 @@ function UpdateInfo() {
 
     if (userSnapshot.exists()) {
       let { numReads = 0 } = userSnapshot.data();
-      if (numReads >= 5000) {
+      if (numReads >= 1000) {
         console.error("Read limit exceeded");
         return false;
       }
