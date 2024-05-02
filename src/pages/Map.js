@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import '../components/drawer.css'
 import GoogleMap from 'google-maps-react-markers'
-import {app, db, auth, storage} from '../firebase'; 
+import { app } from '../firebase'; 
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
 
 import 'mdui/components/navigation-rail.js';
@@ -13,9 +14,25 @@ import 'mdui/components/button.js';
 const Map = () => {
     const [center, setCenter] = useState(null);
     const [trucks, setTrucks] = useState([]);
-    const [selected, setSelected] = useState(null);
+    const [select, setSelect] = useState(null);
+    const [foodType, setFoodType] = useState({
+        "Mexican": 0,
+        "Chinese": 0,
+        "American": 0,
+        "Taco": 0,
+        "Hamburger": 0,
+        "Pizza": 0
+    })
     const db = getFirestore(app);
     let array = [];
+    let typeMap = {
+        "Mexican": 0,
+        "Chinese": 0,
+        "American": 0,
+        "Taco": 0,
+        "Hamburger": 0,
+        "Pizza": 0
+    }
 
     useEffect(() => {
         const getTrucks = async () => {
@@ -23,8 +40,9 @@ const Map = () => {
             const trucksSnapshot = await getDocs(q);
             trucksSnapshot.forEach((truck) => array.push(truck.data()));
             setTrucks(array);
+            console.log('READ FROM FIREBASE');
         } 
-        
+
         getTrucks();
     }, [])
 
@@ -45,9 +63,6 @@ const Map = () => {
         }, []);
     } catch (error) { console.log(error) }
 
-    console.log(trucks[0]);
-    console.log(center);
-
     return (
         <>
         <div style={{ display: "flex" }}>
@@ -63,7 +78,7 @@ const Map = () => {
             
             <h2 style = {{marginTop: '100px'}}>Food Types</h2>
             <mdui-select multiple style = {{width: '100%'}}>
-                <mdui-menu-item value="Mexican">Mexican</mdui-menu-item>
+                <mdui-menu-item value="Mexican" onClick = {() => {}}>Mexican</mdui-menu-item>
                 <mdui-menu-item value="Chinese">Chinese</mdui-menu-item>
                 <mdui-menu-item value="American">American</mdui-menu-item>
                 <mdui-menu-item value="Taco">Taco</mdui-menu-item>
@@ -105,7 +120,11 @@ const Map = () => {
                     alt={truck['business_name']}
                     src={truck['logo']}
                     height='50'
-                    onClick={() => setSelected({'item': 'test'})}
+                    onClick={() => { 
+                        document.querySelector('.drawer').classList.toggle('opened'); 
+                        setSelect(truck);
+                        console.log(truck);
+                    }}
                 />) }
                 <img
                     style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}
@@ -115,20 +134,42 @@ const Map = () => {
                     alt='logo'
                     src='/logo.png'
                     height='50'
+                    onClick={() => { 
+                        document.querySelector('.drawer').classList.toggle('opened'); 
+                        setSelect({
+                            'logo': '/logo.png',
+                            'business_name': 'Successfully rendered name',
+                            'description': 'Here is a description of a food truck',
+                            'menu': '/logo.png'
+                        });
+                        console.log(select && select['business_name']);
+                    }}
+                    onMouseOver={() => {
+                        console.log('Mouse Hover Registered')
+                    }}
                 />
-
-            {selected && 
-                <div style={{ width: "25%", padding: "2%" }}>
-                    <h2>Price Range</h2>
-                    <mdui-segmented-button-group selects="multiple" style={{display: 'flex', justifyContent: 'center',width: '100%'}}>
-                    <mdui-segmented-button value="All">All</mdui-segmented-button>
-                    <mdui-segmented-button value="$">$</mdui-segmented-button>
-                    <mdui-segmented-button value="$$">$$</mdui-segmented-button>
-                    <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
-                    </mdui-segmented-button-group>
-                </div>
-        }
             </GoogleMap>
+            <div className='drawer'>
+                <button onClick={() => {document.querySelector('.drawer').classList.remove('opened');}}>
+                    X
+                </button>
+                {select && 
+                <div style = {{ justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+                    <img 
+                        src={ select['logo'] }
+                        height='100'
+                    />
+                    <h1>{ select['business_name'] }</h1>
+                    <h1>{ select['description'] }</h1>
+                    <img 
+                        src={ select['menu'] }
+                        height='200'
+                    />
+                </div>
+                }
+            </div>
+            <div>
+        </div>
         </div> }
         </div>
         </>

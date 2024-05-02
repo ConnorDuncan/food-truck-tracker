@@ -1,0 +1,43 @@
+.drawer-container {
+    display: flex;
+  }
+  
+  .drawer {
+    position: fixed;
+    width: 400px;
+    height: 100lvh;
+    background-color: #333;
+    color: #fff;
+    transform: translateX(780px);
+    transition: transform 0.5s ease-in-out;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+  
+  .drawer ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .drawer ul li {
+    padding: 10px;
+  }
+  
+  .drawer ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  .opened {
+    transform: translateX(370px);
+  }
+  
+  .open-button {
+    display: block;
+    margin: 10px;
+  }
+  
