@@ -351,7 +351,7 @@ const handleSubmitLogo = async () => {
     {/* <button className='backButton' >Back</button>
     <button className='saveButton' onClick={handleSave}>Create</button> */}
     <mdui-button variant="elevated" style={{width: "10%"}} onClick={() => window.history.back()}>Back</mdui-button>
-    <mdui-button variant="tonal" style={{width: "10%"}} onClick={handleSave}>save</mdui-button>
+    <mdui-button variant="tonal" style={{width: "10%"}} onClick={handleSave}>Save</mdui-button>
 
   </div>
 </div>
