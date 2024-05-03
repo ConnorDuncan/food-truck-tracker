@@ -1,4 +1,4 @@
-import { TextField, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
+import { TextField, MenuItem, Checkbox, ListItemText, FormControlLabel } from '@material-ui/core';
 import { Controller, useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -29,6 +29,7 @@ function UpdateInfo() {
   const [logo, setLogo] = useState(null);
   const [location, setLocation] = useState(null);
   const [verified, setVerified] = useState(null);
+  const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     const fetchTruckData = async () => {
@@ -71,14 +72,11 @@ function UpdateInfo() {
     });
   };
 
-  const handleCheckboxChange = (e) => {
-    // const isChecked = e.target.checked;
-    // console.log("change to",isChecked);
-    // setIsOpen(isChecked);
+  function handleCheckboxChange(isChecked) {
+      setIsOpen(!isOpen);
+    console.log(isChecked);
+}
 
-    setIsOpen(!isOpen);
-    console.log("change to",isOpen);
-  };
 
 
   const handleFileChange = async (file, path, setter) => {
@@ -204,10 +202,13 @@ function UpdateInfo() {
       </div>
 
       <div className='cate'>
-        <p className='inputlabel'>Is the truck open?</p>
-        {/* <input type="checkbox"  id='checkbox' onChange={handleCheckboxChange} style={{ display: 'none' }}/> */}
-        <mdui-checkbox checked={isOpen} onChange={(e) => handleCheckboxChange(e.target.checked)}></mdui-checkbox>
+        <FormControlLabel
+          control={<Checkbox checked={isOpen} onChange={handleCheckboxChange} />}
+          label="Is the truck open?"
+        />
       </div>
+
+
 
 
 
