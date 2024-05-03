@@ -22,7 +22,7 @@ function AddTruck() {
     const [logo, setLogo] = useState(null);
     const { currentUser } = useAuth();
 
-    const foodTypes = ['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'];
+    const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Pasta', 'Pizza', 'Salads', 'Sandwiches', 'Sushi', 'Other'];
 
 
     const handleSubmitFoodLicense = async () => {
