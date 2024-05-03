@@ -242,13 +242,15 @@ function AddTruck() {
                 />
             </div>
             <div className='cate'>
-                <TextField
-                    label="Max Capacity of Customers"
-                    style={{ width: '300px' }}
-                    variant="outlined"
-                    value={truckCapacity}
-                    onChange={(e) => setTruckCapacity(e.target.value)}
-                />
+            <TextField
+                label="Max Capacity of Customers"
+                style={{ width: '300px' }}
+                variant="outlined"
+                value={truckCapacity}
+                onChange={(e) => setTruckCapacity(e.target.value.replace(/\D/, ''))} // Strip non-numeric values
+                inputMode="numeric" // Mobile keyboards
+                pattern="\d*" // Restrict to digits only
+            />
             </div>
             <div className='cate'>
                 <TextField
