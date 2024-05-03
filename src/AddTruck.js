@@ -41,6 +41,8 @@ function AddTruck() {
       return null;
       }
       };
+
+
       const handleSubmitMenu = async () => {
       if (!menu) {
       alert('No file selected!');
@@ -58,6 +60,7 @@ function AddTruck() {
       }
       };
       
+
       const handleSubmitLogo = async () => {
       if (!logo) {
       alert('No file selected!');
@@ -213,8 +216,19 @@ function AddTruck() {
                             }}
                             style={{ width: '300px' }}
                             SelectProps={{
-                                multiple: true,
-                                renderValue: (selected) => selected.join(", "),
+                            multiple: true,
+                            renderValue: (selected) => selected.join(", "),
+                            MenuProps: {
+                            getContentAnchorEl: null,
+                            anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                            },
+                            transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                            }
+                            }
                             }}
                         >
                             {foodTypes.map((foodType) => (
