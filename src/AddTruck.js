@@ -9,7 +9,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import { useAuth } from './components/AuthContext';
 
-function UpdateInfo() {
+function AddTruck() {
     const { control } = useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -307,4 +307,4 @@ function UpdateInfo() {
     );
 }
 
-export default UpdateInfo;
+export default AddTruck;
