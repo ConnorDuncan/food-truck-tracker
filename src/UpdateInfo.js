@@ -1,3 +1,5 @@
+import { TextField, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
+import { Controller, useForm } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
@@ -8,6 +10,7 @@ import { storage } from './firebase';
 import './loadingSpinner.css';
 import 'mdui/components/card.js';
 import { useAuth } from './components/AuthContext';
+import 'mdui/components/checkbox.js';
 
 function UpdateInfo() {
   const navigate = useNavigate();
@@ -67,6 +70,16 @@ function UpdateInfo() {
       }
     });
   };
+
+  const handleCheckboxChange = (e) => {
+    // const isChecked = e.target.checked;
+    // console.log("change to",isChecked);
+    // setIsOpen(isChecked);
+
+    setIsOpen(!isOpen);
+    console.log("change to",isOpen);
+  };
+
 
   const handleFileChange = async (file, path, setter) => {
     if (!file) return;
@@ -148,10 +161,22 @@ function UpdateInfo() {
       <div className='Description'>Only upload a single file for each field</div>
       <div className='Description'>If you open your truck, it will be marked "open" at your current location!</div>
 
-      <div className='cate'>
+      {/* <div className='cate'>
         <p className='inputlabel'>Name of Your Truck</p>
         <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} />
+      </div> */}
+
+      <div className='cate'>
+        <TextField
+          label="Name of Your Truck"
+          style={{ width: '300px' }}
+          variant="outlined"
+          value={truckBusinessName}
+          onChange={(e) => setTruckBusinessName(e.target.value)}
+        />
       </div>
+
+
       <div className='cate'>
         <p className='inputlabel'>Select Food Type</p>
         <select value={selectedFoodType} onChange={handleFoodTypeChange}>
@@ -161,29 +186,106 @@ function UpdateInfo() {
           ))}
         </select>
       </div>
-      <div className='cate'>
+
+      {/* <div className='cate'>
         <p className='inputlabel'>Max Capacity of Customers</p>
         <input className='infoinput' type="number" value={truckCapacity} onChange={(e) => setTruckCapacity(e.target.value)} />
+      </div> */}
+
+      <div className='cate'>
+        <TextField
+          label="Max Capacity of Customers"
+          style={{ width: '300px' }}
+          variant="outlined"
+          value={truckCapacity}
+          type="number"
+          onChange={(e) => setTruckCapacity(e.target.value)}
+        />
       </div>
+
       <div className='cate'>
         <p className='inputlabel'>Is the truck open?</p>
-        <input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.target.checked)} />
+        {/* <input type="checkbox"  id='checkbox' onChange={handleCheckboxChange} style={{ display: 'none' }}/> */}
+        <mdui-checkbox checked={isOpen} onChange={(e) => handleCheckboxChange(e.target.checked)}></mdui-checkbox>
       </div>
-      <div className='cate'>
+
+
+
+      {/* <div className='cate'>
         {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Food License</a>}
         <input className='fileUpload' type="file" onChange={(e) => setFoodLicense(e.target.files[0])} />
-      </div>
+      </div> */}
+
       <div className='cate'>
+                {/* <p className='inputlabel'>Food License</p> */}
+                {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel' style={{marginRight:'30px'}}>Food License</a>}
+                <input
+                    type="file"
+                    onChange={(e) => setFoodLicense(e.target.files[0])}
+                    id="foodLicenseInput"
+                    style={{ display: 'none' }}
+                />
+                <mdui-button
+                    variant="outlined"
+                    component="label"
+                    onClick={() => document.getElementById('foodLicenseInput').click()}
+                >
+                    {foodLicense ? foodLicense.name : "No file chosen"}
+                </mdui-button>
+            </div>
+
+      {/* <div className='cate'>
         {menuUrl && <a href={menuUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Menu</a>}
         <input className='fileUpload' type="file" onChange={(e) => setMenu(e.target.files[0])} />
-      </div>
+      </div> */}
+
       <div className='cate'>
+                {/* <p className='inputlabel'>Menu</p> */}
+                {menuUrl && <a href={menuUrl} target="_blank" rel="noopener noreferrer" className='inputlabel' style={{marginRight:'30px'}}>Menu</a>}
+                <input
+                    type="file"
+                    onChange={(e) => setMenu(e.target.files[0])}
+                    id="menuInput"
+                    style={{ display: 'none' }}
+                />
+                <mdui-button
+                    variant="outlined"
+                    component="label"
+                    onClick={() => document.getElementById('menuInput').click()}
+                >
+                    {menu ? menu.name : "No file chosen"}
+                </mdui-button>
+            </div>
+
+      {/* <div className='cate'>
         {logoUrl && <a href={logoUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Logo</a>}
         <input className='fileUpload' type="file" onChange={(e) => setLogo(e.target.files[0])} />
-      </div>
+      </div> */}
+
+      <div className='cate'>
+                {/* <p className='inputlabel'>Logo</p> */}
+                {logoUrl && <a href={logoUrl} target="_blank" rel="noopener noreferrer" className='inputlabel' style={{marginRight:'30px'}}>Logo</a>}
+                <input
+                    type="file"
+                    onChange={(e) => setLogo(e.target.files[0])}
+                    id="logoInput"
+                    style={{ display: 'none' }}
+                />
+                <mdui-button
+                    variant="outlined"
+                    component="label"
+                    onClick={() => document.getElementById('logoInput').click()}
+                >
+                    {logo ? logo.name : "No file chosen"}
+                </mdui-button>
+            </div>
+
       <div className='buttonContainer'>
-        <button className='backButton' onClick={() => window.history.back()}>Back</button>
-        <button className='saveButton' onClick={handleSave}>Save</button>
+        {/* <button className='backButton' onClick={() => window.history.back()}>Back</button>
+        <button className='saveButton' onClick={handleSave}>Save</button> */}
+
+        <mdui-button variant="elevated" style={{ width: "150px" }} onClick={() => window.history.back()}>Back</mdui-button>
+        <mdui-button variant="tonal" style={{ width: "150px" }} onClick={handleSave}>Save</mdui-button>
       </div>
     </div>
   );
