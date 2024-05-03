@@ -27,7 +27,9 @@ function App() {
             <Route path='/business/list' element={<Protected />}>
               <Route index element={<FoodTrucks />} />
             </Route>
-            <Route path='/map' element={<Map />} />
+            <Route path='/map' element={<Protected />}>
+              <Route path='/map' element={<Map />} />
+            </Route>
             <Route path='/business/login' element={<Protected />}>
               <Route index element={<BusinessLogin />} />
             </Route>
