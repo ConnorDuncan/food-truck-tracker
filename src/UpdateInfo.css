@@ -17,7 +17,11 @@
     margin-right: 30px;
 }
 
-.Description {
+.fileUpload{
+    margin-left: 30px;
+}
+
+.Description{
     color: gray;
     text-align: center;
     margin-bottom: 20px;

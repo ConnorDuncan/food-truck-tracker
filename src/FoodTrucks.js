@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './FoodTrucks.css';
 import TruckIcon from './FoodTruckIcon';
@@ -16,6 +16,9 @@ const FoodTrucks = () => {
         navigate('/business/AddTruck');
     };
 
+    useEffect(() => {
+        
+    })
     if (loading){ return (<div className="Businesses">
     <header className="Business_header">
         <h1 className="Title">Your Food Trucks</h1>
@@ -33,6 +36,7 @@ const FoodTrucks = () => {
                 <p className="Description">
                     Here are the trucks you own, including those that are waiting for verification
                 </p>
+                <mdui-button variant="tonal" onClick={navigateToPage}>Add a Food Truck</mdui-button>
             </header>
             <div className="truck-container">
             {trucks.length > 0 ? trucks.map((truck) => (
@@ -59,7 +63,6 @@ const FoodTrucks = () => {
                 </mdui-card>
             )) : <p>No trucks available. Click below to add one now!</p>}  {/* Show message if no trucks are found */}
             </div>
-            <mdui-button variant="tonal" onClick={navigateToPage}>Add a Food Truck</mdui-button>
         </div>
     );
 };
