@@ -1,17 +1,42 @@
 import './Navbar.css';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { signOut } from '@firebase/auth';
-import {auth} from './firebase';
+import { auth } from './firebase';
 import { useAuth } from './components/AuthContext';
+import { Menu, MenuItem, Typography, IconButton, Avatar } from '@material-ui/core';
 
 
 const Navbar = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation(); // Hook to get current location
+  const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    // Clear the anchorEl state on location change
+    setAnchorEl(null);
+  }, [location]);
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuSettings = () => {
+    setAnchorEl(null);
+    navigate('/user/Settings');
+  };
+  const handleMenuProfile = () => {
+    setAnchorEl(null);
+    navigate('/business/Profile');
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
   const handleLogout = async () => {
     try {
         await signOut(auth);
+        setAnchorEl(null); // Clear the anchorEl state
+      navigate('/');
     } catch (error) {
         console.log(error);
     }
@@ -26,9 +51,38 @@ const Navbar = () => {
         </div>
   
         <div className="links">
-          <a href="/" className="nav-link">Home</a>
           <a href="/map" className="nav-link">Map</a>
-          <a href="/home" className="nav-link" onClick={handleLogout}>Logout</a>
+          {currentUser && (
+          <>
+            <IconButton onClick={handleMenuOpen}>
+              <img
+                src={currentUser.photoURL}
+                alt="User Profile"
+                className="user-photo"
+                style={{ borderRadius: '50%', width: '40px', height: '40px' }}
+              />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              PaperProps={{
+                style: {
+                  width: '250px', // Adjust width
+                  height: 'auto', // Adjust height
+                },
+              }}
+            >
+              <MenuItem>
+                <Avatar src={currentUser.photoURL} style={{ marginRight: '10px' }} />
+                <Typography>{currentUser.displayName || 'User'}</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleMenuProfile}>Profile</MenuItem>
+              <MenuItem onClick={handleMenuSettings}>Settings</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+          </>
+        )}
         </div>
       </nav>
     );

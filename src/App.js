@@ -11,6 +11,9 @@ import NotFound from './pages/FourOhFour.js';
 import FoodTrucks from './FoodTrucks.js';  // Make sure this is the component, not useFoodTrucks hook
 import UpdateInfo from './UpdateInfo.js';
 import AddTruck from './AddTruck.js';
+import Settings from './pages/Settings.js';
+import ProfileBusiness from './pages/ProfileBusiness.js';
+import ProfileCustomer from './pages/ProfileCustomer.js';
 
 function App() {
   return (
@@ -41,6 +44,15 @@ function App() {
             </Route>
             <Route path="/business/AddTruck" element={<Protected />}>
               <Route index element={<AddTruck />} />
+            </Route>
+            <Route path="/user/Settings" element={<Protected />}>
+              <Route index element={<Settings />} />
+            </Route>
+            <Route path="/business/Profile" element={<Protected />}>
+              <Route index element={<ProfileBusiness />} />
+            </Route>
+            <Route path="/customer/Profile" element={<Protected />}>
+              <Route index element={<ProfileCustomer />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
