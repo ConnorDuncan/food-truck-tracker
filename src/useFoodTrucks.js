@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, doc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { useAuth } from './components/AuthContext';
 
@@ -34,7 +34,44 @@ const useFoodTrucks = () => {
     fetchTrucks();
   }, [currentUser]); // Dependency array includes currentUser to re-run the effect when currentUser changes
 
-  return { trucks, loading };
+  const updateTruck = async (truckId, updatedData) => {
+    const truckRef = doc(db, 'userToTrucks', currentUser.uid, 'listOfTrucks', truckId);
+    const truckRefTwo = doc(db, "food-trucks", truckId);
+    try {
+      await updateDoc(truckRef, updatedData);
+      await updateDoc(truckRefTwo, updatedData);
+      // Optionally update the local state
+      setTrucks((prevTrucks) =>
+        prevTrucks.map((truck) => (truck.id === truckId ? { ...truck, ...updatedData } : truck))
+      );
+      console.log('Truck updated successfully!');
+    } catch (error) {
+      console.error('Error updating truck:', error);
+    }
+  };
+
+  const createTruck = async (truckData) => {
+    if (!currentUser) {
+      console.error("No user found, cannot create truck.");
+      return;
+    }
+  
+    const trucksRef = collection(db, 'userToTrucks', currentUser.uid, 'listOfTrucks');
+    const trucksRefTwo = collection(db, 'food-trucks');
+    const newTruckRef = doc(trucksRef); // Generate a new document reference
+    const newTruckRefTwo = doc(trucksRefTwo);
+  
+    try {
+      await setDoc(newTruckRef, truckData); // Set the new document
+      await setDoc(newTruckRefTwo, truckData);
+      setTrucks(prevTrucks => [...prevTrucks, { id: newTruckRef.id, ...truckData }]); // Add to local state
+      console.log("Truck created successfully:", newTruckRef.id);
+    } catch (error) {
+      console.error("Error creating truck:", error);
+    }
+  };
+
+  return { trucks, loading, updateTruck, createTruck };
 };
 
 export default useFoodTrucks;

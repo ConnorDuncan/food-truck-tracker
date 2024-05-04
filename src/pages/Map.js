@@ -85,7 +85,7 @@ const Map = () => {
         )}
 
         {center &&
-        <div style={{ width: "100%", overflow: "hidden", justifyContent: 'center', display: 'flex', alignItems: 'center'}}>
+        <div style={{ width: "100%", overflow: "hidden", justifyContent: 'center', display: 'flex', alignItems: 'right'}}>
             <GoogleMap
                 apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
                 defaultCenter={center}
