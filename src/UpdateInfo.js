@@ -12,15 +12,14 @@ import 'mdui/components/card.js';
 import { useAuth } from './components/AuthContext';
 import 'mdui/components/checkbox.js';
 
-
-
 function UpdateInfo() {
+  const { control } = useForm();
   const navigate = useNavigate();
   const { truckId } = useParams();
   const { currentUser } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedFoodType, setSelectedFoodType] = useState([]);
+  const [selectedFoodType, setSelectedFoodType] = useState('');
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
   const [foodLicenseUrl, setFoodLicenseUrl] = useState('');
@@ -32,8 +31,6 @@ function UpdateInfo() {
   const [location, setLocation] = useState(null);
   const [verified, setVerified] = useState(null);
   const [counter, setCounter] = useState(1);
-  const { control } = useForm();
-
 
   const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Pasta', 'Pizza', 'Salads', 'Sandwiches', 'Sushi', 'Other'];
 
@@ -180,60 +177,48 @@ function UpdateInfo() {
         />
       </div>
 
-{/* 
       <div className='cate'>
-        <p className='inputlabel'>Select Food Type</p>
-        <select value={selectedFoodType} onChange={handleFoodTypeChange}>
-          <option value="">Select Food Type</option>
-          {['Burgers', 'Chinese', 'Pizza', 'Mexican', 'Sushi', 'Salads', 'Sandwiches', 'Pasta'].map((foodType) => (
-            <option key={foodType} value={foodType}>{foodType}</option>
-          ))}
-        </select>
-      </div> */}
-
-      <div className='cate'>
-        <Controller
-            control={control}
-            name="selectedFoodType"
-            
-            value={selectedFoodType}
-             render={({ field: { onChange, value = [] } }) => (
-                <TextField
-                    select
-                    label="Food Type"
-                    variant="outlined"
-                    value={value}
-                    onChange={(e) => {
-                        setSelectedFoodType(e.target.value);
-                        onChange(e.target.value);
-                    }}
-                    style={{ width: '300px' }}
-                    SelectProps={{
-                    multiple: true,
-                    renderValue: (selected) => selected.join(", "),
-                    MenuProps: {
-                    getContentAnchorEl: null,
-                    anchorOrigin: {
-                    vertical: "bottom",
-                    horizontal: "left"
-                    },
-                    transformOrigin: {
-                    vertical: "top",
-                    horizontal: "left"
-                    }
-                    }
-                    }}
-                >
-                    {foodTypes.map((foodType) => (
-                        <MenuItem key={foodType} value={foodType}>
-                             <Checkbox checked={value.includes(foodType)} />
-                            <ListItemText primary={foodType} />
-                        </MenuItem>
-                    ))}
-                </TextField>
-            )}
-        />
-    </div>
+                <Controller
+                    control={control}
+                    name="selectedFoodType"
+                    defaultValue={selectedFoodType}
+                    render={({ field: { onChange, value = [] } }) => (
+                        <TextField
+                            select
+                            label="Food Type"
+                            variant="outlined"
+                            value={value}
+                            onChange={(e) => {
+                                setSelectedFoodType(e.target.value);
+                                onChange(e.target.value);
+                            }}
+                            style={{ width: '300px' }}
+                            SelectProps={{
+                            multiple: true,
+                            renderValue: (selected) => selected.join(", "),
+                            MenuProps: {
+                            getContentAnchorEl: null,
+                            anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                            },
+                            transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                            }
+                            }
+                            }}
+                        >
+                            {foodTypes.map((foodType) => (
+                                <MenuItem key={foodType} value={foodType}>
+                                    <Checkbox checked={value.includes(foodType)} />
+                                    <ListItemText primary={foodType} />
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    )}
+                />
+            </div>
 
       {/* <div className='cate'>
         <p className='inputlabel'>Max Capacity of Customers</p>
