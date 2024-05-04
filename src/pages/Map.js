@@ -11,6 +11,7 @@ import 'mdui/components/menu-item.js';
 import 'mdui/components/circular-progress.js';
 import 'mdui/components/button.js';
 import '../components/drawer.css';
+import '../components/toggle.css';
 import '../pages/BusinessInfo.css';
 
 const Map = () => {
@@ -18,7 +19,8 @@ const Map = () => {
     const [center, setCenter] = useState(null);
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
-    const [drawerLoading, setDrawerLoading] = useState(false); // Drawer loading state
+    const [types, setTypes] = useState(['Mexican', 'Chinese', 'Italian']);
+    const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
 
     const [type, setType] = useState({
         "Mexican": 0,
@@ -69,8 +71,9 @@ const Map = () => {
     }, []);
 
     const handleDrawerOpen = (truck) => {
-        setDrawerLoading(true); // Set drawer loading to true
+        setDrawerLoading(true);
         document.querySelector('.drawer').classList.add('opened');
+    
         setSelect({
             'header': truck['header'],
             'logo': truck['logo'],
@@ -80,45 +83,60 @@ const Map = () => {
             'description': 'filler description',
             'id': truck.id
         });
-        setDrawerLoading(false); 
     };
-
-    // Track when both images have loaded
-    const [logoLoaded, setLogoLoaded] = useState(false);
-    const [menuLoaded, setMenuLoaded] = useState(false);
-
-    // Set loading status based on the images' loaded status
+    
+    // useEffect to set drawerLoading to false once setSelect is complete
     useEffect(() => {
-        if (logoLoaded && menuLoaded) {
-            setDrawerLoading(false);
-        }
-    }, [logoLoaded, menuLoaded]);
+        setDrawerLoading(false);
+        console.log(drawerLoading); // Logs false
+    }, [select]);
 
     return (
         <div style={{ display: "flex" }}>
             <div style={{ width: "25%", padding: "2%" }}>
                 {/* Sidebar content */}
                 <h2>Price Range</h2>
-                <mdui-segmented-button-group selects="multiple" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                {/* <mdui-segmented-button-group selects="multiple" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                     <mdui-segmented-button value="All">All</mdui-segmented-button>
                     <mdui-segmented-button value="$">$</mdui-segmented-button>
                     <mdui-segmented-button value="$$">$$</mdui-segmented-button>
                     <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
-                </mdui-segmented-button-group>
+                </mdui-segmented-button-group> */}
 
                 <h2 style={{ marginTop: '100px' }}>Food types</h2>
-                <mdui-select multiple style={{ width: '100%' }}>
+                {/* <mdui-select multiple style={{ width: '100%' }} onChange={handleSelectChange}>
                     <mdui-menu-item value="Mexican">Mexican</mdui-menu-item>
                     <mdui-menu-item value="Chinese">Chinese</mdui-menu-item>
                     <mdui-menu-item value="American">American</mdui-menu-item>
                     <mdui-menu-item value="Taco">Taco</mdui-menu-item>
                     <mdui-menu-item value="Hamburger">Hamburger</mdui-menu-item>
                     <mdui-menu-item value="Pizza">Pizza</mdui-menu-item>
-                </mdui-select>
+                </mdui-select> */}
+
+                <div className='box' onClick = {() => document.querySelector('.options').classList.toggle('options-open')}>
+                    {types.map((type) => type)}
+                </div>
+                <div className='options'>
+                    <li className='option'>Option 1</li>
+                    <li className='option'>Option 2</li>
+                    <li className='option'>Option 3</li>
+                    <li className='option'>Option 4</li>
+                    
+                </div>
 
                 <mdui-button variant="tonal" style={{ marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center' }}>Save Preferences</mdui-button>
+
+
             </div>
 
+            {!center && (
+                <>  
+                    <div style={{position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)'}}>
+                        <h1>Just a moment...</h1>
+                        <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>
+                    </div>
+                </>
+            )}
             {center && (
                 <div style={{ width: "100%", overflow: "hidden", justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
                     <GoogleMap
@@ -152,38 +170,50 @@ const Map = () => {
                     </GoogleMap>
                     
                     <div className='drawer'>
+                        <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
                         <div>
                             <ul>
                                 <ul>
-                                    <header className="drawer-header" style={{height: '5vh', backgroundColor: '#fff'}}>
+                                    <header className="drawer-header" style={{height: '5vh'}}>
                                         <h1>{ select['business_name'] }</h1>
                                     </header>
                                 </ul>
+
                                 <div className='drawer-header'>
                                     <img 
-                                    style = {{ justifyContent: 'center', alignItems: 'center' }}
-                                    width='400px'
+                                    style = {{ justifyContent: 'center', alignItems: 'center' ,marginTop:'40px', borderRadius: '10px'}}
+                                    width='300px'
                                     height='100%'
                                     src={ select['header'] }
                                     />
                                 </div>
                                 
                                 </ul>
-                                <ul style={{ listStyleType: 'none', textAlign: 'left', padding: '30px' }}>
-                                    <li>{ select['food_type'] }</li>
-                                    <mdui-card style={{ width: '370px', height: '150px', padding: '10px' }}>
+                                <mdui-card variant="elevated" style={{marginLeft:'40px',width: '300px',height: '124px'}}>
+                                    <p style={{marginLeft:'15px', color:'gray'}}>What kinds of food they are offering:</p>
+                                    <p style={{marginLeft:'15px', color:'gray'}}>{ select['food_type'] }</p>
+                                    
+                                </mdui-card>
+
+                                <mdui-card variant="filled" style={{marginLeft:'40px',marginTop:'30px',width: '300px',height: '124px'}}>
                                         <tag>{ select['description'] }</tag>
-                                    </mdui-card>
+                                </mdui-card>
+                                <div style={{ marginLeft:'60px' }}>
                                     <img 
                                         src={ select['menu'] }
                                         height='150'
+                                        style={{marginLeft:'40px',marginTop:'30px', borderRadius: '10px'}}
                                     />
-                                    <li><Link to={`/business/info/`}>view details</Link></li>
-                                </ul>
-                        </div>
+                                </div>
+
+                                <mdui-button variant="tonal" style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/`}>Click to view more details</Link>
+                                </mdui-button>
+                            </div>
                         }
+                        </mdui-navigation-drawer>
                     </div>
                     <div>
                     </div>

@@ -1,0 +1,33 @@
+.box {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 30px;
+    background-color: #f9f9f9;
+    margin: 0; 
+    align-items: center;
+    display: flex;
+}
+
+.options {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    list-style-type: none;
+    background-color: #f9f9f9;
+    transition: height 0.3s ease;
+    height: 0px;
+    overflow: hidden;
+}
+
+.option {
+    height: calc(200px / 16);
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.options-open {
+    height: 200px;
+    border-bottom: 1px solid #ccc;
+}
