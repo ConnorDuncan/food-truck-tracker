@@ -50,7 +50,7 @@ function BusinessInfo() {
 
   return (
     <div className="BusinessName">
-      <header className="info-header">
+      <header className="info-header" style={{ width: '400px' }}>
         <h1>
           Business_name
         </h1>
