@@ -29,6 +29,7 @@ const FoodTrucks = () => {
     
     </div>
     );}
+
     return (
         <div className="Businesses">
             <header className="Business_header">
@@ -50,6 +51,16 @@ const FoodTrucks = () => {
                                 <div className='check_circle'>
                                     <CheckCircleIcon />
                                 </div>
+
+                                <mdui-snackbar id="open-snackbar">
+                                    The truck is {truck.open ? "closed" : "opened"}
+                                </mdui-snackbar>
+
+                                <mdui-button variant="outlined"
+                                    onClick={()=>document.getElementById('open-snackbar').open=true}
+                                >
+                                    {truck.open ? "Close" : "Open"}
+                                </mdui-button>
                             </> :
                             <>
                                 <div className="waiting">Waiting for Verification</div>
