@@ -124,6 +124,8 @@ function UpdateInfo() {
     if (foodLicense) {
       updates.license = await handleFileChange(foodLicense, 'licenses', setFoodLicenseUrl);
       updates.verified = false;
+      updates.open = false;
+      updates.location = null;
     }
     if (menu) {
       updates.menu = await handleFileChange(menu, 'menus', setMenuUrl);
@@ -138,9 +140,15 @@ function UpdateInfo() {
 
       const userTruckRef = doc(db, "userToTrucks", currentUser.uid, "listOfTrucks", truckId);
       await updateDoc(userTruckRef, updates);
-
-      alert("Truck updated successfully!");
-      navigate('/business/list');
+      if(foodLicense){
+        alert("Truck updated successfully. Please wait for re-verification.");
+        navigate('/business/list');
+      }
+      else{
+        alert("Truck updated successfully!");
+        navigate('/business/list');
+      }
+      
     } catch (error) {
       console.error("Error updating truck: ", error);
       alert("Failed to update the truck.");
