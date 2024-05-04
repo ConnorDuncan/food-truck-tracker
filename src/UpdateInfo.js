@@ -164,10 +164,6 @@ function UpdateInfo() {
       <div className='Description'>Only upload a single file for each field</div>
       <div className='Description'>If you open your truck, it will be marked "open" at your current location!</div>
 
-      {/* <div className='cate'>
-        <p className='inputlabel'>Name of Your Truck</p>
-        <input className='infoinput' value={truckBusinessName} onChange={(e) => setTruckBusinessName(e.target.value)} />
-      </div> */}
 
       <div className='cate'>
         <TextField
@@ -222,10 +218,6 @@ function UpdateInfo() {
                 />
             </div>
 
-      {/* <div className='cate'>
-        <p className='inputlabel'>Max Capacity of Customers</p>
-        <input className='infoinput' type="number" value={truckCapacity} onChange={(e) => setTruckCapacity(e.target.value)} />
-      </div> */}
 
       <div className='cate'>
         <TextField
@@ -246,14 +238,6 @@ function UpdateInfo() {
       </div>
 
 
-
-
-
-      {/* <div className='cate'>
-        {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Food License</a>}
-        <input className='fileUpload' type="file" onChange={(e) => setFoodLicense(e.target.files[0])} />
-      </div> */}
-
       <div className='cate'>
                 {/* <p className='inputlabel'>Food License</p> */}
                 {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel' style={{marginRight:'30px'}}>Food License</a>}
@@ -272,10 +256,6 @@ function UpdateInfo() {
                 </mdui-button>
             </div>
 
-      {/* <div className='cate'>
-        {menuUrl && <a href={menuUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Menu</a>}
-        <input className='fileUpload' type="file" onChange={(e) => setMenu(e.target.files[0])} />
-      </div> */}
 
       <div className='cate'>
                 {/* <p className='inputlabel'>Menu</p> */}
@@ -295,10 +275,6 @@ function UpdateInfo() {
                 </mdui-button>
             </div>
 
-      {/* <div className='cate'>
-        {logoUrl && <a href={logoUrl} target="_blank" rel="noopener noreferrer" className='inputlabel'>Logo</a>}
-        <input className='fileUpload' type="file" onChange={(e) => setLogo(e.target.files[0])} />
-      </div> */}
 
       <div className='cate'>
                 {/* <p className='inputlabel'>Logo</p> */}
@@ -319,8 +295,6 @@ function UpdateInfo() {
             </div>
 
       <div className='buttonContainer'>
-        {/* <button className='backButton' onClick={() => window.history.back()}>Back</button>
-        <button className='saveButton' onClick={handleSave}>Save</button> */}
 
         <mdui-button variant="elevated" style={{ width: "150px" }} onClick={() => window.history.back()}>Back</mdui-button>
         <mdui-button variant="tonal" style={{ width: "150px" }} onClick={handleSave}>Save</mdui-button>
