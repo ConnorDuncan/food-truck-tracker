@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, doc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { useAuth } from './components/AuthContext';
 
@@ -34,7 +34,23 @@ const useFoodTrucks = () => {
     fetchTrucks();
   }, [currentUser]); // Dependency array includes currentUser to re-run the effect when currentUser changes
 
-  return { trucks, loading };
+  const updateTruck = async (truckId, updatedData) => {
+    const truckRef = doc(db, 'userToTrucks', currentUser.uid, 'listOfTrucks', truckId);
+    const truckRefTwo = doc(db, "food-trucks", truckId);
+    try {
+      await updateDoc(truckRef, updatedData);
+      await updateDoc(truckRefTwo, updatedData);
+      // Optionally update the local state
+      setTrucks((prevTrucks) =>
+        prevTrucks.map((truck) => (truck.id === truckId ? { ...truck, ...updatedData } : truck))
+      );
+      console.log('Truck updated successfully!');
+    } catch (error) {
+      console.error('Error updating truck:', error);
+    }
+  };
+
+  return { trucks, loading, updateTruck };
 };
 
 export default useFoodTrucks;
