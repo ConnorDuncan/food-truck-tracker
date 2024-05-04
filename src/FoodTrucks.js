@@ -17,6 +17,7 @@ const FoodTrucks = () => {
 
   const toggleOpenStatus = (truckId, currentStatus) => {
     updateTruck(truckId, { open: !currentStatus });
+    document.getElementById('open-snackbar').open=true;
   };
 
   if (loading) {
@@ -53,6 +54,12 @@ const FoodTrucks = () => {
                   <div className='check_circle'>
                     <CheckCircleIcon />
                   </div>
+
+                <mdui-snackbar closeable id="open-snackbar">
+                    The truck is {truck.open ? "opened" : "closed"}
+                </mdui-snackbar>
+
+
                   <mdui-button
                     variant="outlined"
                     onClick={() => toggleOpenStatus(truck.id, truck.open)}
