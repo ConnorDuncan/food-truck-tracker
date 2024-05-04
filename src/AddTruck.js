@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
 import { db } from './firebase';
-import { collection, doc, setDoc, getDoc, updateDoc} from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, updateDoc, Timestamp} from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import { useAuth } from './components/AuthContext';
@@ -130,6 +130,8 @@ function AddTruck() {
       setIsLoading(false);
       return;
       }
+      const currentTime = Timestamp.now();
+
       await setDoc(newTruckRef, {
       business_name: truckBusinessName,
       food_type: selectedFoodType,
@@ -140,7 +142,8 @@ function AddTruck() {
       open: false,
       verified: false,
       creator: currentUser.uid,
-      description: truckIntro
+      description: truckIntro,
+      createTime: currentTime
       });
       const userTrucksRef = collection(db, "userToTrucks", currentUser.uid, "listOfTrucks");
       const userTruckRef = doc(userTrucksRef, truckId);
@@ -155,7 +158,8 @@ function AddTruck() {
       open: false,
       verified: false,
       creator: currentUser.uid,
-      description: truckIntro
+      description: truckIntro,
+      createTime: currentTime
       });
       const userRef = doc(db, "userToTrucks", currentUser.uid);
       const userSnap = await getDoc(userRef);

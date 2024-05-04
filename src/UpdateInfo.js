@@ -123,6 +123,7 @@ function UpdateInfo() {
 
     if (foodLicense) {
       updates.license = await handleFileChange(foodLicense, 'licenses', setFoodLicenseUrl);
+      updates.verified = false;
     }
     if (menu) {
       updates.menu = await handleFileChange(menu, 'menus', setMenuUrl);
