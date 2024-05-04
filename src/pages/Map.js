@@ -12,6 +12,7 @@ import 'mdui/components/circular-progress.js';
 import 'mdui/components/button.js';
 import '../components/drawer.css';
 import '../pages/BusinessInfo.css';
+import 'mdui/components/card.js';
 
 const Map = () => {
     const db = getFirestore(app);
@@ -69,7 +70,13 @@ const Map = () => {
     }, []);
 
     const handleDrawerOpen = (truck) => {
-        setDrawerLoading(true); // Set drawer loading to true
+
+        document.querySelector('.drawer').querySelector("mdui-navigation-drawer").open=true;
+
+
+
+
+        // setDrawerLoading(true); // Set drawer loading to true
         document.querySelector('.drawer').classList.add('opened');
         setSelect({
             'header': truck['header'],
@@ -77,10 +84,10 @@ const Map = () => {
             'menu': truck['menu'],
             'food_type': truck['food_type'],
             'business_name': truck['business_name'],
-            'description': 'filler description',
+            'description': truck['description'],
             'id': truck.id
         });
-        setDrawerLoading(false); 
+        // setDrawerLoading(false); 
     };
 
     // Track when both images have loaded
@@ -119,13 +126,22 @@ const Map = () => {
                 <mdui-button variant="tonal" style={{ marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center' }}>Save Preferences</mdui-button>
             </div>
 
+            {!center && (
+            <>  
+                <div style={{position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)'}}>
+                    <h1>Just a moment...</h1>
+                    <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>
+                </div>
+            </>
+            )}
+
             {center && (
                 <div style={{ width: "100%", overflow: "hidden", justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
                     <GoogleMap
                         apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
                         defaultCenter={center}
                         defaultZoom={13}
-                        mapMinHeight="100vh"
+                        mapMinHeight="90vh"
                     >
                         {trucks && trucks.map((truck) =>
                             truck['open'] &&
@@ -152,38 +168,50 @@ const Map = () => {
                     </GoogleMap>
                     
                     <div className='drawer'>
+                        <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
                         <div>
                             <ul>
                                 <ul>
-                                    <header className="drawer-header" style={{height: '5vh', backgroundColor: '#fff'}}>
+                                    <header className="drawer-header" style={{height: '5vh'}}>
                                         <h1>{ select['business_name'] }</h1>
                                     </header>
                                 </ul>
+
                                 <div className='drawer-header'>
                                     <img 
-                                    style = {{ justifyContent: 'center', alignItems: 'center' }}
-                                    width='400px'
+                                    style = {{ justifyContent: 'center', alignItems: 'center' ,marginTop:'40px', borderRadius: '10px'}}
+                                    width='300px'
                                     height='100%'
                                     src={ select['header'] }
                                     />
                                 </div>
                                 
                                 </ul>
-                                <ul style={{ listStyleType: 'none', textAlign: 'left', padding: '30px' }}>
-                                    <li>{ select['food_type'] }</li>
-                                    <mdui-card style={{ width: '370px', height: '150px', padding: '10px' }}>
+                                <mdui-card variant="elevated" style={{marginLeft:'40px',width: '300px',height: '124px'}}>
+                                    <p style={{marginLeft:'15px', color:'gray'}}>What kinds of food they are offering:</p>
+                                    <p style={{marginLeft:'15px', color:'gray'}}>{ select['food_type'] }</p>
+                                    
+                                </mdui-card>
+
+                                <mdui-card variant="filled" style={{marginLeft:'40px',marginTop:'30px',width: '300px',height: '124px'}}>
                                         <tag>{ select['description'] }</tag>
-                                    </mdui-card>
+                                </mdui-card>
+                                <div style={{ marginLeft:'60px' }}>
                                     <img 
                                         src={ select['menu'] }
                                         height='150'
+                                        style={{marginLeft:'40px',marginTop:'30px', borderRadius: '10px'}}
                                     />
-                                    <li><Link to={`/business/info/`}>view details</Link></li>
-                                </ul>
-                        </div>
+                                </div>
+
+                                <mdui-button variant="tonal" style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
+                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/`}>Click to view more details</Link>
+                                </mdui-button>
+                            </div>
                         }
+                        </mdui-navigation-drawer>
                     </div>
                     <div>
                     </div>
