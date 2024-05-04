@@ -111,7 +111,6 @@ function UpdateInfo() {
     if (truckBusinessName) updates.business_name = truckBusinessName;
     if (selectedFoodType.length != 0){
       updates.food_type = selectedFoodType;
-      console.log(selectedFoodType);
     }
     if (truckCapacity) updates.max_capacity = parseInt(truckCapacity, 10);
     if (isOpen !== undefined) updates.open = isOpen;
