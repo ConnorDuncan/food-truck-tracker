@@ -27,7 +27,12 @@ const Navbar = () => {
   };
   const handleMenuProfile = () => {
     setAnchorEl(null);
-    navigate('/business/Profile');
+    if(isCustomer){
+      navigate('/customer/Profile');
+    }
+    else{
+      navigate('/business/Profile');
+    }
   };
 
   const handleMenuClose = () => {
