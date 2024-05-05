@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import './Settings.css';
 
 const ProfileBusiness    = () => {
     useEffect(() => {
         
     })
     return (
-        <div>
-            <h1>Profile</h1>
+        <div className="parent-container">
+            <h1 className="Title">Profile</h1>
         </div>
     );
 };

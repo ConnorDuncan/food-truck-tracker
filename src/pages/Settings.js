@@ -1,14 +1,15 @@
-import { alignProperty } from '@mui/material/styles/cssUtils';
 import React, { useEffect } from 'react';
+import './Settings.css';
 
 const Settings = () => {
     useEffect(() => {
         
     })
     return (
-        <div>
+        <div className="parent-container">
             <h1 className="Title">Settings</h1>
         </div>
+
     );
 };
 

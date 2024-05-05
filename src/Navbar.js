@@ -85,11 +85,10 @@ const Navbar = () => {
               }}
             >
                 <p style={{ textAlign: 'center' }}>Signed in as {userLabel}</p>
-              <MenuItem>
+              <MenuItem onClick={handleMenuProfile}>
                 <Avatar src={currentUser.photoURL} style={{ marginRight: '10px' }} />
                 <Typography>{currentUser.displayName || 'User'}</Typography>
               </MenuItem>
-              <MenuItem onClick={handleMenuProfile}>Profile</MenuItem>
               <MenuItem onClick={handleMenuSettings}>Settings</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>

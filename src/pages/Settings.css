@@ -1,0 +1,7 @@
+/* Add this to your CSS file */
+.parent-container {
+    display: flex;
+    justify-content: center; /* horizontal alignment */
+    height: 100vh;           /* Set a height to the container */
+  }
+  
