@@ -130,8 +130,9 @@ const Map = () => {
                     <GoogleMap
                         apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
                         defaultCenter={center}
-                        defaultZoom={13}
+                        defaultZoom={15}
                         mapMinHeight="100vh"
+                        options={{ minZoom: 13, fullscreenControl: false }}
                     >
                         {trucks && trucks.map((truck, index) =>
                             truck['open'] &&
@@ -161,30 +162,32 @@ const Map = () => {
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
                         <div style={{ marginTop: '0' }}>
-                            <ul style={{ marginTop: '0', marginBottom: '0' }}>
-                                <header style={{ backgroundColor: '#fff', flexWrap: 'wrap' }}>
-                                    <h1>{ select['business_name'] }</h1>
-                                </header>
-                            </ul>
+                            <ul>
+                                {select['header'] && <div>
+                                    <img 
+                                    style = {{ justifyContent: 'center', alignItems: 'center', borderRadius: '5px', marginTop: '20px' }}
+                                    width='90%'
+                                    height='90%'
+                                    src={ select['header'] }
+                                    />
+                                </div>}
 
-                            {select['header'] && <div className='drawer-header'>
+                                <ul>
+                                    <h1 style={{ padding: '5px', margin: '0' }}>{ select['business_name'] }</h1>
+                                </ul>
+
+                                <div className='selected' style={{ flexWrap: 'wrap', padding: '10px' }}>{ select['food_type'] }</div>
+                                {/* <mdui-card style={{ width: '370px', height: '150px', padding: '10px', flexWrap: 'wrap' }}>
+                                    <p style={{marginLeft:'15px', color:'gray'}}>{ select['description'] }</p>
+                                </mdui-card>
                                 <img 
-                                style = {{ justifyContent: 'center', alignItems: 'center' }}
-                                width='400px'
-                                height='100%'
-                                src={ select['header'] }
+                                    src={ select['menu'] }
+                                    height='150'
                                 />
-                            </div>}
-
-                            <li style = {{ justifyContent: 'left', }}>{ select['food_type'] }</li>
-                            <mdui-card style={{ width: '370px', height: '150px', padding: '10px' }}>
-                                <p>{ select['description'] }</p>
-                            </mdui-card>
-                            <img 
-                                src={ select['menu'] }
-                                height='150'
-                            />
-                            <li><Link to={`/business/info/`}>view details</Link></li>
+                                <mdui-button variant="tonal" style={{ width: '80%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
+                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/${select['id']}`}>Click to view more details</Link>
+                                </mdui-button> */}
+                            </ul>
                         </div>
                         }
                     </div>

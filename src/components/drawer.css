@@ -14,9 +14,7 @@
     transition: transform 0.5s ease-in-out;
     overflow: 'hidden';
     z-index: 2000;
-    flex-wrap: 'wrap';
-    margin-top: 0;
-    margin-bottom: 0;
+    flex-wrap: wrap;
   }
   
 
@@ -46,22 +44,12 @@
     transform: translateX(353px);
   }
 
-  .arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-  }
-
   .drawer-header {
     background-color: #000000;
     width: 400px;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
   }
 
