@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import './UpdateInfo.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
+import './loadingSpinner.css';
+import nodemailer from 'nodemailer';
+import axios from 'axios';
+import 'mdui/components/card.js';
 import { useAuth } from './components/AuthContext';
 import useFoodTrucks from './useFoodTrucks';
 
@@ -78,8 +82,19 @@ function AddTruck() {
             createTime: new Date()
         };
 
+
         try {
-            await createTruck(truckData);
+            const truckId = await createTruck(truckData);
+            const response = await axios.post('http://localhost:5000/api/user/email', {
+                "truckId": truckId,
+                "businessName": truckBusinessName,
+                "selectedFoodType": selectedFoodType,
+                "maxCapacity": parseInt(truckCapacity),
+                "foodLicenseURL": foodLicenseURL,
+                "menuURL": menuURL,
+                "logoURL": logoURL        
+                });
+                console.log(response.data);
             setIsLoading(false);
             navigate('/business/list');
         } catch (error) {

@@ -53,23 +53,26 @@ const useFoodTrucks = () => {
   const createTruck = async (truckData) => {
     if (!currentUser) {
       console.error("No user found, cannot create truck.");
-      return;
+      return null;
     }
   
     const trucksRef = collection(db, 'userToTrucks', currentUser.uid, 'listOfTrucks');
     const trucksRefTwo = collection(db, 'food-trucks');
-    const newTruckRef = doc(trucksRef); // Generate a new document reference
+    const newTruckRef = doc(trucksRef);
     const newTruckRefTwo = doc(trucksRefTwo);
   
     try {
-      await setDoc(newTruckRef, truckData); // Set the new document
+      await setDoc(newTruckRef, truckData);
       await setDoc(newTruckRefTwo, truckData);
-      setTrucks(prevTrucks => [...prevTrucks, { id: newTruckRef.id, ...truckData }]); // Add to local state
+      setTrucks(prevTrucks => [...prevTrucks, { id: newTruckRef.id, ...truckData }]);
       console.log("Truck created successfully:", newTruckRef.id);
+      return newTruckRef.id;
     } catch (error) {
       console.error("Error creating truck:", error);
+      return null;
     }
   };
+  
 
   return { trucks, loading, updateTruck, createTruck };
 };
