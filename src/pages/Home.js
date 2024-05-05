@@ -11,8 +11,8 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const Home = () => {
-    const { currentUser, setCurrentUser } = useAuth();
     const navigate = useNavigate();
+    const { currentUser, setCurrentUser, isCustomer, setCustomer, setBusiness } = useAuth();
 
     useEffect(() => {
 
@@ -65,8 +65,14 @@ const Home = () => {
     };
     
 
-    const handleSigninWithGoogleBusiness = () => handleSignIn("/business/list");
-    const handleSigninWithGoogleCustomer = () => handleSignIn("/map");
+    const handleSigninWithGoogleBusiness = () => {
+        setBusiness();
+        handleSignIn("/business/list");
+    }
+    const handleSigninWithGoogleCustomer = () => {
+        setCustomer();
+        handleSignIn("/map");
+    }
 
     const faqs = [
         {

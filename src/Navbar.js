@@ -12,6 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Hook to get current location
   const [anchorEl, setAnchorEl] = useState(null);
+  const { isCustomer, setCustomer, setBusiness } = useAuth();
   useEffect(() => {
     // Clear the anchorEl state on location change
     setAnchorEl(null);
@@ -41,6 +42,10 @@ const Navbar = () => {
         console.log(error);
     }
   };
+  let userLabel = "Business";
+  if(isCustomer){
+    userLabel = "Customer";
+  }
     return (
       <nav className="navbar">
         <a href="/" className="logo"> 
@@ -73,6 +78,7 @@ const Navbar = () => {
                 },
               }}
             >
+                <p style={{ textAlign: 'center' }}>Signed in as {userLabel}</p>
               <MenuItem>
                 <Avatar src={currentUser.photoURL} style={{ marginRight: '10px' }} />
                 <Typography>{currentUser.displayName || 'User'}</Typography>

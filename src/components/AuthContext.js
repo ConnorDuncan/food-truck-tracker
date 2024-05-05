@@ -10,6 +10,7 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
+  const [isCustomer, setIsCustomer] = useState(true);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -30,8 +31,21 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  // Function to toggle user type to customer
+  const setCustomer = () => {
+    setIsCustomer(true);
+  };
+
+  // Function to toggle user type to business
+  const setBusiness = () => {
+    setIsCustomer(false);
+  };
+
   const value = {
     currentUser,
+    isCustomer, // Expose the current user type state
+    setCustomer, // Expose the function to set the user as a customer
+    setBusiness, // Expose the function to set the user as a business
     setCurrentUser
   };
 
