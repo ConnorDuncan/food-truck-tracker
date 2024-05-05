@@ -19,25 +19,19 @@ const Map = () => {
     const [center, setCenter] = useState(null);
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
-    const [types, setTypes] = useState(['Mexican', 'Chinese', 'Italian']);
+    const [type, setType] = useState([]);
     const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
 
-    const [type, setType] = useState({
-        "Mexican": 0,
-        "Chinese": 0,
-        "American": 0,
-        "Taco": 0,
-        "Hamburger": 0,
-        "Pizza": 0,
-    });
-
-    const handletype = (typeKey) => {
+    const handleType = (typeKey) => {
         setType(prevType => {
-            const updatedType = { ...prevType };
-            updatedType[typeKey] = updatedType[typeKey] ? 0 : 1;
-            return updatedType;
+            if (!prevType.includes(typeKey)) return [...prevType, typeKey]; 
+            else return prevType.filter(item => item !== typeKey);
         });
     };
+
+    useEffect(() => {
+        console.log(type);
+    }, [type])
 
     useEffect(() => {
         const getTrucks = async () => {
@@ -73,6 +67,7 @@ const Map = () => {
     const handleDrawerOpen = (truck) => {
         setDrawerLoading(true);
         document.querySelector('.drawer').classList.add('opened');
+        document.querySelector('.overlay').classList.add('show-overlay');
     
         setSelect({
             'header': truck['header'],
@@ -80,7 +75,7 @@ const Map = () => {
             'menu': truck['menu'],
             'food_type': truck['food_type'],
             'business_name': truck['business_name'],
-            'description': 'filler description',
+            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             'id': truck.id
         });
     };
@@ -93,35 +88,28 @@ const Map = () => {
 
     return (
         <div style={{ display: "flex" }}>
+            <div className='overlay' onClick = {() => {
+                document.querySelector('.overlay').classList.toggle('show-overlay');
+                document.querySelector('.drawer').classList.remove('opened');
+            }}>
+            </div>
             <div style={{ width: "25%", padding: "2%" }}>
-                {/* Sidebar content */}
-                <h2>Price Range</h2>
-                {/* <mdui-segmented-button-group selects="multiple" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <mdui-segmented-button value="All">All</mdui-segmented-button>
-                    <mdui-segmented-button value="$">$</mdui-segmented-button>
-                    <mdui-segmented-button value="$$">$$</mdui-segmented-button>
-                    <mdui-segmented-button value="$$$">$$$</mdui-segmented-button>
-                </mdui-segmented-button-group> */}
-
-                <h2 style={{ marginTop: '100px' }}>Food types</h2>
-                {/* <mdui-select multiple style={{ width: '100%' }} onChange={handleSelectChange}>
-                    <mdui-menu-item value="Mexican">Mexican</mdui-menu-item>
-                    <mdui-menu-item value="Chinese">Chinese</mdui-menu-item>
-                    <mdui-menu-item value="American">American</mdui-menu-item>
-                    <mdui-menu-item value="Taco">Taco</mdui-menu-item>
-                    <mdui-menu-item value="Hamburger">Hamburger</mdui-menu-item>
-                    <mdui-menu-item value="Pizza">Pizza</mdui-menu-item>
-                </mdui-select> */}
-
+                <h1>Filter Food Types</h1>
                 <div className='box' onClick = {() => document.querySelector('.options').classList.toggle('options-open')}>
-                    {types.map((type) => type)}
+                    {type.length ? type.map((item, index) => 
+                        <div className='selected'>
+                            {item}
+                            <button className="exit-button" onClick={(event) => { event.stopPropagation(); handleType(item) }}>&times;</button>
+                        </div>
+                    ) : 'Any'}
                 </div>
                 <div className='options'>
-                    <li className='option'>Option 1</li>
-                    <li className='option'>Option 2</li>
-                    <li className='option'>Option 3</li>
-                    <li className='option'>Option 4</li>
-                    
+                    <li className={`option ${type.includes('Mexican') ? 'option-clicked' : ''}`} onClick = {() => handleType('Mexican')}>Mexican</li>
+                    <li className={`option ${type.includes('Chinese') ? 'option-clicked' : ''}`} onClick = {() => handleType('Chinese')}>Chinese</li>
+                    <li className={`option ${type.includes('Burgers') ? 'option-clicked' : ''}`} onClick = {() => handleType('Burgers')}>Burgers</li>
+                    <li className={`option ${type.includes('Desserts') ? 'option-clicked' : ''}`} onClick = {() => handleType('Desserts')}>Desserts</li>
+                    <li className={`option ${type.includes('Sandwiches') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sandwiches')}>Sandwiches</li>
+                    <li className={`option ${type.includes('Ice Cream') ? 'option-clicked' : ''}`} onClick = {() => handleType('Ice Cream')}>Ice Cream</li>
                 </div>
 
                 <mdui-button variant="tonal" style={{ marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center' }}>Save Preferences</mdui-button>
@@ -145,9 +133,9 @@ const Map = () => {
                         defaultZoom={13}
                         mapMinHeight="100vh"
                     >
-                        {trucks && trucks.map((truck) =>
+                        {trucks && trucks.map((truck, index) =>
                             truck['open'] &&
-                            truck['verified'] &&
+                            (type.includes(truck['food_type']) || !type.length) &&
                             <img
                                 style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '50px', height: '50px' }}
                                 lat={truck['location']._lat}
@@ -170,52 +158,35 @@ const Map = () => {
                     </GoogleMap>
                     
                     <div className='drawer'>
-                        <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
-                        <div>
-                            <ul>
-                                <ul>
-                                    <header className="drawer-header" style={{height: '5vh'}}>
-                                        <h1>{ select['business_name'] }</h1>
-                                    </header>
-                                </ul>
+                        <div style={{ marginTop: '0' }}>
+                            <ul style={{ marginTop: '0', marginBottom: '0' }}>
+                                <header style={{ backgroundColor: '#fff', flexWrap: 'wrap' }}>
+                                    <h1>{ select['business_name'] }</h1>
+                                </header>
+                            </ul>
 
-                                <div className='drawer-header'>
-                                    <img 
-                                    style = {{ justifyContent: 'center', alignItems: 'center' ,marginTop:'40px', borderRadius: '10px'}}
-                                    width='300px'
-                                    height='100%'
-                                    src={ select['header'] }
-                                    />
-                                </div>
-                                
-                                </ul>
-                                <mdui-card variant="elevated" style={{marginLeft:'40px',width: '300px',height: '124px'}}>
-                                    <p style={{marginLeft:'15px', color:'gray'}}>What kinds of food they are offering:</p>
-                                    <p style={{marginLeft:'15px', color:'gray'}}>{ select['food_type'] }</p>
-                                    
-                                </mdui-card>
+                            {select['header'] && <div className='drawer-header'>
+                                <img 
+                                style = {{ justifyContent: 'center', alignItems: 'center' }}
+                                width='400px'
+                                height='100%'
+                                src={ select['header'] }
+                                />
+                            </div>}
 
-                                <mdui-card variant="filled" style={{marginLeft:'40px',marginTop:'30px',width: '300px',height: '124px'}}>
-                                        <tag>{ select['description'] }</tag>
-                                </mdui-card>
-                                <div style={{ marginLeft:'60px' }}>
-                                    <img 
-                                        src={ select['menu'] }
-                                        height='150'
-                                        style={{marginLeft:'40px',marginTop:'30px', borderRadius: '10px'}}
-                                    />
-                                </div>
-
-                                <mdui-button variant="tonal" style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
-                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/`}>Click to view more details</Link>
-                                </mdui-button>
-                            </div>
+                            <li style = {{ justifyContent: 'left', }}>{ select['food_type'] }</li>
+                            <mdui-card style={{ width: '370px', height: '150px', padding: '10px' }}>
+                                <p>{ select['description'] }</p>
+                            </mdui-card>
+                            <img 
+                                src={ select['menu'] }
+                                height='150'
+                            />
+                            <li><Link to={`/business/info/`}>view details</Link></li>
+                        </div>
                         }
-                        </mdui-navigation-drawer>
-                    </div>
-                    <div>
                     </div>
                 </div>
             )}

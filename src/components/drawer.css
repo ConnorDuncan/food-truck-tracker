@@ -1,5 +1,7 @@
-.drawer-container {
+  .drawer-container {
     display: flex;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
   .drawer {
@@ -11,24 +13,33 @@
     transform: translateX(780px);
     transition: transform 0.5s ease-in-out;
     overflow: 'hidden';
-    z-index: 9998;
+    z-index: 2000;
+    flex-wrap: 'wrap';
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
+
   .drawer ul {
     list-style-type: 'none';
     padding: 0;
     text-align: center;
-    margin: 0 auto; 
+    margin-top: 0;
+    margin-bottom: 0; 
 }
   
   .drawer ul li {
     list-style-type: 'none';
     padding: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
   .drawer ul li a {
     color: #fff;
     text-decoration: none;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
   .opened {
@@ -47,8 +58,29 @@
   .drawer-header {
     background-color: #000000;
     width: 400px;
-    height: 20vh;
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 107px;
+    left: 0;
+    width: 100%; /* Cover the entire width of the viewport */
+    height: 100%; /* Cover the entire height of the viewport */
+    background-color: rgba(0, 0, 0, 0); /* Semi-transparent black background */
+    z-index: 1000; /* Make sure it's on top of other content */
+    visibility: hidden; /* Initially hidden */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+  .show-overlay {
+    visibility: visible;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   
