@@ -40,13 +40,18 @@ export const AuthProvider = ({ children }) => {
   const setBusiness = () => {
     setIsCustomer(false);
   };
+  
+  const setNull = () => {
+    setIsCustomer(null);
+  }
 
   const value = {
     currentUser,
     isCustomer, // Expose the current user type state
     setCustomer, // Expose the function to set the user as a customer
     setBusiness, // Expose the function to set the user as a business
-    setCurrentUser
+    setCurrentUser,
+    setNull
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

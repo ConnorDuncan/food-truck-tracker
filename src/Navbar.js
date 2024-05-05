@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Hook to get current location
   const [anchorEl, setAnchorEl] = useState(null);
-  const { isCustomer, setCustomer, setBusiness } = useAuth();
+  const { isCustomer, setNull } = useAuth();
   useEffect(() => {
     // Clear the anchorEl state on location change
     setAnchorEl(null);
@@ -42,6 +42,7 @@ const Navbar = () => {
     try {
         await signOut(auth);
         setAnchorEl(null); // Clear the anchorEl state
+        setNull();
       navigate('/');
     } catch (error) {
         console.log(error);
