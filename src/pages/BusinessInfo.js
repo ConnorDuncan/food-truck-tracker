@@ -5,6 +5,7 @@ import ClockIcon from '../components/ClockIcon';
 import MapPinIcon from '../components/MapPinIcon';
 import PhoneIcon from '../components/PhoneIcon';
 import Stars from '../components/Stars';
+import { useParams } from 'react-router-dom';
 
 
 //import MDUI components
@@ -15,16 +16,14 @@ import 'mdui/components/card.js';
 
 //import map
 import { useState, useEffect } from 'react'
-import GoogleMap from 'google-maps-react-markers'
-
-
-
-  
+import GoogleMap from 'google-maps-react-markers'  
 
 
 function BusinessInfo() {
 
   const [center, setCenter] = useState(null)
+  const { truckId } = useParams();
+
 
   useEffect(() => {
       try {

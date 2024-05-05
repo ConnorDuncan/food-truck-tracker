@@ -141,7 +141,7 @@ const Map = () => {
                         apiKey="AIzaSyCTPpsLTqqt0Dq0O-_qF6RjRE_W2CbmS_Q"
                         defaultCenter={center}
                         defaultZoom={13}
-                        mapMinHeight="90vh"
+                        mapMinHeight="88vh"
                     >
                         {trucks && trucks.map((truck) =>
                             truck['open'] &&
@@ -207,7 +207,7 @@ const Map = () => {
                                 </div>
 
                                 <mdui-button variant="tonal" style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
-                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/`}>Click to view more details</Link>
+                                    <Link style={{ textDecoration: 'none' }} to={`/business/info/${select['id']}`}>Click to view more details</Link>
                                 </mdui-button>
                             </div>
                         }
