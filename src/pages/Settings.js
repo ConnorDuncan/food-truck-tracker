@@ -1,3 +1,4 @@
+import { alignProperty } from '@mui/material/styles/cssUtils';
 import React, { useEffect } from 'react';
 
 const Settings = () => {
@@ -6,7 +7,7 @@ const Settings = () => {
     })
     return (
         <div>
-            <h1>Settings</h1>
+            <h1 className="Title">Settings</h1>
         </div>
     );
 };
