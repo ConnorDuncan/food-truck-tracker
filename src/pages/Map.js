@@ -20,6 +20,7 @@ const Map = () => {
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(false);
     const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
 
     const handleType = (typeKey) => {
@@ -161,32 +162,50 @@ const Map = () => {
                     <div className='drawer'>
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
-                        <div style={{ marginTop: '0' }}>
-                            <ul>
-                                {select['header'] && <div>
+                        <div>
+                            {select['header'] && <div style = {{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
                                     <img 
-                                    style = {{ justifyContent: 'center', alignItems: 'center', borderRadius: '5px', marginTop: '20px' }}
-                                    width='90%'
-                                    height='90%'
-                                    src={ select['header'] }
+                                        style = {{ borderRadius: '5px' }}
+                                        width='90%'
+                                        height='90%'
+                                        src={ select['header'] }
                                     />
                                 </div>}
+                            <ul style = {{ padding: '12px' }}>
+                                <div style = {{ display: 'flex', alignItems: 'center' }}>
+                                    <h2 style={{ padding: '5px', margin: '0' }}>{ select['business_name'] }</h2>
+                                    <img   
+                                        style = {{ borderRadius: '100%', marginLeft: '7px' }}
+                                        height='30px'
+                                        src={ select['logo'] }
+                                    />
+                                </div>
 
-                                <ul>
-                                    <h1 style={{ padding: '5px', margin: '0' }}>{ select['business_name'] }</h1>
-                                </ul>
+                                <div className='category' style={{ flexWrap: 'wrap', padding: '4px', marginLeft: '4px' }}>
+                                    <h5 style={{ color:'gray', margin: '0' }}>{ select['food_type'] }</h5>
+                                </div>
 
-                                <div className='selected' style={{ flexWrap: 'wrap', padding: '10px' }}>{ select['food_type'] }</div>
-                                {/* <mdui-card style={{ width: '370px', height: '150px', padding: '10px', flexWrap: 'wrap' }}>
-                                    <p style={{marginLeft:'15px', color:'gray'}}>{ select['description'] }</p>
-                                </mdui-card>
-                                <img 
-                                    src={ select['menu'] }
-                                    height='150'
-                                />
-                                <mdui-button variant="tonal" style={{ width: '80%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
+                                <div style={{ marginTop: '10px' }}>
+                                    <h2 style={{ paddingLeft: '5px', margin: '0' }}>Details</h2>
+                                    <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray' }}>
+                                        { select['description'].slice(0, 220) }...  
+                                        { select['description'].length > 220 && <Link style={{ marginLeft: '5px' }}>more</Link> }
+                                    </p>
+                                </div>
+
+                                <a href={select['menu']} target="_blank" rel="noopener noreferrer">
+                                    <img 
+                                        onClick={() => {console.log(select['menu'])}}
+                                        height = '150px'
+                                        style={{ display: 'block', borderRadius: '5px', margin: '0 auto' }}
+                                        src={select['menu']}
+                                        href={select['menu']}
+                                    />
+                                </a>
+
+                                <mdui-button variant="tonal" style={{ width: '80%', display: 'block', marginTop: '30px', margin: '30px auto 0' }}>
                                     <Link style={{ textDecoration: 'none' }} to={`/business/info/${select['id']}`}>Click to view more details</Link>
-                                </mdui-button> */}
+                                </mdui-button>
                             </ul>
                         </div>
                         }

@@ -1,11 +1,7 @@
-  .drawer-container {
-    display: flex;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
   .drawer {
     position: absolute;
+    border-top: 1px solid #ccc;
+    box-sizing: border-box;
     width: 400px;
     height: 100vh;
     background-color: #fdf7fe;
@@ -21,10 +17,10 @@
   .drawer ul {
     list-style-type: 'none';
     padding: 0;
-    text-align: center;
+    text-align: left;
     margin-top: 0;
     margin-bottom: 0; 
-}
+  }
   
   .drawer ul li {
     list-style-type: 'none';
@@ -39,18 +35,19 @@
     margin-top: 0;
     margin-bottom: 0;
   }
+
+  .category {
+    display: inline-block;
+    align-items: center; 
+    position: relative;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+  } 
   
   .opened {
     transform: translateX(353px);
-  }
-
-  .drawer-header {
-    background-color: #000000;
-    width: 400px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
   }
 
   .overlay {
@@ -64,7 +61,7 @@
     visibility: hidden; /* Initially hidden */
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-}
+  }
 
   .show-overlay {
     visibility: visible;
