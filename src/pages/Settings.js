@@ -44,6 +44,7 @@ const Settings = () => {
         }
         if (description.length) updates.description = description;
         if(name.length) updates.name = name;
+        if(email.length) updates.email = email;
         await updateProfile(updates);
         setLoading(false);
         if(isCustomer){
