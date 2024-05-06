@@ -4,8 +4,6 @@ import Home from './pages/Home';
 import BusinessInfo from './pages/BusinessInfo';
 import Map from './pages/Map.js';
 import { AuthProvider } from './components/AuthContext';
-import BusinessLogin from './pages/BusinessLogin';
-import CustomerLogin from './pages/CustomerLogin';
 import Protected from './components/Protected.jsx';
 import NotFound from './pages/FourOhFour.js';
 import FoodTrucks from './FoodTrucks.js';  // Make sure this is the component, not useFoodTrucks hook
@@ -34,12 +32,6 @@ function App() {
             </Route>
             <Route path='/map' element={<ProtectedCustomer />}>
               <Route path='/map' element={<Map />} />
-            </Route>
-            <Route path='/business/login' element={<ProtectedBusiness />}>
-              <Route index element={<BusinessLogin />} />
-            </Route>
-            <Route path='/customer/login' element={<ProtectedCustomer />}>
-              <Route index element={<CustomerLogin />} />
             </Route>
             <Route path="/business/UpdateInfo/:truckId" element={<ProtectedBusiness />}>
               <Route index element={<UpdateInfo />} />

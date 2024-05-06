@@ -1,9 +1,13 @@
 /* Add this to your CSS file */
 .parent-container {
-    display: flex;
-    justify-content: center; /* horizontal alignment */
-    height: 100vh;           /* Set a height to the container */
-  }
+  display: flex;
+  flex-direction: column;  /* Stacks children vertically */
+  justify-content: flex-start; /* Aligns children at the top */
+  align-items: center;     /* Centers children horizontally */
+  height: 100vh;           /* Full viewport height */
+}
+
+
   
 
   .profile-container {
@@ -35,3 +39,10 @@
     color: gray;
   }
   
+
+  .title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+}
