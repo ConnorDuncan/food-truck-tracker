@@ -6,9 +6,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm install`
+### `npm install --legacy-peer-deps`
 
-### `npm start`
+cd into the "backend" folder in the "src" folder.
+
+### `nodemon start`
+
+Switch to a new terminal tab/window.
+
+### 'npm start'
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
