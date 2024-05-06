@@ -6,7 +6,6 @@ import './UpdateInfo.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import './loadingSpinner.css';
-import nodemailer from 'nodemailer';
 import axios from 'axios';
 import 'mdui/components/card.js';
 import { useAuth } from './components/AuthContext';
@@ -82,10 +81,9 @@ function AddTruck() {
             createTime: new Date()
         };
 
-
         try {
             const truckId = await createTruck(truckData);
-            const response = await axios.post('http://localhost:5000/api/user/email', {
+            const response = await axios.post('http://localhost:5001/api/user/email', {
                 "truckId": truckId,
                 "businessName": truckBusinessName,
                 "selectedFoodType": selectedFoodType,
@@ -101,6 +99,12 @@ function AddTruck() {
             alert("Error creating truck: ", error);
             setIsLoading(false);
         }
+    };
+
+    const handleCapacityInput = (e) => {
+        // Ensures only positive integers are allowed
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        setTruckCapacity(e.target.value);
     };
 
     if (isLoading || !currentUser) {
@@ -173,8 +177,9 @@ function AddTruck() {
                     label="Max Capacity of Customers"
                     style={{ width: '300px' }}
                     variant="outlined"
+                    type="number"
                     value={truckCapacity}
-                    onChange={(e) => setTruckCapacity(e.target.value)}
+                    onInput={handleCapacityInput}
                 />
             </div>
             <div className='cate'>
