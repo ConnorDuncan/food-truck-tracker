@@ -4,6 +4,7 @@
     margin-right: 20px;
     padding: 8px 10px;
     transition: color 0.3s ease; /* Transition only the color */
+    z-index: 9999;
   }
 
   .nav-link:hover {
