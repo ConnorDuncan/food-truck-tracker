@@ -85,7 +85,7 @@ const Navbar = () => {
 
       <div className="links">
         <a href="/map" className="nav-link">Map</a>
-        
+        { currentUser && 
         <>
           <IconButton onClick={handleMenuOpen}>
             <img
@@ -115,6 +115,7 @@ const Navbar = () => {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </>
+        }
       </div>
     </nav>
   );
