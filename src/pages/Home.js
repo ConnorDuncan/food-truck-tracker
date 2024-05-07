@@ -10,6 +10,10 @@ import 'mdui/components/button.js';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
+import 'mdui/mdui.css';
+import 'mdui';
+import 'mdui/components/card.js';
+
 const Home = () => {
     const { currentUser, setCurrentUser } = useAuth();
     const navigate = useNavigate();
@@ -86,21 +90,36 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            <h1>Welcome to Vendor Vista!</h1>
-            <p>Find your favorite food trucks or track your business.</p>
-            <div className="buttons">
-                {/* <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button> */}
-                <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
-                {/* <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button> */}
-                <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
+            <img
+                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '13.6%', opacity: '0.5', clipPath: 'inset(0px 0px 50px 0px)' }}
+                alt='Banner'
+                src={'./Banner.jpeg'}
+                height='120%'
+            />
+            <div style={{ marginTop: '80px' }}>
+                <mdui-card style={{ width: '600px', height: '380px', marginTop: '30px', alignItems: 'center' }}>
+
+                    <h1 style={{ marginTop: '35px' }}>Welcome to Vendor Vista!</h1>
+                    <p>Find your favorite food trucks or track your business.</p>
+                    <div className="buttons">
+                        {/* <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button> */}
+                        <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
+                        {/* <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button> */}
+                        <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
+                    </div>
+
+                    <div className='intro'>
+                        Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
+                    </div>
+
+                    <div style={{ paddingTop: '20px', color: 'gray', fontFamily: 'inherit' }}>
+                        <p1>Trusted by 1 business worldwide.</p1>
+                    </div>
+                </mdui-card>
             </div>
 
-            <div className='intro'>
-                Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
-            </div>
 
-
-            <div className='faq'>
+            <div className='faq' style={{background: 'white'}}>
                 <h2>Frequently Asked Questions</h2>
                 <ul>
                     {faqs.map((faq, index) => (

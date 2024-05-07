@@ -15,7 +15,7 @@ function App() {
     <div>
       <AuthProvider>
         <Router>
-          <Navbar />
+          <Navbar style={{background: 'white'}}/>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />
