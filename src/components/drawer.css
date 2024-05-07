@@ -6,7 +6,8 @@
     height: 100vh;
     background-color: #fdf7fe;
     color: #1c1b1f;
-    transform: translateX(780px);
+    transform: translateX(250%);
+    visibility: hidden;
     transition: transform 0.5s ease-in-out;
     overflow: 'hidden';
     z-index: 2000;
@@ -47,7 +48,9 @@
   } 
   
   .opened {
-    transform: translateX(353px);
+    transform: translateX(0);
+    visibility: visible;
+    right: 0;
   }
 
   .overlay {
