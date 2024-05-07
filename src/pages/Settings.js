@@ -12,7 +12,7 @@ import { waitFor } from '@testing-library/react';
 const Settings = () => {
     const { currentUser, isCustomer } = useAuth();
     const { profile, updateProfile } = useProfile();
-    const [description, setDescription] = useState(profile.description || '');
+    // const [description, setDescription] = useState(profile.description || '');
     const [photoInput, setPhoto] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Settings = () => {
             const photoUrl = await handleFileChange(photoInput, 'photos');
             if (photoUrl) updates.photo = photoUrl;
         }
-        if (description.length) updates.description = description;
+        // if (description.length) updates.description = description;
         if(name.length) updates.name = name;
         if(email.length) updates.email = email;
         await updateProfile(updates);
@@ -92,7 +92,7 @@ const Settings = () => {
                 onChange={(e) => setName(e.target.value)}
                 />
             </div>
-            <div className='cate'>
+            {/* <div className='cate'>
                 <TextField
                     label="Description"
                     rows={3}
@@ -102,7 +102,7 @@ const Settings = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-            </div>
+            </div> */}
             <div className='cate'>
                 <TextField
                 label="Email"
