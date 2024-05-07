@@ -21,7 +21,6 @@ const Map = () => {
     const [center, setCenter] = useState(null);
     const { currentUser } = useAuth();
     const [userPhoto, setUserPhoto] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
@@ -37,9 +36,6 @@ const Map = () => {
     };
 
     useEffect(() => {
-        // Clear the anchorEl state on location change
-        setAnchorEl(null);
-    
         // Fetch user photo from Firestore
         const fetchUserPhoto = async () => {
           if (currentUser) {
@@ -48,7 +44,7 @@ const Map = () => {
             if (userDocSnap.exists() && userDocSnap.data().photo) {
               setUserPhoto(userDocSnap.data().photo);
             }
-          }
+          } console.log('FETCHED USER - READ FROM FIREBASE')
         };
     
         fetchUserPhoto();
@@ -67,6 +63,7 @@ const Map = () => {
                 ...doc.data()
             }));
             setTrucks(trucksData);
+            console.log('FETCHED TRUCKS - READ FROM FIREBASE')
         };
 
         getTrucks();
@@ -158,7 +155,7 @@ const Map = () => {
                             (type.length === 0 || truck['food_type'].some(foodType => type.includes(foodType))) &&
                             <img
                                 style={{ 
-                                    borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '50px', height: '50px', border: '3px solid green' 
+                                    borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '40px', height: '40px', border: '3px solid green' 
                                 }}
                                 lat={truck['location']._lat}
                                 lng={truck['location']._long}
@@ -169,7 +166,7 @@ const Map = () => {
                             />
                         )}
                         <img
-                            style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #394293' }}
+                            style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #6dbbf8' }}
                             lat={center['lat']}
                             lng={center['lng']}
                             href='/'
@@ -188,6 +185,7 @@ const Map = () => {
                                         style = {{ borderRadius: '5px' }}
                                         width='40%'
                                         height='40%'
+                                        alt='selected truck logo'
                                         src={ select['logo'] }
                                     />
                             </div>
