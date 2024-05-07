@@ -50,7 +50,7 @@ const Map = () => {
         };
     
         fetchUserPhoto();
-      }, [currentUser]);
+    }, [currentUser]);
 
     useEffect(() => {
         console.log(type);
