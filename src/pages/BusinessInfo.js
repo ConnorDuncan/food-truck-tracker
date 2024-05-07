@@ -61,7 +61,7 @@ function BusinessInfo() {
     <>
     {truck && (
     <div className="BusinessName">
-      {truck && <header className="info-header" style={{ width: '400px' }}>
+      {truck && <header className="info-header" style={{ width: '100%', height: '50px' }}>
         <h1>
           {truck['business_name']}
         </h1>
@@ -70,7 +70,7 @@ function BusinessInfo() {
       <body>
         
       <div className="horizontal-container">
-        <mdui-card style={{width: '600px', height: '150px', marginTop: '30px'}}>
+        <mdui-card style={{width: '600px', height: '180px', marginLeft:'8%',marginTop: '30px'}}>
 
         <div className="location" style={{ marginLeft: '10px' }}>
           <MapPinIcon className="MapPinIcon" />
@@ -83,6 +83,15 @@ function BusinessInfo() {
           {!truck['open'] && <p1 style={{ color: 'red' }}>Closed</p1>}
         </div>}
 
+        <div style={{marginLeft: '10px'}}>
+        { truck['food_type'].map((type) => 
+          <div className='category' style={{ flexWrap: 'wrap', padding: '4px', marginLeft: '4px' }}>
+              <h5 style={{ color:'gray', margin: '0' }}>
+                  { type }
+              </h5>
+          </div>)
+        }
+        </div>
         </mdui-card>
 
       <div style={{ width: "50%", overflow: "hidden" }}>
@@ -122,18 +131,14 @@ function BusinessInfo() {
           </GoogleMap>
         )}
       </div>
+      
 
     </div>
-    { truck['food_type'].map((type) => 
-      <div className='category' style={{ flexWrap: 'wrap', padding: '4px', marginLeft: '4px' }}>
-          <h5 style={{ color:'gray', margin: '0' }}>
-              { type }
-          </h5>
-      </div>)
-    }
+    
+
         <div className="horizontal-container">
 
-        <mdui-card variant="elevated" style={{ width: '600px', height: '120px' }}>
+        <mdui-card variant="elevated" style={{ width: '600px', height: '120px', marginLeft:'8%'}}>
 
           <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
             <div>{ truck['phone'] }</div>
@@ -147,15 +152,15 @@ function BusinessInfo() {
         </mdui-card>
         
 
-          <div className="dishes">
+          <div className="dishes" style={{marginRight:'80px'}}> 
             <h2>Description</h2>
-            <mdui-card variant="elevated" style={{ padding: '10px' }}>
+            <mdui-card variant="elevated" style={{ width: "100%",padding: '10px' }}>
                 <div className="comment">
                   <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray' }}>
                     { truck['description'] }  
                   </p>
                 </div>
-              </mdui-card>
+            </mdui-card>
             
           </div>
         </div>

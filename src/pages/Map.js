@@ -128,13 +128,22 @@ const Map = () => {
                 <div className='options'>
                     <li className={`option ${type.includes('Mexican') ? 'option-clicked' : ''}`} onClick = {() => handleType('Mexican')}>Mexican</li>
                     <li className={`option ${type.includes('Chinese') ? 'option-clicked' : ''}`} onClick = {() => handleType('Chinese')}>Chinese</li>
+                    <li className={`option ${type.includes('Italian') ? 'option-clicked' : ''}`} onClick = {() => handleType('Italian')}>Italian</li>
+                    <li className={`option ${type.includes('Pizza') ? 'option-clicked' : ''}`} onClick = {() => handleType('Pizza')}>Pizza</li>
+                    <li className={`option ${type.includes('Salad') ? 'option-clicked' : ''}`} onClick = {() => handleType('Salad')}>Salad</li>
+                    <li className={`option ${type.includes('Grill') ? 'option-clicked' : ''}`} onClick = {() => handleType('Grill')}>Grill</li>
+                    <li className={`option ${type.includes('Sushi') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sushi')}>Sushi</li>
                     <li className={`option ${type.includes('Burgers') ? 'option-clicked' : ''}`} onClick = {() => handleType('Burgers')}>Burgers</li>
                     <li className={`option ${type.includes('Desserts') ? 'option-clicked' : ''}`} onClick = {() => handleType('Desserts')}>Desserts</li>
                     <li className={`option ${type.includes('Sandwiches') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sandwiches')}>Sandwiches</li>
-                    <li className={`option ${type.includes('Ice Cream') ? 'option-clicked' : ''}`} onClick = {() => handleType('Ice Cream')}>Ice Cream</li>
+                    <li className={`option ${type.includes('Fried') ? 'option-clicked' : ''}`} onClick = {() => handleType('Fried')}>Fried</li>
+                    <li className={`option ${type.includes('Seafood') ? 'option-clicked' : ''}`} onClick = {() => handleType('Seafood')}>Seafood</li>
+                    <li className={`option ${type.includes('Indian') ? 'option-clicked' : ''}`} onClick = {() => handleType('Indian')}>Indian</li>
+                    <li className={`option ${type.includes('Other') ? 'option-clicked' : ''}`} onClick = {() => handleType('Other')}>Other</li>
+                    <li className={`option ${type.includes('Noodle') ? 'option-clicked' : ''}`} onClick = {() => handleType('Noodle')}>Noodle</li>
                 </div>
             </div>
-
+       
             {!center && (
                 <>  
                     <div style={{position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)'}}>
