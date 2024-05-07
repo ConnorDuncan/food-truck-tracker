@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import GoogleMap from 'google-maps-react-markers';
+import { useAuth } from '../components/AuthContext';
 import { app } from '../firebase';
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, getDocs, getDoc, doc } from "firebase/firestore";
+import GoogleMap from 'google-maps-react-markers';
 
 import 'mdui/components/navigation-rail.js';
 import 'mdui/components/navigation-rail-item.js';
 import 'mdui/components/select.js';
 import 'mdui/components/menu-item.js';
+import 'mdui/components/icon.js';
 import 'mdui/components/circular-progress.js';
 import 'mdui/components/button.js';
 import '../components/drawer.css';
@@ -17,10 +19,12 @@ import '../pages/BusinessInfo.css';
 const Map = () => {
     const db = getFirestore(app);
     const [center, setCenter] = useState(null);
+    const { currentUser } = useAuth();
+    const [userPhoto, setUserPhoto] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
-    const [menuOpen, setMenuOpen] = useState(false);
     const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
 
     const handleType = (typeKey) => {
@@ -29,6 +33,24 @@ const Map = () => {
             else return prevType.filter(item => item !== typeKey);
         });
     };
+
+    useEffect(() => {
+        // Clear the anchorEl state on location change
+        setAnchorEl(null);
+    
+        // Fetch user photo from Firestore
+        const fetchUserPhoto = async () => {
+          if (currentUser) {
+            const userDocRef = doc(db, 'userToInfo', currentUser.uid);
+            const userDocSnap = await getDoc(userDocRef);
+            if (userDocSnap.exists() && userDocSnap.data().photo) {
+              setUserPhoto(userDocSnap.data().photo);
+            }
+          }
+        };
+    
+        fetchUserPhoto();
+      }, [currentUser]);
 
     useEffect(() => {
         console.log(type);
@@ -76,7 +98,7 @@ const Map = () => {
             'menu': truck['menu'],
             'food_type': truck['food_type'],
             'business_name': truck['business_name'],
-            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            'description': 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
             'id': truck.id
         });
     };
@@ -84,7 +106,6 @@ const Map = () => {
     // useEffect to set drawerLoading to false once setSelect is complete
     useEffect(() => {
         setDrawerLoading(false);
-        console.log(drawerLoading); // Logs false
     }, [select]);
 
     return (
@@ -112,10 +133,6 @@ const Map = () => {
                     <li className={`option ${type.includes('Sandwiches') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sandwiches')}>Sandwiches</li>
                     <li className={`option ${type.includes('Ice Cream') ? 'option-clicked' : ''}`} onClick = {() => handleType('Ice Cream')}>Ice Cream</li>
                 </div>
-
-                <mdui-button variant="tonal" style={{ marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center' }}>Save Preferences</mdui-button>
-
-
             </div>
 
             {!center && (
@@ -154,7 +171,7 @@ const Map = () => {
                             lng={center['lng']}
                             href='/'
                             alt='logo'
-                            src='/logo.png'
+                            src={userPhoto ? userPhoto : './userIcon.jpeg'}
                             height='50px'
                         />
                     </GoogleMap>
@@ -163,14 +180,14 @@ const Map = () => {
                         {drawerLoading && <mdui-circular-progress style={{left: '35%'}}></mdui-circular-progress>}
                         {select && !drawerLoading &&
                         <div>
-                            {select['header'] && <div style = {{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+                            <div style = {{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
                                     <img 
                                         style = {{ borderRadius: '5px' }}
-                                        width='90%'
-                                        height='90%'
-                                        src={ select['header'] }
+                                        width='40%'
+                                        height='40%'
+                                        src={ select['logo'] }
                                     />
-                                </div>}
+                            </div>
                             <ul style = {{ padding: '12px' }}>
                                 <div style = {{ display: 'flex', alignItems: 'center' }}>
                                     <h2 style={{ padding: '5px', margin: '0' }}>{ select['business_name'] }</h2>
@@ -181,23 +198,35 @@ const Map = () => {
                                     />
                                 </div>
 
-                                <div className='category' style={{ flexWrap: 'wrap', padding: '4px', marginLeft: '4px' }}>
-                                    <h5 style={{ color:'gray', margin: '0' }}>{ select['food_type'] }</h5>
-                                </div>
+                                
+                                    { select['food_type'].map((type) => 
+                                    <div className='category' style={{ flexWrap: 'wrap', padding: '4px', marginLeft: '4px' }}>
+                                        <h5 style={{ color:'gray', margin: '0' }}>
+                                            { type }
+                                        </h5>
+                                    </div>)
+                                    }
+                                
 
-                                <div style={{ marginTop: '10px' }}>
+                                <div style={{ marginTop: '20px' }}>
                                     <h2 style={{ paddingLeft: '5px', margin: '0' }}>Details</h2>
                                     <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray' }}>
-                                        { select['description'].slice(0, 220) }...  
-                                        { select['description'].length > 220 && <Link style={{ marginLeft: '5px' }}>more</Link> }
+                                        { select['description'].length > 220 ? select['description'].slice(0, 220) + '...' :  select['description']}  
+                                        { select['description'].length > 220 && 
+                                        <Link
+                                            style={{ marginLeft: '5px', color: '#40547d' }} 
+                                            to={`/business/info/${select['id']}`}>
+                                            <b6>more</b6>
+                                        </Link> }
                                     </p>
                                 </div>
 
                                 <a href={select['menu']} target="_blank" rel="noopener noreferrer">
                                     <img 
-                                        onClick={() => {console.log(select['menu'])}}
-                                        height = '150px'
-                                        style={{ display: 'block', borderRadius: '5px', margin: '0 auto' }}
+                                        alt = 'menu'
+                                        height = '175px'
+                                        width = '100%'
+                                        style={{ display: 'block', borderRadius: '5px', margin: '0 auto', objectFit: 'cover' }}
                                         src={select['menu']}
                                         href={select['menu']}
                                     />
