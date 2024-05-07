@@ -69,7 +69,7 @@ const Settings = () => {
         <div className="parent-container">
             <h1 className="Title">Settings</h1>
             <div className='cate'>
-                <p className='inputlabel'>Photo</p>
+                <p className='inputlabel'>Upload a profile picture</p>
                 <input
                     type="file"
                     onChange={(e) => setPhoto(e.target.files[0])}

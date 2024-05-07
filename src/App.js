@@ -30,7 +30,7 @@ function App() {
             <Route path='/business/list' element={<ProtectedBusiness />}>
               <Route index element={<FoodTrucks />} />
             </Route>
-            <Route path='/map' element={<ProtectedCustomer />}>
+            <Route path='/map'>
               <Route path='/map' element={<Map />} />
             </Route>
             <Route path="/business/UpdateInfo/:truckId" element={<ProtectedBusiness />}>

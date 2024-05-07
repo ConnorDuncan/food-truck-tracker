@@ -71,8 +71,6 @@ const Map = () => {
                 <mdui-menu-item value="Pizza">Pizza</mdui-menu-item>
             </mdui-select>
 
-            <mdui-button variant="tonal" style = {{marginTop: '100px', width: '100%', display: 'flex', justifyContent: 'center'}}>Save Preferences</mdui-button>
-
             </div>
         
         {!center && (

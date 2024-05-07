@@ -103,6 +103,7 @@ const Navbar = () => {
               style: {
                 width: '250px', // Adjust width
                 height: 'auto', // Adjust height
+                marginTop:'60px'
               },
             }}
           >
