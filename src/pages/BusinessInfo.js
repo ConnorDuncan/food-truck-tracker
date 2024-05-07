@@ -61,26 +61,28 @@ function BusinessInfo() {
     <>
     {truck && (
     <div className="BusinessName">
-      {truck && <header className="info-header" style={{ width: '100%', height: '50px' }}>
+      {truck && <header className="info-header" style={{ width: '100%', height: '50px',display: 'flex', alignItems: 'center', justifyContent:"center" }}>
         <h1>
           {truck['business_name']}
         </h1>
       </header>}
 
-      <body>
+      <body style={{ maxHeight: '100%', overflowY: 'hidden' }}>
         
       <div className="horizontal-container">
         <mdui-card style={{width: '600px', height: '180px', marginLeft:'8%',marginTop: '30px'}}>
 
-        <div className="location" style={{ marginLeft: '10px' }}>
-          <MapPinIcon className="MapPinIcon" />
-          Street
+        <div className="location" style={{ marginLeft: '20px',display:'flex', justifyContent:'space-between'  }}>
+          
+          <p1 style={{ fontSize: '20px'}}>Street</p1>
+          <MapPinIcon style={{ marginRight: '20px'}} className="MapPinIcon" />
         </div>
 
-        {truck && <div className="open" style={{ marginLeft: '10px', alignItems: 'center' }}>
-          <ClockIcon className="ClockIcon"></ClockIcon>
-          {truck['open'] && <p1 style={{ color: 'green' }}>Open</p1>}
-          {!truck['open'] && <p1 style={{ color: 'red' }}>Closed</p1>}
+        {truck && <div className="open" style={{ marginLeft: '20px', alignItems: 'center', display:'flex', justifyContent:'space-between' }}>
+          
+          {truck['open'] && <p1 style={{ fontSize: '20px', color: 'green' }}>Open</p1>}
+          {!truck['open'] && <p1 style={{ fontSize: '20px', color: 'red' }}>Closed</p1>}
+          <ClockIcon className="ClockIcon" style={{ marginRight: '20px'}}></ClockIcon>
         </div>}
 
         <div style={{marginLeft: '10px'}}>
@@ -94,7 +96,7 @@ function BusinessInfo() {
         </div>
         </mdui-card>
 
-      <div style={{ width: "50%", overflow: "hidden" }}>
+      <div style={{ width: "45%", overflow: "hidden", marginRight:'80px' }}>
           {/* <div style={{ position: "relative", height: "35vh" }}>
             <h2 style={{ position: "absolute", top: "40%", left: "50%", transform: "translate(-50%, -50%)" }}>
               Just a moment...
@@ -138,7 +140,7 @@ function BusinessInfo() {
 
         <div className="horizontal-container">
 
-        <mdui-card variant="elevated" style={{ width: '600px', height: '120px', marginLeft:'8%'}}>
+        <mdui-card variant="elevated" style={{ width: '600px', height: '120px', marginLeft:'8%',transform: 'translateY(-100px)'}}>
 
           <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
             <div>{ truck['phone'] }</div>
@@ -153,10 +155,13 @@ function BusinessInfo() {
         
 
           <div className="dishes" style={{marginRight:'80px'}}> 
-            <h2>Description</h2>
-            <mdui-card variant="elevated" style={{ width: "100%",padding: '10px' }}>
+            <h2>
+              Description
+              
+            </h2>
+            <mdui-card variant="elevated" style={{ height:'200px',width: "100%",padding: '10px',display: 'flex', alignItems: 'center' }}>
                 <div className="comment">
-                  <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray' }}>
+                  <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray',fontSize: '20px' }}>
                     { truck['description'] }  
                   </p>
                 </div>
@@ -164,7 +169,16 @@ function BusinessInfo() {
             
           </div>
         </div>
+          
+        <img
+                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '300px', height: '300px', marginLeft:'18%',transform: 'translateY(-200px)'}}
+                lat={truck['location']._lat}
+                lng={truck['location']._long}
+                href="/"
+                alt="logo"
+                src={truck['logo']}
 
+              />
         
         
 
