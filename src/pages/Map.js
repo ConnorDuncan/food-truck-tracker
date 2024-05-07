@@ -26,6 +26,7 @@ const Map = () => {
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
     const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
+    const [name, setName] = useState('');
 
     const handleType = (typeKey) => {
         setType(prevType => {
@@ -45,7 +46,9 @@ const Map = () => {
             const userDocSnap = await getDoc(userDocRef);
             if (userDocSnap.exists() && userDocSnap.data().photo) {
               setUserPhoto(userDocSnap.data().photo);
+              setName(userDocSnap.data().name);
             }
+            
           }
         };
     
@@ -116,7 +119,9 @@ const Map = () => {
             }}>
             </div>
             <div style={{ width: "25%", padding: "2%" }}>
-                <h1>Filter Food Types</h1>
+                <h1 style={{marginBottom:'90px'}}>Welcome, {name}!</h1>
+
+                <h1>Filter for Food Types</h1>
                 <div className='box' onClick = {() => document.querySelector('.options').classList.toggle('options-open')}>
                     {type.length ? type.map((item, index) => 
                         <div className='selected'>
