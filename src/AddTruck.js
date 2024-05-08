@@ -25,13 +25,13 @@ function AddTruck() {
     const phonePattern = /^\d{10}$/;
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-    const emailPattern = /^[A-Za-z._-]+@[A-Za-z.-_]+\.[A-Za-z]+$/;
+    const emailPattern = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
     const [foodLicense, setFoodLicense] = useState(null);
     const [menu, setMenu] = useState(null);
     const [logo, setLogo] = useState(null);
     const { currentUser } = useAuth();
 
-    const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Italian', 'Pizza', 'Salad', 'Sandwiches','Grill', 'Sushi','Noodle','Fried', 'Seafood','Indian','Dessert', 'Other'];
+    const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Pasta', 'Pizza', 'Salads', 'Sandwiches', 'Sushi', 'Other'];
 
     const handleFileUpload = async (file, path) => {
         if (!file) return null;
@@ -110,6 +110,29 @@ function AddTruck() {
             description: truckIntro,
             createTime: new Date()
         };
+
+        try {
+            const truckId = await createTruck(truckData);
+            const response = await axios.post('http://localhost:5001/api/user/email', {
+                "truckId": truckId,
+                "businessName": truckBusinessName,
+                "selectedFoodType": selectedFoodType,
+                "maxCapacity": parseInt(truckCapacity),
+                "phone": '(' + phone.slice(0, 3) + ')'
+                             + phone.slice(3, 6) + '-' 
+                             + phone.slice(6, 10),
+                "email": email,
+                "foodLicenseURL": foodLicenseURL,
+                "menuURL": menuURL,
+                "logoURL": logoURL        
+                });
+                console.log(response.data);
+            setIsLoading(false);
+            navigate('/business/list');
+        } catch (error) {
+            alert("Error creating truck: ", error);
+            setIsLoading(false);
+        }
     };
 
     const handleCapacityInput = (e) => {

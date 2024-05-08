@@ -89,7 +89,7 @@ function BusinessInfo() {
       <body style={{ maxHeight: '100%', overflowY: 'hidden' }}>
         
       <div className="horizontal-container">
-        <mdui-card style={{width: '600px', height: '180px', marginLeft:'8%',marginTop: '30px'}}>
+        <mdui-card style={{width: '600px', height: '180px', marginLeft:'2%',marginTop: '30px'}}>
         <div className="location" style={{ marginLeft: '10px' }}>
           <MapPinIcon className="MapPinIcon" />
           { address }
@@ -157,7 +157,7 @@ function BusinessInfo() {
 
         <div className="horizontal-container">
 
-        <mdui-card variant="elevated" style={{ width: '600px', height: '120px', marginLeft:'8%',transform: 'translateY(-100px)'}}>
+        <mdui-card variant="elevated" style={{ width: '600px', height: '120px', marginLeft:'2%', marginTop: '30px', transform: 'translateY(-100px)'}}>
 
           <div className="contact" style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
             <div>{ truck['phone'] }</div>
@@ -184,7 +184,7 @@ function BusinessInfo() {
 
               />
           </div>
-            <mdui-card variant="elevated" style={{ height:'200px',width: "100%",padding: '10px',display: 'flex', alignItems: 'center' }}>
+            <mdui-card variant="elevated" style={{ padding: '10px',display: 'flex', alignItems: 'center' }}>
                 <div className="comment">
                   <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray',fontSize: '20px' }}>
                     { truck['description'] }  
@@ -195,21 +195,27 @@ function BusinessInfo() {
           </div>
         </div>
 
+        <a href={truck['menu']} target="_blank" rel="noopener noreferrer">
         <img
-                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', wigth:'auto', height:'auto',maxWidth: '300px',maxHeight: '300px',marginTop:'30px',marginLeft:'15%',transform: 'translateY(-200px)'}}
-                lat={truck['location']._lat}
-                lng={truck['location']._long}
-                href="/"
-                alt="logo"
-                src={truck['menu']}
-
-          />
-        
-        
-
-        
-        
-
+        style={{
+            position: 'absolute',
+            left: 0,
+            top: '75%',
+            borderRadius: '10%',
+            justifyContent: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            maxWidth: '300px',
+            maxHeight: '500px',
+            marginTop: '30px',
+            marginLeft: '12%',
+        // transform: 'translateY(-200px)', // Remove or adjust this property
+    }}
+    href="/"
+    alt="logo"
+    src={truck['menu']}
+/>
+</a>
       </body>
     </div>
     )}</>
