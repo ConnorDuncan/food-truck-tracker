@@ -148,7 +148,11 @@ const FoodTrucks = () => {
     const geoPoint = await fetchUserLocation();
     updateTruck(truckId, { open: !currentStatus, location: geoPoint });
     document.getElementById('open-snackbar').open=true;
+    console.log(!currentStatus);
+    console.log(geoPoint);
   };
+
+
   if (loading) {
     return (
       <div className="Businesses">

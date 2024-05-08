@@ -26,6 +26,7 @@ const Map = () => {
     const [type, setType] = useState([]);
     const [drawerLoading, setDrawerLoading] = useState(true);
     const foodTypes = ['Chinese', 'Mexican', 'Desserts', 'Indian', 'Burgers', 'Pizza', 'Salad', 'Sandwiches', 'Dessert', 'Noodles', 'Fried', 'Seafood', 'Other'];
+    const [name, setname] = useState('');
 
 
     const handleType = (typeKey) => {
@@ -43,6 +44,7 @@ const Map = () => {
             const userDocSnap = await getDoc(userDocRef);
             if (userDocSnap.exists() && userDocSnap.data().photo) {
               setUserPhoto(userDocSnap.data().photo);
+              setname(userDocSnap.data().name);
             }
           } console.log('FETCHED USER - READ FROM FIREBASE')
         };
@@ -115,7 +117,8 @@ const Map = () => {
             }}>
             </div>
             <div style={{ width: "25%", padding: "2%", paddingTop: '10px' }}>
-                <h1>Filter Food Types</h1>
+                <h1 >Welcome, {name}!</h1>
+                <h1 style={{marginTop:'60px'}}>Filter Food Types</h1>
                 <div className='box' onClick = {() => document.querySelector('.options').classList.toggle('options-open')}>
                     {type.length ? type.map((item, index) => 
                         <div className='selected'>
@@ -152,6 +155,7 @@ const Map = () => {
                     >
                         {trucks && trucks.map((truck, index) =>
                             truck['open'] &&
+                            truck['location'] &&
                             (type.length === 0 || truck['food_type'].some(foodType => type.includes(foodType))) &&
                             <img
                                 style={{ 
@@ -165,7 +169,7 @@ const Map = () => {
                                 onClick={() => handleDrawerOpen(truck)}
                             />
                         )}
-                        <img
+                        {/* <img
                             style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #6dbbf8' }}
                             lat={center['lat']}
                             lng={center['lng']}
@@ -173,7 +177,7 @@ const Map = () => {
                             alt='logo'
                             src={userPhoto ? userPhoto : './userIcon.jpeg'}
                             height='40px'
-                        />
+                        /> */}
                     </GoogleMap>
                     
                     <div className='drawer'>

@@ -1,24 +1,25 @@
-  .drawer {
-    position: fixed; /* Changed to fixed for better positioning */
-    top: 13.6%;
-    right: -400px; /* Initially position the drawer off-screen to the right */
-    border-top: 1px solid #ccc;
-    box-sizing: border-box;
-    width: 400px;
-    height: 100vh;
-    background-color: #fdf7fe;
-    color: #1c1b1f;
-    transition: right 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Added right transition */
-    visibility: hidden; /* Initially hidden */
-    overflow: hidden;
-    z-index: 2000;
-    flex-wrap: wrap;
-  }
+.drawer {
+  position: fixed; /* Changed to fixed for better positioning */
+  top: 13.6%;
+  right: -400px; /* Initially position the drawer off-screen to the right */
+  border-top: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 400px;
+  height: 100vh;
+  background-color: #fdf7fe;
+  color: #1c1b1f;
+  transition: right 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Added right transition */
+  visibility: hidden; /* Initially hidden */
+  overflow: hidden;
+  z-index: 2000;
+  flex-wrap: wrap;
+}
 
-  .opened {
-    right: 0; /* Move the drawer to the right edge when opened */
-    visibility: visible; /* Make the drawer visible when opened */
-  }
+.opened {
+  position: absolute;
+  right: 0; /* Move the drawer to the right edge when opened */
+  visibility: visible; /* Make the drawer visible when opened */
+}
   
   .drawer ul {
     list-style-type: 'none';
