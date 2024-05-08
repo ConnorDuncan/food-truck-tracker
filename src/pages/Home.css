@@ -4,10 +4,15 @@
   --mdui-color-primary-dark: 208, 188, 255;
 }
 
+body{
+  height: 100vh
+}
+
 .home-page {
     text-align: center;
     font-family: sans-serif;
     font-size: large;
+    height: 100vh;
    
   }
   

@@ -89,12 +89,13 @@ const Home = () => {
       ];
 
     return (
+        <body>
         <div className="home-page">
             <img
-                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '13.6%', opacity: '0.5', clipPath: 'inset(0px 0px 50px 0px)' }}
+                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '11.5%', opacity: '0.5', clipPath: 'inset(0px 0px 50px 0px)' }}
                 alt='Banner'
                 src={'./Banner.jpeg'}
-                height='120%'
+                height='100%'
             />
             <div style={{ marginTop: '80px' }}>
                 <mdui-card style={{ width: '600px', height: '380px', marginTop: '30px', alignItems: 'center' }}>
@@ -102,9 +103,7 @@ const Home = () => {
                     <h1 style={{ marginTop: '35px' }}>Welcome to Vendor Vista!</h1>
                     <p>Find your favorite food trucks or track your business.</p>
                     <div className="buttons">
-                        {/* <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button> */}
                         <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
-                        {/* <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button> */}
                         <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
                     </div>
 
@@ -119,18 +118,25 @@ const Home = () => {
             </div>
 
 
-            <div className='faq' style={{background: 'white'}}>
-                <h2>Frequently Asked Questions</h2>
-                <ul>
-                    {faqs.map((faq, index) => (
-                        <li key={index}>
-                            <h3>{faq.question}</h3>
-                            <p>{faq.answer}</p>
-                        </li>
-                    ))}
-                </ul>
+            <div className='faq' style={{background:'white',transform: 'translateY(-40px)', borderRadius:'3%', height:'390px', display:'flex'}}>
+                <div style={{transform: 'translateX(30px)'}}>
+                    <h2>Frequently Asked Questions</h2>
+                    <ul>
+                        {faqs.map((faq, index) => (
+                            <li key={index}>
+                                <h3>{faq.question}</h3>
+                                <p>{faq.answer}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div style={{transform: 'translateX(200px)'}}>
+                    <p1>This website is a project </p1>
+
+                </div>
             </div>
         </div>
+        </body>
     );
 }
 
