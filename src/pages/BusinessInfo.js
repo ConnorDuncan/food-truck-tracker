@@ -179,7 +179,7 @@ function BusinessInfo() {
         </div>
 
         <img
-                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', wigth:'auto', height:'auto',maxWidth: '300px',maxHeight: '300px',marginTop:'30px',marginLeft:'15%',transform: 'translateY(-200px)'}}
+                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', wigth:'auto', height:'auto',maxWidth: '300px',maxHeight: '300px',marginTop:'30px',marginLeft:'15%',transform: 'translateY(-240px)'}}
                 lat={truck['location']._lat}
                 lng={truck['location']._long}
                 href="/"
