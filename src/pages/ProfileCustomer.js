@@ -37,7 +37,6 @@ const ProfileCustomer = () => {
         )}
         <h2 className="profile-name">{profile.name || 'Anonymous'}</h2>
         <p className="profile-email">{profile.email || 'No email provided'}</p>
-        <p className="profile-description">Description: {profile.description || 'No description available'}</p>
       </div>
     </div>
   );
