@@ -6,20 +6,43 @@ import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import firebase from 'firebase/compat/app';
+import { GeoPoint } from 'firebase/firestore';
 
 const FoodTrucks = () => {
   const navigate = useNavigate();
   const { trucks, loading, updateTruck } = useFoodTrucks();
+  const [center, setCenter] = useState({ lat: 0, lng: 0 });
 
   const navigateToPage = () => {
     navigate('/business/AddTruck');
   };
 
-  const toggleOpenStatus = (truckId, currentStatus) => {
-    updateTruck(truckId, { open: !currentStatus });
-    document.getElementById('open-snackbar').open=true;
+  const fetchUserLocation = () => {
+    return new Promise((resolve) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          resolve(new GeoPoint(latitude, longitude));
+        }, (error) => {
+          console.error("Error fetching location", error);
+          alert("Unable to fetch location.");
+          resolve(null);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+        resolve(null);
+      }
+    });
   };
 
+  const toggleOpenStatus = async (truckId, currentStatus) => {
+    const geoPoint = await fetchUserLocation();
+    updateTruck(truckId, { open: !currentStatus, location: geoPoint });
+    document.getElementById('open-snackbar').open=true;
+  };
   if (loading) {
     return (
       <div className="Businesses">

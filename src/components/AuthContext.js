@@ -1,6 +1,5 @@
-// src/contexts/AuthContext.js
 import React, { useContext, useState, useEffect, createContext } from 'react';
-import { auth } from '../firebase'; // Ensure this points to your Firebase configuration
+import { auth } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -10,7 +9,11 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
-  const [isCustomer, setIsCustomer] = useState(true);
+  // Initialize isCustomer from localStorage or default to true if not set
+  const [isCustomer, setIsCustomer] = useState(() => {
+    const isCust = localStorage.getItem('isCustomer');
+    return isCust !== null ? JSON.parse(isCust) : true;
+  });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -29,30 +32,25 @@ export const AuthProvider = ({ children }) => {
       }
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
-  // Function to toggle user type to customer
   const setCustomer = () => {
     setIsCustomer(true);
+    localStorage.setItem('isCustomer', 'true');
   };
 
-  // Function to toggle user type to business
   const setBusiness = () => {
     setIsCustomer(false);
+    localStorage.setItem('isCustomer', 'false');
   };
-  
-  const setNull = () => {
-    setIsCustomer(null);
-  }
 
   const value = {
     currentUser,
-    isCustomer, // Expose the current user type state
-    setCustomer, // Expose the function to set the user as a customer
-    setBusiness, // Expose the function to set the user as a business
+    isCustomer,
+    setCustomer,
+    setBusiness,
     setCurrentUser,
-    setNull
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
