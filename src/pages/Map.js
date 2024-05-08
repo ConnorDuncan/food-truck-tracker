@@ -154,7 +154,7 @@ const Map = () => {
                         options={{ minZoom: 13, fullscreenControl: false }}
                     >
                         {trucks && trucks.map((truck, index) =>
-                            truck['open'] &&
+                            truck['open'] && truck['location'] &&
                             (type.length === 0 || truck['food_type'].some(foodType => type.includes(foodType))) &&
                             <img
                                 style={{ 
