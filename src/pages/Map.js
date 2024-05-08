@@ -108,7 +108,7 @@ const Map = () => {
     }, [select]);
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", overflowX: 'hidden' }}>
             <div className='overlay' onClick = {() => {
                 document.querySelector('.overlay').classList.toggle('show-overlay');
                 document.querySelector('.drawer').classList.remove('opened');

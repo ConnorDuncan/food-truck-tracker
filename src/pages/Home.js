@@ -89,12 +89,12 @@ const Home = () => {
       ];
 
     return (
-        <div className="home-page">
+        <div className="home-page" style={{ overflowX: 'hidden' }}>
             <img
                 style={{ position: 'absolute', zIndex: '-1', left: '0', top: '13.6%', opacity: '0.5', clipPath: 'inset(0px 0px 50px 0px)' }}
                 alt='Banner'
                 src={'./Banner.jpeg'}
-                height='120%'
+                width='100%'
             />
             <div style={{ marginTop: '80px' }}>
                 <mdui-card style={{ width: '600px', height: '380px', marginTop: '30px', alignItems: 'center' }}>
