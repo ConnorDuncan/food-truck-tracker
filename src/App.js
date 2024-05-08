@@ -9,6 +9,11 @@ import NotFound from './pages/FourOhFour.js';
 import FoodTrucks from './FoodTrucks.js';  // Make sure this is the component, not useFoodTrucks hook
 import UpdateInfo from './UpdateInfo.js';
 import AddTruck from './AddTruck.js';
+import Settings from './pages/Settings.js';
+import ProfileBusiness from './pages/ProfileBusiness.js';
+import ProfileCustomer from './pages/ProfileCustomer.js';
+import ProtectedCustomer from './components/ProtectedCustomer.jsx';
+import ProtectedBusiness from './components/ProtectedBusiness.jsx';
 
 function App() {
   return (
@@ -19,20 +24,27 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />} />
-            <Route path='/business/info/:truckId' element={<Protected />}>
-              <Route index element={<BusinessInfo />} />
-            </Route>
-            <Route path='/business/list' element={<Protected />}>
+            <Route path='/business/info/:truckId' element={<BusinessInfo />}/>
+            <Route path='/business/list' element={<ProtectedBusiness />}>
               <Route index element={<FoodTrucks />} />
             </Route>
-            <Route path='/map' element={<Protected />}>
+            <Route path='/map'>
               <Route path='/map' element={<Map />} />
             </Route>
-            <Route path="/business/UpdateInfo/:truckId" element={<Protected />}>
+            <Route path="/business/UpdateInfo/:truckId" element={<ProtectedBusiness />}>
               <Route index element={<UpdateInfo />} />
             </Route>
-            <Route path="/business/AddTruck" element={<Protected />}>
+            <Route path="/business/AddTruck" element={<ProtectedBusiness />}>
               <Route index element={<AddTruck />} />
+            </Route>
+            <Route path="/user/Settings" element={<Protected />}>
+              <Route index element={<Settings />} />
+            </Route>
+            <Route path="/business/Profile" element={<ProtectedBusiness />}>
+              <Route index element={<ProfileBusiness />} />
+            </Route>
+            <Route path="/customer/Profile" element={<ProtectedCustomer />}>
+              <Route index element={<ProfileCustomer />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
