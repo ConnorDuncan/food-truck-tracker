@@ -132,7 +132,7 @@ const Map = () => {
                     ))}
                 </div>
             </div>
-
+       
             {!center && (
                 <>  
                     <div style={{position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)'}}>

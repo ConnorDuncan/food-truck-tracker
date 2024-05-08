@@ -31,7 +31,7 @@ function AddTruck() {
     const [logo, setLogo] = useState(null);
     const { currentUser } = useAuth();
 
-    const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Pasta', 'Pizza', 'Salads', 'Sandwiches', 'Sushi', 'Other'];
+    const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Italian', 'Pizza', 'Salad', 'Sandwiches','Grill', 'Sushi','Noodle','Fried', 'Seafood','Indian','Dessert', 'Other'];
 
     const handleFileUpload = async (file, path) => {
         if (!file) return null;

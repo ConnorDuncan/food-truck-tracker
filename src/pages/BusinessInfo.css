@@ -1,4 +1,7 @@
-
+body{
+  height: 78vh;
+  width: 100vw
+}
 
 .BusinessName {
   display: flex;
@@ -28,7 +31,6 @@
 }
 
 .Intro{
-
   color: gray;
 }
 
@@ -48,38 +50,38 @@
   width: 45%;
 }
 
-.dishes {
+/* .dishes {
   display: flex;
   flex-direction: column;
-}
-
+} */
+/* 
 .image-comment-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
   max-height: 300px;
-}
+} */
 
-.dish {
+/* .dish {
   display: flex;
   gap: 10px;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-}
+} */
 
-.dish img {
+/* .dish img {
   width: 100px;
   height: auto;
   object-fit: cover;
-}
+} */
 
 .comment {
   font-style: italic;
 }
 
-.grid {
+/* .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-}
+} */

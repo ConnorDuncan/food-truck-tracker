@@ -33,7 +33,7 @@ function UpdateInfo() {
   const [logo, setLogo] = useState(null);
   const [verified, setVerified] = useState(null);
 
-  const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Pasta', 'Pizza', 'Salads', 'Sandwiches', 'Sushi', 'Other'];
+  const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Italian', 'Pizza', 'Salad', 'Sandwiches','Grill', 'Sushi','Noodle','Fried', 'Seafood','Indian','Dessert', 'Other'];
 
   useEffect(() => {
     const truckData = trucks.find(truck => truck.id === truckId);
@@ -192,6 +192,7 @@ function UpdateInfo() {
                 }
               }}
             >
+              
               {foodTypes.map((foodType) => (
                 <MenuItem key={foodType} value={foodType}>
                   <Checkbox checked={selectedFoodType.includes(foodType)} />

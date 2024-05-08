@@ -71,7 +71,7 @@ const FoodTrucks = () => {
                   </div>
                 </>
               }
-              <Link to={`/business/UpdateInfo/${truck.id}`}>view details</Link>
+              <Link to={`/business/UpdateInfo/${truck.id}`}>Update Info</Link>
             </div>
           </mdui-card>
         )) : <p>No trucks available. Click below to add one now!</p>}
