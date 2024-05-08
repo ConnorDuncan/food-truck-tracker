@@ -155,10 +155,18 @@ function BusinessInfo() {
         
 
           <div className="dishes" style={{marginRight:'80px'}}> 
-            <h2>
-              Description
-              
-            </h2>
+          <div style={{display:'flex'}}>
+            <h2>Description</h2>
+            <img
+                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '40px', height: '40px',marginLeft:'30px',transform: 'translateY(15px)'}}
+                lat={truck['location']._lat}
+                lng={truck['location']._long}
+                href="/"
+                alt="logo"
+                src={truck['logo']}
+
+              />
+          </div>
             <mdui-card variant="elevated" style={{ height:'200px',width: "100%",padding: '10px',display: 'flex', alignItems: 'center' }}>
                 <div className="comment">
                   <p style={{ paddingLeft: '5px', marginTop: '4px', color:'gray',fontSize: '20px' }}>
@@ -169,16 +177,16 @@ function BusinessInfo() {
             
           </div>
         </div>
-          
+
         <img
-                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '300px', height: '300px', marginLeft:'18%',transform: 'translateY(-200px)'}}
+                style={{ borderRadius: '10%', justifyContent: 'center', display: 'flex', alignItems: 'center', wigth:'auto', height:'auto',maxWidth: '300px',maxHeight: '300px',marginTop:'30px',marginLeft:'15%',transform: 'translateY(-200px)'}}
                 lat={truck['location']._lat}
                 lng={truck['location']._long}
                 href="/"
                 alt="logo"
-                src={truck['logo']}
+                src={truck['menu']}
 
-              />
+          />
         
         
 
