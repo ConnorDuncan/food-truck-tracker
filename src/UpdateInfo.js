@@ -18,6 +18,13 @@ function UpdateInfo() {
   const [selectedFoodType, setSelectedFoodType] = useState([]);
   const [truckCapacity, setTruckCapacity] = useState('');
   const [truckBusinessName, setTruckBusinessName] = useState('');
+  const [truckIntro, setTruckIntro] = useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const phonePattern = /^\d{10}$/;
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const emailPattern = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
   const [foodLicenseUrl, setFoodLicenseUrl] = useState('');
   const [menuUrl, setMenuUrl] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
@@ -35,6 +42,9 @@ function UpdateInfo() {
       setIsOpen(truckData.open);
       setSelectedFoodType(Array.isArray(truckData.food_type) ? truckData.food_type : [truckData.food_type]);
       setTruckCapacity(truckData.max_capacity);
+      setTruckIntro(truckData.description);
+      if (truckData.phone) setPhone(truckData.phone.replace(/[^0-9]/g, ''));
+      setEmail(truckData.email);
       setFoodLicenseUrl(truckData.license);
       setMenuUrl(truckData.menu);
       setLogoUrl(truckData.logo);
@@ -85,6 +95,17 @@ function UpdateInfo() {
     if (truckBusinessName) updates.business_name = truckBusinessName;
     if (selectedFoodType.length) updates.food_type = selectedFoodType;
     if (truckCapacity) updates.max_capacity = parseInt(truckCapacity, 10);
+    if (truckIntro) updates.truckInfo = truckIntro;
+    if (phone) updates.phone = phone;
+    if (email) updates.email = email;
+    if (!phonePattern.test(phone)) {
+      setPhoneError('Invalid phone number. Please enter 10 digits.');
+      return;
+    } else setPhoneError('');
+    if (!emailPattern.test(email)) {
+        setEmailError('Invalid email. Please enter a valid email.');
+        return;
+    } else setEmailError('');
     if (isOpen !== undefined) updates.open = isOpen;
     if (isOpen) {
       const fetchedLocation = await fetchUserLocation();
@@ -201,6 +222,44 @@ function UpdateInfo() {
       </div>
 
       <div className='cate'>
+          <TextField
+              label="A Brief Description of Your Truck"
+              rows={3}
+              multiline
+              style={{ width: '300px' }}
+              variant="outlined"
+              value={truckIntro}
+              onChange={(e) => setTruckIntro(e.target.value)}
+          />
+      </div>
+      <div className='cate'>
+          <TextField
+              label="Phone Number"
+              rows={1}
+              multiline
+              style={{ width: '300px' }}
+              variant="outlined"
+              value={phone}
+              onChange={(e) => {setPhone(e.target.value)}}
+              error={Boolean(phoneError)}
+              helperText={phoneError}
+          />
+      </div>
+      <div className='cate'>
+          <TextField
+              label="Email"
+              rows={1}
+              multiline
+              style={{ width: '300px' }}
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={Boolean(emailError)}
+              helperText={emailError}
+          />
+      </div>
+
+      <div className='cate'>
         {foodLicenseUrl && <a href={foodLicenseUrl} target="_blank" rel="noopener noreferrer" className='inputlabel' style={{ marginRight: '30px' }}>Food License</a>}
         <input
           type="file"
@@ -251,7 +310,7 @@ function UpdateInfo() {
         </mdui-button>
       </div>
 
-      <div className='buttonContainer'>
+      <div className='buttonContainer' style={{ marginBottom: '20px' }}>
         <mdui-button variant="elevated" style={{ width: "150px" }} onClick={() => window.history.back()}>Back</mdui-button>
         <mdui-button variant="tonal" style={{ width: "150px" }} onClick={handleSave}>Save</mdui-button>
       </div>

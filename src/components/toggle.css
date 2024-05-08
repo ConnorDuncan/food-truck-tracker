@@ -2,6 +2,7 @@
     cursor: pointer;
     border: 1px solid #ccc;
     padding: 10px;
+    max-width: 240px;
     background-color: #f9f9f9;
     margin: 0; 
     align-items: center;
@@ -13,6 +14,7 @@
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
     list-style-type: none;
+    max-width: 260px;
     background-color: #f9f9f9;
     transition: height 0.3s ease;
     height: 0px;
@@ -38,7 +40,7 @@
 }
 
 .options-open {
-    height: 204px;
+    height: 532px;
     border-bottom: 1px solid #ccc;
 }
 
