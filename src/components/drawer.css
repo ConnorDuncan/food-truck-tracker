@@ -1,19 +1,25 @@
   .drawer {
-    position: absolute;
+    position: fixed; /* Changed to fixed for better positioning */
+    top: 13.6%;
+    right: -400px; /* Initially position the drawer off-screen to the right */
     border-top: 1px solid #ccc;
     box-sizing: border-box;
     width: 400px;
     height: 100vh;
     background-color: #fdf7fe;
     color: #1c1b1f;
-    transform: translateX(780px);
-    transition: transform 0.5s ease-in-out;
-    overflow: 'hidden';
+    transition: right 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Added right transition */
+    visibility: hidden; /* Initially hidden */
+    overflow: hidden;
     z-index: 2000;
     flex-wrap: wrap;
   }
-  
 
+  .opened {
+    right: 0; /* Move the drawer to the right edge when opened */
+    visibility: visible; /* Make the drawer visible when opened */
+  }
+  
   .drawer ul {
     list-style-type: 'none';
     padding: 0;
@@ -45,10 +51,6 @@
     background-color: #f0f0f0;
     border: 1px solid #ccc;
   } 
-  
-  .opened {
-    transform: translateX(353px);
-  }
 
   .overlay {
     position: absolute;

@@ -53,18 +53,16 @@
 
 
   .intro{
-    margin-top: 50px;
+    padding: 20px;
     color: gray;
     max-width: 400px;
     margin: 0 auto; /* This will center the div horizontally */
-    margin-top: 50px;
     text-align: center;
 
   }
   
   .faq {
     margin-top: 10%;
-    border-top: 2px solid #ccc;
     padding-top: 20px;
   }
   

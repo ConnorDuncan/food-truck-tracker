@@ -10,9 +10,13 @@ import 'mdui/components/button.js';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
+import 'mdui/mdui.css';
+import 'mdui';
+import 'mdui/components/card.js';
+
 const Home = () => {
-    const { currentUser, setCurrentUser } = useAuth();
     const navigate = useNavigate();
+    const { currentUser, setCurrentUser, isCustomer, setCustomer, setBusiness } = useAuth();
 
     useEffect(() => {
 
@@ -65,8 +69,14 @@ const Home = () => {
     };
     
 
-    const handleSigninWithGoogleBusiness = () => handleSignIn("/business/list");
-    const handleSigninWithGoogleCustomer = () => handleSignIn("/map");
+    const handleSigninWithGoogleBusiness = () => {
+        setBusiness();
+        handleSignIn("/business/list");
+    }
+    const handleSigninWithGoogleCustomer = () => {
+        setCustomer();
+        handleSignIn("/map");
+    }
 
     const faqs = [
         {
@@ -84,35 +94,45 @@ const Home = () => {
         // Add more FAQs as needed
       ];
 
-    return (
-        <div className="home-page">
-            <h1>Welcome to Vendor Vista!</h1>
-            <p>Find your favorite food trucks or track your business.</p>
-            <div className="buttons">
-                {/* <button className="business-button" onClick={handleSigninWithGoogleBusiness}>Business Login</button> */}
-                <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
-                {/* <button className="customer-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</button> */}
-                <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
-            </div>
-
-            <div className='intro'>
-                Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
-            </div>
-
-
-            <div className='faq'>
-                <h2>Frequently Asked Questions</h2>
-                <ul>
-                    {faqs.map((faq, index) => (
-                        <li key={index}>
-                            <h3>{faq.question}</h3>
-                            <p>{faq.answer}</p>
-                        </li>
-                    ))}
-                </ul>
+      return (
+        <>
+        <div className="home-page" style={{ overflowX: 'hidden', marginBottom: '0' }}>
+            <img
+                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '13.6%', opacity: '0.5', width: '100%' }}
+                alt='Banner'
+                src={'./Banner.jpeg'}
+            />
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <mdui-card style={{ padding: '20px', maxWidth: '600px', width: '100%', height: 'auto', margin: '30px auto', alignItems: 'center' }}>
+                    <h1 style={{ textAlign: 'center' }}>Welcome to Vendor Vista!</h1>
+                    <p style={{ textAlign: 'center' }}>Find your favorite food trucks or track your business.</p>
+                    <div className="buttons" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
+                        <mdui-button class="my-custom-button" onClick={handleSigninWithGoogleCustomer}>Customer Login</mdui-button>
+                    </div>
+                    <div className='intro' style={{ textAlign: 'center', paddingTop: '20px', color: 'gray', fontFamily: 'inherit' }}>
+                        Vendor Vista is a platform that makes it easy for you to discover and connect with local vendors. Our mission is to help students find good food and support local businesses.
+                    </div>
+                    <div style={{ paddingTop: '20px', color: 'gray', fontFamily: 'inherit', textAlign: 'center' }}>
+                        <p>Trusted by 1 business worldwide.</p>
+                    </div>
+                </mdui-card>
             </div>
         </div>
+        <div className='faq' style={{ background: 'white', width: '100%', marginTop: '50%' }}>
+            <h2 style={{ textAlign: 'center' }}>Frequently Asked Questions</h2>
+            <ul style={{ textAlign: 'center' }}>
+                {faqs.map((faq, index) => (
+                    <li key={index} style={{ marginBottom: '20px' }}>
+                        <h3>{faq.question}</h3>
+                        <p>{faq.answer}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        </>
     );
+    
 }
 
 export default Home;

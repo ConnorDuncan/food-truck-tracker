@@ -21,11 +21,12 @@ const Map = () => {
     const [center, setCenter] = useState(null);
     const { currentUser } = useAuth();
     const [userPhoto, setUserPhoto] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [trucks, setTrucks] = useState([]);
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
-    const [drawerLoading, setDrawerLoading] = useState(true); // Drawer loading state
+    const [drawerLoading, setDrawerLoading] = useState(true);
+    const foodTypes = ['Chinese', 'Mexican', 'Desserts', 'Indian', 'Burgers', 'Pizza', 'Salad', 'Sandwiches', 'Dessert', 'Noodles', 'Fried', 'Seafood', 'Other'];
+
 
     const handleType = (typeKey) => {
         setType(prevType => {
@@ -35,9 +36,6 @@ const Map = () => {
     };
 
     useEffect(() => {
-        // Clear the anchorEl state on location change
-        setAnchorEl(null);
-    
         // Fetch user photo from Firestore
         const fetchUserPhoto = async () => {
           if (currentUser) {
@@ -46,11 +44,11 @@ const Map = () => {
             if (userDocSnap.exists() && userDocSnap.data().photo) {
               setUserPhoto(userDocSnap.data().photo);
             }
-          }
+          } console.log('FETCHED USER - READ FROM FIREBASE')
         };
     
         fetchUserPhoto();
-      }, [currentUser]);
+    }, [currentUser]);
 
     useEffect(() => {
         console.log(type);
@@ -65,6 +63,7 @@ const Map = () => {
                 ...doc.data()
             }));
             setTrucks(trucksData);
+            console.log('FETCHED TRUCKS - READ FROM FIREBASE')
         };
 
         getTrucks();
@@ -98,7 +97,7 @@ const Map = () => {
             'menu': truck['menu'],
             'food_type': truck['food_type'],
             'business_name': truck['business_name'],
-            'description': 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
+            'description': truck['description'],
             'id': truck.id
         });
     };
@@ -109,13 +108,13 @@ const Map = () => {
     }, [select]);
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", overflowX: 'hidden' }}>
             <div className='overlay' onClick = {() => {
                 document.querySelector('.overlay').classList.toggle('show-overlay');
                 document.querySelector('.drawer').classList.remove('opened');
             }}>
             </div>
-            <div style={{ width: "25%", padding: "2%" }}>
+            <div style={{ width: "25%", padding: "2%", paddingTop: '10px' }}>
                 <h1>Filter Food Types</h1>
                 <div className='box' onClick = {() => document.querySelector('.options').classList.toggle('options-open')}>
                     {type.length ? type.map((item, index) => 
@@ -126,21 +125,11 @@ const Map = () => {
                     ) : 'Any'}
                 </div>
                 <div className='options'>
-                    <li className={`option ${type.includes('Mexican') ? 'option-clicked' : ''}`} onClick = {() => handleType('Mexican')}>Mexican</li>
-                    <li className={`option ${type.includes('Chinese') ? 'option-clicked' : ''}`} onClick = {() => handleType('Chinese')}>Chinese</li>
-                    <li className={`option ${type.includes('Italian') ? 'option-clicked' : ''}`} onClick = {() => handleType('Italian')}>Italian</li>
-                    <li className={`option ${type.includes('Pizza') ? 'option-clicked' : ''}`} onClick = {() => handleType('Pizza')}>Pizza</li>
-                    <li className={`option ${type.includes('Salad') ? 'option-clicked' : ''}`} onClick = {() => handleType('Salad')}>Salad</li>
-                    <li className={`option ${type.includes('Grill') ? 'option-clicked' : ''}`} onClick = {() => handleType('Grill')}>Grill</li>
-                    <li className={`option ${type.includes('Sushi') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sushi')}>Sushi</li>
-                    <li className={`option ${type.includes('Burgers') ? 'option-clicked' : ''}`} onClick = {() => handleType('Burgers')}>Burgers</li>
-                    <li className={`option ${type.includes('Desserts') ? 'option-clicked' : ''}`} onClick = {() => handleType('Desserts')}>Desserts</li>
-                    <li className={`option ${type.includes('Sandwiches') ? 'option-clicked' : ''}`} onClick = {() => handleType('Sandwiches')}>Sandwiches</li>
-                    <li className={`option ${type.includes('Fried') ? 'option-clicked' : ''}`} onClick = {() => handleType('Fried')}>Fried</li>
-                    <li className={`option ${type.includes('Seafood') ? 'option-clicked' : ''}`} onClick = {() => handleType('Seafood')}>Seafood</li>
-                    <li className={`option ${type.includes('Indian') ? 'option-clicked' : ''}`} onClick = {() => handleType('Indian')}>Indian</li>
-                    <li className={`option ${type.includes('Other') ? 'option-clicked' : ''}`} onClick = {() => handleType('Other')}>Other</li>
-                    <li className={`option ${type.includes('Noodle') ? 'option-clicked' : ''}`} onClick = {() => handleType('Noodle')}>Noodle</li>
+                    {foodTypes.map((foodType) => (
+                        <li className={`option ${type.includes(foodType) ? 'option-clicked' : ''}`} 
+                            onClick = {() => handleType(foodType)}>{foodType}
+                        </li>
+                    ))}
                 </div>
             </div>
        
@@ -163,9 +152,11 @@ const Map = () => {
                     >
                         {trucks && trucks.map((truck, index) =>
                             truck['open'] &&
-                            (type.includes(truck['food_type']) || !type.length) &&
+                            (type.length === 0 || truck['food_type'].some(foodType => type.includes(foodType))) &&
                             <img
-                                style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '50px', height: '50px' }}
+                                style={{ 
+                                    borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', width: '40px', height: '40px', border: '3px solid green' 
+                                }}
                                 lat={truck['location']._lat}
                                 lng={truck['location']._long}
                                 href='/'
@@ -175,13 +166,13 @@ const Map = () => {
                             />
                         )}
                         <img
-                            style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center' }}
+                            style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #6dbbf8' }}
                             lat={center['lat']}
                             lng={center['lng']}
                             href='/'
                             alt='logo'
                             src={userPhoto ? userPhoto : './userIcon.jpeg'}
-                            height='50px'
+                            height='40px'
                         />
                     </GoogleMap>
                     
@@ -194,17 +185,13 @@ const Map = () => {
                                         style = {{ borderRadius: '5px' }}
                                         width='40%'
                                         height='40%'
+                                        alt='selected truck logo'
                                         src={ select['logo'] }
                                     />
                             </div>
                             <ul style = {{ padding: '12px' }}>
-                                <div style = {{ display: 'flex', alignItems: 'center' }}>
+                                <div style = {{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
                                     <h2 style={{ padding: '5px', margin: '0' }}>{ select['business_name'] }</h2>
-                                    <img   
-                                        style = {{ borderRadius: '100%', marginLeft: '7px' }}
-                                        height='30px'
-                                        src={ select['logo'] }
-                                    />
                                 </div>
 
                                 

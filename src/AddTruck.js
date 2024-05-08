@@ -20,6 +20,12 @@ function AddTruck() {
     const [truckCapacity, setTruckCapacity] = useState('');
     const [truckBusinessName, setTruckBusinessName] = useState('');
     const [truckIntro, setTruckIntro] = useState('');
+    const [phone, setPhone] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const phonePattern = /^\d{10}$/;
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const emailPattern = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
     const [foodLicense, setFoodLicense] = useState(null);
     const [menu, setMenu] = useState(null);
     const [logo, setLogo] = useState(null);
@@ -56,6 +62,26 @@ function AddTruck() {
             setIsLoading(false);
             return;
         }
+        if (!phone) {
+            alert("Please input a phone number");
+            setIsLoading(false);
+            return;
+        }
+        if (!phonePattern.test(phone)) {
+            setIsLoading(false);
+            setPhoneError('Invalid phone number. Please enter 10 digits.');
+            return;
+        } else setPhoneError('');
+        if (!email) {
+            alert("Please input an email");
+            setIsLoading(false);
+            return;
+        }
+        if (!emailPattern.test(email)) {
+            setEmailError('Invalid email. Please enter a valid email.');
+            setIsLoading(false);
+            return;
+        } else setEmailError('');
 
         const foodLicenseURL = await handleFileUpload(foodLicense, 'licenses');
         const menuURL = await handleFileUpload(menu, 'menus');
@@ -71,6 +97,10 @@ function AddTruck() {
             business_name: truckBusinessName,
             food_type: selectedFoodType,
             max_capacity: parseInt(truckCapacity),
+            phone: '(' + phone.slice(0, 3) + ')'
+                       + phone.slice(3, 6) + '-' 
+                       + phone.slice(6, 10),
+            email: email,
             license: foodLicenseURL,
             menu: menuURL,
             logo: logoURL,
@@ -88,6 +118,10 @@ function AddTruck() {
                 "businessName": truckBusinessName,
                 "selectedFoodType": selectedFoodType,
                 "maxCapacity": parseInt(truckCapacity),
+                "phone": '(' + phone.slice(0, 3) + ')'
+                             + phone.slice(3, 6) + '-' 
+                             + phone.slice(6, 10),
+                "email": email,
                 "foodLicenseURL": foodLicenseURL,
                 "menuURL": menuURL,
                 "logoURL": logoURL        
@@ -184,13 +218,39 @@ function AddTruck() {
             </div>
             <div className='cate'>
                 <TextField
-                    label="A Brief Intro to Your Truck"
+                    label="A Brief Description of Your Truck"
                     rows={3}
                     multiline
                     style={{ width: '300px' }}
                     variant="outlined"
                     value={truckIntro}
                     onChange={(e) => setTruckIntro(e.target.value)}
+                />
+            </div>
+            <div className='cate'>
+                <TextField
+                    label="Phone Number"
+                    rows={1}
+                    multiline
+                    style={{ width: '300px' }}
+                    variant="outlined"
+                    value={phone}
+                    onChange={(e) => {setPhone(e.target.value)}}
+                    error={Boolean(phoneError)}
+                    helperText={phoneError}
+                />
+            </div>
+            <div className='cate'>
+                <TextField
+                    label="Email"
+                    rows={1}
+                    multiline
+                    style={{ width: '300px' }}
+                    variant="outlined"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={Boolean(emailError)}
+                    helperText={emailError}
                 />
             </div>
             <div className='cate'>
@@ -241,7 +301,7 @@ function AddTruck() {
                     {logo ? logo.name : "No file chosen"}
                 </mdui-button>
             </div>
-            <div className='buttonContainer'>
+            <div className='buttonContainer' style={{ marginBottom: '20px' }}>
                 <mdui-button variant="elevated" style={{ width: "150px" }} onClick={() => window.history.back()}>Back</mdui-button>
                 <mdui-button variant="tonal" style={{ width: "150px" }} onClick={handleSave}>Save</mdui-button>
             </div>
