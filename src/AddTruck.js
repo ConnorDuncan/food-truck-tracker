@@ -6,10 +6,11 @@ import './UpdateInfo.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import './loadingSpinner.css';
-import axios from 'axios';
+// import axios from 'axios';
 import 'mdui/components/card.js';
 import { useAuth } from './components/AuthContext';
 import useFoodTrucks from './useFoodTrucks';
+
 
 function AddTruck() {
     const { control } = useForm();
@@ -83,16 +84,16 @@ function AddTruck() {
 
         try {
             const truckId = await createTruck(truckData);
-            const response = await axios.post('http://localhost:5001/api/user/email', {
-                "truckId": truckId,
-                "businessName": truckBusinessName,
-                "selectedFoodType": selectedFoodType,
-                "maxCapacity": parseInt(truckCapacity),
-                "foodLicenseURL": foodLicenseURL,
-                "menuURL": menuURL,
-                "logoURL": logoURL        
-                });
-                console.log(response.data);
+            // const response = await axios.post('http://localhost:5001/api/user/email', {
+            //     "truckId": truckId,
+            //     "businessName": truckBusinessName,
+            //     "selectedFoodType": selectedFoodType,
+            //     "maxCapacity": parseInt(truckCapacity),
+            //     "foodLicenseURL": foodLicenseURL,
+            //     "menuURL": menuURL,
+            //     "logoURL": logoURL        
+            //     });
+            //     console.log(response.data);
             setIsLoading(false);
             navigate('/business/list');
         } catch (error) {
