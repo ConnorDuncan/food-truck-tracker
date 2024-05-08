@@ -1,9 +1,11 @@
 import './BusinessInfo.css';
 import '../components/drawer.css';
+import CalendarIcon from '../components/CalendarIcon'
 import ClockIcon from '../components/ClockIcon';
 import MapPinIcon from '../components/MapPinIcon';
 import PhoneIcon from '../components/PhoneIcon';
 import EmailIcon from '../components/EmailIcon';
+import Stars from '../components/Stars';
 
 //import MDUI components
 import 'mdui/mdui.css';
@@ -13,20 +15,18 @@ import 'mdui/components/card.js';
 //import map
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { app } from '../firebase';
-import { getFirestore, getDoc, doc } from "firebase/firestore";
 import GoogleMap from 'google-maps-react-markers'
-import axios from 'axios';
+import { app } from '../firebase';
+import { getFirestore, collection, query, where, getDoc, doc } from "firebase/firestore";
 
 function BusinessInfo() {
   const db = getFirestore(app);
   const [center, setCenter] = useState(null);
   const { truckId } = useParams();
   const [truck, setTruck] = useState(null);
-  const [address, setAddress] = useState('');
-  const API_KEY = 'AIzaSyCdp6nKGP_hV1NNRB2EzMCCUF2sLWWwQww';
 
   useEffect(() => {
+      console.log('Truck ID:', truckId);
       try {
           if ("geolocation" in navigator) {
               const watchId = navigator.geolocation.watchPosition((position) => {
@@ -57,25 +57,6 @@ function BusinessInfo() {
     getTruck();
   }, []);
 
-  useEffect(() => {
-    const reverseGeocode = async (latitude, longitude) => {
-      try {
-          // Make a GET request to the Google Maps Geocoding API
-          const response = await axios.get(
-              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
-          );
-          // Extract the formatted address from the response
-          const formattedAddress = response.data.results[0].formatted_address;
-          setAddress(formattedAddress);
-      } catch (error) {
-          console.error('Error fetching reverse geocode:', error);
-      }
-  };
-  
-    if (truck) reverseGeocode(truck['location']._lat, truck['location']._long);
-    else setAddress('This truck is closed');
-  }, [truck])
-
   return (
     <>
     {truck && (
@@ -90,9 +71,11 @@ function BusinessInfo() {
         
       <div className="horizontal-container">
         <mdui-card style={{width: '600px', height: '180px', marginLeft:'8%',marginTop: '30px'}}>
-        <div className="location" style={{ marginLeft: '10px' }}>
-          <MapPinIcon className="MapPinIcon" />
-          { address }
+
+        <div className="location" style={{ marginLeft: '20px',display:'flex', justifyContent:'space-between'  }}>
+          
+          <p1 style={{ fontSize: '20px'}}>Street</p1>
+          <MapPinIcon style={{ marginRight: '20px'}} className="MapPinIcon" />
         </div>
 
         {truck && <div className="open" style={{ marginLeft: '20px', alignItems: 'center', display:'flex', justifyContent:'space-between' }}>
@@ -217,5 +200,3 @@ function BusinessInfo() {
 }
 
 export default BusinessInfo;
-
-
