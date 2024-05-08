@@ -110,29 +110,6 @@ function AddTruck() {
             description: truckIntro,
             createTime: new Date()
         };
-
-        try {
-            const truckId = await createTruck(truckData);
-            const response = await axios.post('http://localhost:5001/api/user/email', {
-                "truckId": truckId,
-                "businessName": truckBusinessName,
-                "selectedFoodType": selectedFoodType,
-                "maxCapacity": parseInt(truckCapacity),
-                "phone": '(' + phone.slice(0, 3) + ')'
-                             + phone.slice(3, 6) + '-' 
-                             + phone.slice(6, 10),
-                "email": email,
-                "foodLicenseURL": foodLicenseURL,
-                "menuURL": menuURL,
-                "logoURL": logoURL        
-                });
-                console.log(response.data);
-            setIsLoading(false);
-            navigate('/business/list');
-        } catch (error) {
-            alert("Error creating truck: ", error);
-            setIsLoading(false);
-        }
     };
 
     const handleCapacityInput = (e) => {

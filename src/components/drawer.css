@@ -1,5 +1,5 @@
   .drawer {
-    position: fixed; /* Changed to fixed for better positioning */
+    position: absolute; /* Changed to fixed for better positioning */
     top: 13.6%;
     right: -400px; /* Initially position the drawer off-screen to the right */
     border-top: 1px solid #ccc;
