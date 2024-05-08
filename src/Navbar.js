@@ -68,7 +68,6 @@ const Navbar = () => {
       console.log(error);
     }
   };
-
   let userLabel = "Business";
   if(isCustomer){
     userLabel = "Customer";

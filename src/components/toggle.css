@@ -1,0 +1,67 @@
+.box {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin: 0; 
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.options {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    list-style-type: none;
+    background-color: #f9f9f9;
+    transition: height 0.3s ease;
+    height: 0px;
+    overflow: hidden;
+}
+
+.option {
+    cursor: pointer;
+    height: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #ccc;
+}
+
+.option-clicked {
+    background-color: #ccc;
+}
+
+.options-open {
+    height: 204px;
+    border-bottom: 1px solid #ccc;
+}
+
+.selected {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.exit-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: auto; /* Push the button to the right */
+}
+.exit-button:hover {
+    color: red; /* Change color on hover */
+}

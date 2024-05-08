@@ -1,0 +1,71 @@
+  .drawer {
+    position: absolute;
+    border-top: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 400px;
+    height: 100vh;
+    background-color: #fdf7fe;
+    color: #1c1b1f;
+    transform: translateX(780px);
+    transition: transform 0.5s ease-in-out;
+    overflow: 'hidden';
+    z-index: 2000;
+    flex-wrap: wrap;
+  }
+  
+
+  .drawer ul {
+    list-style-type: 'none';
+    padding: 0;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0; 
+  }
+  
+  .drawer ul li {
+    list-style-type: 'none';
+    padding: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .drawer ul li a {
+    color: #fff;
+    text-decoration: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .category {
+    display: inline-block;
+    align-items: center; 
+    position: relative;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+  } 
+  
+  .opened {
+    transform: translateX(353px);
+  }
+
+  .overlay {
+    position: absolute;
+    top: 107px;
+    left: 0;
+    width: 100%; /* Cover the entire width of the viewport */
+    height: 100%; /* Cover the entire height of the viewport */
+    background-color: rgba(0, 0, 0, 0); /* Semi-transparent black background */
+    z-index: 1000; /* Make sure it's on top of other content */
+    visibility: hidden; /* Initially hidden */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .show-overlay {
+    visibility: visible;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
