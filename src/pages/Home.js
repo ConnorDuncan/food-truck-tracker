@@ -98,7 +98,7 @@ const Home = () => {
             />
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                 <mdui-card style={{ padding: '20px', maxWidth: '600px', width: '100%', height: 'auto', margin: '30px auto', alignItems: 'center' }}>
-                    <h1 style={{ marginTop: '35px', textAlign: 'center' }}>Welcome to Vendor Vista!</h1>
+                    <h1 style={{ textAlign: 'center' }}>Welcome to Vendor Vista!</h1>
                     <p style={{ textAlign: 'center' }}>Find your favorite food trucks or track your business.</p>
                     <div className="buttons" style={{ display: 'flex', justifyContent: 'center' }}>
                         <mdui-button variant="tonal" class="my-custom-button" onClick={handleSigninWithGoogleBusiness}>Business Login</mdui-button>
@@ -113,7 +113,7 @@ const Home = () => {
                 </mdui-card>
             </div>
         </div>
-        <div className='faq' style={{ background: 'white', width: '100%', marginTop: '0' }}>
+        <div className='faq' style={{ background: 'white', width: '100%', marginTop: '50%' }}>
             <h2 style={{ textAlign: 'center' }}>Frequently Asked Questions</h2>
             <ul style={{ textAlign: 'center' }}>
                 {faqs.map((faq, index) => (
