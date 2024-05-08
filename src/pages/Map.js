@@ -155,6 +155,7 @@ const Map = () => {
                     >
                         {trucks && trucks.map((truck, index) =>
                             truck['open'] &&
+                            truck['location'] &&
                             (type.length === 0 || truck['food_type'].some(foodType => type.includes(foodType))) &&
                             <img
                                 style={{ 
@@ -168,7 +169,7 @@ const Map = () => {
                                 onClick={() => handleDrawerOpen(truck)}
                             />
                         )}
-                        <img
+                        {/* <img
                             style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #6dbbf8' }}
                             lat={center['lat']}
                             lng={center['lng']}
@@ -176,7 +177,7 @@ const Map = () => {
                             alt='logo'
                             src={userPhoto ? userPhoto : './userIcon.jpeg'}
                             height='40px'
-                        />
+                        /> */}
                     </GoogleMap>
                     
                     <div className='drawer'>
