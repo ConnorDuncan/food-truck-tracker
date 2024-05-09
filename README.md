@@ -10,7 +10,11 @@ In the project directory, you can run:
 
 cd into the "backend" folder in the "src" folder.
 
-### `nodemon start`
+### `sudo npm install -g nodemon`
+
+enter the password
+
+### `nodemon server`
 
 Switch to a new terminal tab/window.
 
