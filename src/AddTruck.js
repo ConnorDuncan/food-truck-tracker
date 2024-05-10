@@ -35,7 +35,7 @@ function AddTruck() {
 
     const handleFileUpload = async (file, path) => {
         if (!file) return null;
-        const storageRef = ref(storage, `uploads/${path}/${file.name}`);
+        const storageRef = ref(storage, `uploads/${currentUser.uid}/${path}/${file.name}`);
         try {
             const snapshot = await uploadBytes(storageRef, file);
             return await getDownloadURL(snapshot.ref);
