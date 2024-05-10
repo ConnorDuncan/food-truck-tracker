@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Award 🥈
+
+This project won second place in the 2024 UCSB CodersSB Club's Project Series among ~30 projects.
+
 ## Available Scripts
 
 In the project directory, you can run:
