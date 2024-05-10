@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Award 🥈
 
-This project won second place in the 2024 UCSB CodersSB Club's Project Series among ~30 projects.
+This project won second place among ~30 projects in the 2024 UCSB CodersSB Club's Project Series.
 
 ## Available Scripts
 
