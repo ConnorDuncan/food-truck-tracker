@@ -45,36 +45,35 @@ function BusinessInfo() {
       } catch (error) {
           console.log(error);
       }
-  }, []);
 
-  useEffect(() => {
-    const getTruck = async () => {
+      const getTruck = async () => {
         const docRef = doc(db, 'food-trucks', truckId);
         const docSnap = await getDoc(docRef);
         setTruck(docSnap.data())
+      };
+
+      getTruck();
+
+      const reverseGeocode = async (latitude, longitude) => {
+        try {
+            // Make a GET request to the Google Maps Geocoding API
+            const response = await axios.get(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+            );
+            // Extract the formatted address from the response
+            const formattedAddress = response.data.results[0].formatted_address;
+            setAddress(formattedAddress);
+        } catch (error) {
+            console.error('Error fetching reverse geocode:', error);
+        }
     };
+    
+      if (truck) reverseGeocode(truck['location']._lat, truck['location']._long);
+      else setAddress('This truck is closed');
 
-    getTruck();
-  }, []);
+      
+  }, [db, truckId, truck]);
 
-  useEffect(() => {
-    const reverseGeocode = async (latitude, longitude) => {
-      try {
-          // Make a GET request to the Google Maps Geocoding API
-          const response = await axios.get(
-              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
-          );
-          // Extract the formatted address from the response
-          const formattedAddress = response.data.results[0].formatted_address;
-          setAddress(formattedAddress);
-      } catch (error) {
-          console.error('Error fetching reverse geocode:', error);
-      }
-  };
-  
-    if (truck) reverseGeocode(truck['location']._lat, truck['location']._long);
-    else setAddress('This truck is closed');
-  }, [truck])
 
   return (
     <>

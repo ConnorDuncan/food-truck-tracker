@@ -72,7 +72,7 @@ function UpdateInfo() {
 
   const handleFileChange = async (file, path, setter) => {
     if (!file) return;
-    const storageRef = ref(storage, `uploads/${path}/${file.name}`);
+    const storageRef = ref(storage, `uploads/${currentUser.uid}/${path}/${file.name}`);
     try {
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);

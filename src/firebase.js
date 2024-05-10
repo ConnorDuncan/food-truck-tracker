@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import {getStorage} from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCdp6nKGP_hV1NNRB2EzMCCUF2sLWWwQww",
-  authDomain: "food-truck-tracker-8ee55.firebaseapp.com",
-  projectId: "food-truck-tracker-8ee55",
-  storageBucket: "food-truck-tracker-8ee55.appspot.com",
-  messagingSenderId: "1033266101822",
-  appId: "1:1033266101822:web:efb60ea75a319f2caa1b6f",
-  measurementId: "G-GBNT7JZRGS"
+  apiKey: "AIzaSyBIYjsV7aAiGhn1QTljHg9htKg9hJWB3i8",
+  authDomain: "food-truck-tracker-7289c.firebaseapp.com",
+  projectId: "food-truck-tracker-7289c",
+  storageBucket: "food-truck-tracker-7289c.appspot.com",
+  messagingSenderId: "432084863701",
+  appId: "1:432084863701:web:1b48e5de80b69ce5a6b05c",
+  measurementId: "G-T368YZRV7K"
 };
 
   // Initialize Firebase
