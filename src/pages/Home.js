@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import './Home.css';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../firebase';
-import { useAuth, onAuthStateChanged } from '../components/AuthContext';
+import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import 'mdui/mdui.css';
 import 'mdui';
 import 'mdui/components/button.js';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 import 'mdui/mdui.css';
@@ -16,7 +16,7 @@ import 'mdui/components/card.js';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { currentUser, setCurrentUser, isCustomer, setCustomer, setBusiness } = useAuth();
+    const { currentUser, setCurrentUser, setCustomer, setBusiness } = useAuth();
 
     useEffect(() => {
 
