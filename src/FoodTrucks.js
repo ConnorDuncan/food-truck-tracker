@@ -147,6 +147,7 @@ const FoodTrucks = () => {
   const toggleOpenStatus = async (truckId, currentStatus) => {
     const geoPoint = await fetchUserLocation();
     updateTruck(truckId, { open: !currentStatus, location: geoPoint });
+    updateTruck(truckId, {open: !currentStatus});
     document.getElementById('open-snackbar').open=true;
     console.log(!currentStatus);
     console.log(geoPoint);

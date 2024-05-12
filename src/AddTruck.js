@@ -25,7 +25,7 @@ function AddTruck() {
     const phonePattern = /^\d{10}$/;
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-    const emailPattern = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/;
+    const emailPattern = /^[A-Za-z0-9.-_]+@[A-Za-z0-9-_]+\.[A-Za-z]+$/;
     const [foodLicense, setFoodLicense] = useState(null);
     const [menu, setMenu] = useState(null);
     const [logo, setLogo] = useState(null);
