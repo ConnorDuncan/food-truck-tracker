@@ -9,20 +9,18 @@ const useFoodTrucks = () => {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    // Ensure that currentUser is not null
     if (!currentUser) {
       setLoading(false);
       return;
     }
     const fetchTrucks = async () => {
       setLoading(true);
-      // Reference the sub-collection 'listOfTrucks' for the current user
       const trucksRef = collection(db, 'userToTrucks', currentUser.uid, 'listOfTrucks');
       try {
         const snapshot = await getDocs(trucksRef);
         const trucksArray = snapshot.docs.map(doc => ({
-          id: doc.id, // The ID of the truck document
-          ...doc.data() // Spread the rest of the data into the object
+          id: doc.id,
+          ...doc.data()
         }));
         setTrucks(trucksArray);
       } catch (error) {
@@ -32,7 +30,7 @@ const useFoodTrucks = () => {
     };
 
     fetchTrucks();
-  }, [currentUser]); // Dependency array includes currentUser to re-run the effect when currentUser changes
+  }, [currentUser]);
 
   const updateTruck = async (truckId, updatedData) => {
     const truckRef = doc(db, 'userToTrucks', currentUser.uid, 'listOfTrucks', truckId);
@@ -40,7 +38,6 @@ const useFoodTrucks = () => {
     try {
       await updateDoc(truckRef, updatedData);
       await updateDoc(truckRefTwo, updatedData);
-      // Optionally update the local state
       setTrucks((prevTrucks) =>
         prevTrucks.map((truck) => (truck.id === truckId ? { ...truck, ...updatedData } : truck))
       );
@@ -56,10 +53,11 @@ const useFoodTrucks = () => {
       return null;
     }
   
+    // Generate a new document ID from one reference and use it for both
     const trucksRef = collection(db, 'userToTrucks', currentUser.uid, 'listOfTrucks');
     const trucksRefTwo = collection(db, 'food-trucks');
-    const newTruckRef = doc(trucksRef);
-    const newTruckRefTwo = doc(trucksRefTwo);
+    const newTruckRef = doc(trucksRef); // Auto-generate ID from the first reference
+    const newTruckRefTwo = doc(trucksRefTwo, newTruckRef.id); // Use the same ID for the second reference
   
     try {
       await setDoc(newTruckRef, truckData);
@@ -73,7 +71,6 @@ const useFoodTrucks = () => {
     }
   };
   
-
   return { trucks, loading, updateTruck, createTruck };
 };
 
