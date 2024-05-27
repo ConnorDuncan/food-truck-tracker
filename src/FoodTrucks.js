@@ -6,6 +6,7 @@ import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';
 import { useNavigate } from 'react-router-dom';
+import { GeoPoint } from 'firebase/firestore';
 
 const FoodTrucks = () => {
   const navigate = useNavigate();
@@ -15,8 +16,34 @@ const FoodTrucks = () => {
     navigate('/business/AddTruck');
   };
 
-  const toggleOpenStatus = (truckId, currentStatus) => {
-    updateTruck(truckId, { open: !currentStatus });
+  const fetchUserLocation = () => {
+    return new Promise((resolve) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          resolve(new GeoPoint(latitude, longitude));
+        }, (error) => {
+          console.error("Error fetching location", error);
+          alert("Unable to fetch location.");
+          resolve(null);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+        resolve(null);
+      }
+    });
+  };
+
+  const toggleOpenStatus = async (truckId, currentStatus) => {
+    let updates = {};
+    if(!currentStatus){
+      const fetchedLocation = await fetchUserLocation();
+      if (fetchedLocation) {
+        updates.location = fetchedLocation;
+      }
+    }
+    updates.open = !currentStatus;
+    updateTruck(truckId, updates);
     document.getElementById('open-snackbar').open=true;
   };
 
