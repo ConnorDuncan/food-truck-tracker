@@ -25,7 +25,7 @@ const Map = () => {
     const [select, setSelect] = useState(null);
     const [type, setType] = useState([]);
     const [drawerLoading, setDrawerLoading] = useState(true);
-    const foodTypes = ['Chinese', 'Mexican', 'Desserts', 'Indian', 'Burgers', 'Pizza', 'Salad', 'Sandwiches', 'Dessert', 'Noodles', 'Fried', 'Seafood', 'Other'];
+    const foodTypes = ['Chinese', 'Mexican', 'Desserts', 'Indian', 'Burgers', 'Pizza', 'Salad', 'Sandwiches', 'Grill', 'Dessert', 'Noodles', 'Fried', 'Seafood', 'Other'];
     const [name, setname] = useState('');
 
 
@@ -169,7 +169,7 @@ const Map = () => {
                                 onClick={() => handleDrawerOpen(truck)}
                             />
                         )}
-                        {/* <img
+                        <img
                             style={{ borderRadius: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', border: '3px solid #6dbbf8' }}
                             lat={center['lat']}
                             lng={center['lng']}
@@ -177,7 +177,7 @@ const Map = () => {
                             alt='logo'
                             src={userPhoto ? userPhoto : './userIcon.jpeg'}
                             height='40px'
-                        /> */}
+                        />
                     </GoogleMap>
                     
                     <div className='drawer'>
