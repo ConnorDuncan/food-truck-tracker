@@ -185,7 +185,7 @@ const FoodTrucks = () => {
                   </div>
                   <mdui-snackbar closeable id="open-snackbar">
                     The truck is {truck.open ? "opened" : "closed"}
-                </mdui-snackbar>
+                  </mdui-snackbar>
                   <mdui-button
                     variant="outlined"
                     onClick={() => toggleOpenStatus(truck.id, truck.open)}
