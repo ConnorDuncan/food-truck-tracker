@@ -134,6 +134,10 @@ const Map = () => {
                         </li>
                     ))}
                 </div>
+
+                <mdui-button variant="tonal" style={{marginTop:'10%', marginLeft:'10%'}} onClick={() => setType([])}>
+                    Clear Selections
+                </mdui-button>
             </div>
        
             {!center && (

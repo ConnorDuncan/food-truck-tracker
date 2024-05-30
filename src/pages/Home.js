@@ -92,13 +92,13 @@ const Home = () => {
           answer: 'Food truck vendors can log in to their accounts to update their business information and menu details.'
         }
         // Add more FAQs as needed
-      ];
+    ];
 
       return (
         <>
         <div className="home-page" style={{ overflowX: 'hidden', marginBottom: '0' }}>
             <img
-                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '13.6%', opacity: '0.5', width: '100%' }}
+                style={{ position: 'absolute', zIndex: '-1', left: '0', top: '11.3%', opacity: '0.5', width: '100%' }}
                 alt='Banner'
                 src={'./Banner.jpeg'}
             />
