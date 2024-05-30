@@ -6,6 +6,7 @@ import CheckCircleIcon from './CheckCircleIcon';
 import ClockIcon from './ClockIcon';
 import useFoodTrucks from './useFoodTrucks';
 import { useNavigate } from 'react-router-dom';
+import { GeoPoint } from 'firebase/firestore';
 
 const FoodTrucks = () => {
   const navigate = useNavigate();
@@ -15,23 +16,36 @@ const FoodTrucks = () => {
     navigate('/business/AddTruck');
   };
 
+  const fetchUserLocation = () => {
+    return new Promise((resolve) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          resolve(new GeoPoint(latitude, longitude));
+        }, (error) => {
+          console.error("Error fetching location", error);
+          alert("Unable to fetch location.");
+          resolve(null);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+        resolve(null);
+      }
+    });
+  };
+
   const toggleOpenStatus = async (truckId, currentStatus) => {
-    const newStatus = !currentStatus; // Calculate the new status
-
-    // Update the truck status immediately
-    await updateTruck(truckId, { open: newStatus });
-
-    // Update the button text immediately
-    const button = document.getElementById('open-close-button');
-    if (button) {
-        button.innerText = newStatus ? "Close" : "Open";
+    let updates = {};
+    if(!currentStatus){
+      const fetchedLocation = await fetchUserLocation();
+      if (fetchedLocation) {
+        updates.location = fetchedLocation;
+      }
     }
-
-    console.log("Status should change");
-
-    // Open the snackbar
-    // document.getElementById('open-snackbar').open = true;
-};
+    updates.open = !currentStatus;
+    updateTruck(truckId, updates);
+    document.getElementById('open-snackbar').open=true;
+  };
 
   if (loading) {
     return (

@@ -43,7 +43,7 @@ function UpdateInfo() {
       setSelectedFoodType(Array.isArray(truckData.food_type) ? truckData.food_type : [truckData.food_type]);
       setTruckCapacity(truckData.max_capacity);
       setTruckIntro(truckData.description);
-      if (truckData.phone) setPhone(truckData.phone.replace(/[^0-9]/g, ''));
+      setPhone(truckData.phone);
       setEmail(truckData.email);
       setFoodLicenseUrl(truckData.license);
       setMenuUrl(truckData.menu);

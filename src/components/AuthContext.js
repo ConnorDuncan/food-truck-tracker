@@ -9,11 +9,15 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
+<<<<<<< HEAD
   // Initialize isCustomer from localStorage or default to true if not set
   const [isCustomer, setIsCustomer] = useState(() => {
     const isCust = localStorage.getItem('isCustomer');
     return isCust !== null ? JSON.parse(isCust) : true;
   });
+=======
+  const [isCustomer, setIsCustomer] = useState();
+>>>>>>> 58f678ce2f6d50a49ae1430248f798871b7413f4
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

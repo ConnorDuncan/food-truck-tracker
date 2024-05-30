@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Award 🥈
+
+This project won second place among ~30 projects in the 2024 UCSB CodersSB Club's Project Series.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -10,7 +14,11 @@ In the project directory, you can run:
 
 cd into the "backend" folder in the "src" folder.
 
-### `nodemon start`
+### `sudo npm install -g nodemon`
+
+enter the password
+
+### `nodemon server`
 
 Switch to a new terminal tab/window.
 
