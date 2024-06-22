@@ -48,25 +48,7 @@ const email = (req, res) => {
     }
 
     let mail = MailGenerator.generate(response)
-   
-    // const message = {
-    //     from: 'vendorVistaMichael@gmail.com',
-    //     to: 'vendorVistaMichael@gmail.com',
-    //     subject: 'New Food Truck Submission - Verification Required',
-    //     html: `
-    //         <p>Food Truck ID: \${truckId}</p>
-    //         <p>Business Name: \${businessName}</p>
-    //         <p>Food Type: \${selectedFoodType}</p>
-    //         <p>Max Capacity: \${maxCapacity}</p>
-    //         <p>Food License: <a href="\${foodLicenseURL}">View License</a></p>
-    //         <p>Menu: <a href="\${menuURL}">View Menu</a></p>
-    //         <p>Logo: <img src="\${logoURL}" alt="Truck Logo" style="max-width: 200px;"></p>
-    //         <p>Click the button below to verify:</p>
-    //         <a href="http://your-domain.com/verify/\${truckId}" target="_blank">
-    //             <button style="padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">Verify Truck</button>
-    //         </a>
-    //     `,
-    // };
+
     let message = {
         from : "vendorVistaMichael@gmail.com",
         to : "vendorVistaMichael@gmail.com",
@@ -81,13 +63,7 @@ const email = (req, res) => {
         return res.status(500).json({ error })
     })
 
-    // try {
-    //     const info = await transporter.sendMail(message);
-    //     console.log('Email sent:', info.response);
-    // } catch (error) {
-    //     console.error('Error sending email:', error);
-    // }
-// }
+
 }
 
 module.exports = {

@@ -113,7 +113,12 @@ function AddTruck() {
 
         try {
             const truckId = await createTruck(truckData);
-            const response = await axios.post('http://localhost:5001/api/user/email', {
+            // 'https://us-west1-1033266101822.cloudfunctions.net/api/send-email'
+            // CLOUD FUNCTION: https://us-central1-food-truck-tracker-8ee55.cloudfunctions.net/api
+
+            // EMULATOR: 'http://localhost:5001/1033266101822/us-central1/api/send-email'
+
+            const response = await axios.post('https://us-central1-food-truck-tracker-8ee55.cloudfunctions.net/api/send-email', {
                 "truckId": truckId,
                 "businessName": truckBusinessName,
                 "selectedFoodType": selectedFoodType,
