@@ -6,8 +6,9 @@ const Mailgen = require("mailgen");
 require("dotenv").config();
 
 const app = express();
+const allowedOrigin = ["http://localhost:3000", "https://food-truck-tracker-8ee55.web.app"];
 app.use(cors({
-  origin: "http://localhost:3000", // Allow only your frontend origin
+  origin: allowedOrigin, // Allow only your frontend origin
 }));
 app.use(express.json());
 
