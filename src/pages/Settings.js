@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Settings.css';
 import { useAuth } from '../components/AuthContext';
 import { TextField } from '@material-ui/core';
-import { updateDoc, doc } from 'firebase/firestore';
-import { db, storage } from '../firebase';
+import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import useProfile from '../useProfile';
-import { useParams, useNavigate } from 'react-router-dom';
-import { waitFor } from '@testing-library/react';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
     const { currentUser, isCustomer } = useAuth();
-    const { profile, updateProfile } = useProfile();
+    const { updateProfile } = useProfile();
     // const [description, setDescription] = useState(profile.description || '');
     const [photoInput, setPhoto] = useState(null);
     const [loading, setLoading] = useState(false);

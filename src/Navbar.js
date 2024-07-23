@@ -13,7 +13,6 @@ const Navbar = () => {
   const location = useLocation(); // Hook to get current location
   const [anchorEl, setAnchorEl] = useState(null);
   const { isCustomer, setNull } = useAuth();
-  const {counter, setCounter} = useState(0);
   const [userPhoto, setUserPhoto] = useState();
 
   useEffect(() => {

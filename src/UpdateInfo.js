@@ -8,6 +8,7 @@ import useFoodTrucks from './useFoodTrucks';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from './firebase';
 import './loadingSpinner.css';
+import { useAuth } from './components/AuthContext';
 
 function UpdateInfo() {
   const { control } = useForm();
@@ -32,6 +33,7 @@ function UpdateInfo() {
   const [menu, setMenu] = useState(null);
   const [logo, setLogo] = useState(null);
   const [verified, setVerified] = useState(null);
+  const [currentUser] = useAuth();
 
   const foodTypes = ['Burgers', 'Chinese', 'Mexican', 'Italian', 'Pizza', 'Salad', 'Sandwiches','Grill', 'Sushi','Noodle','Fried', 'Seafood','Indian','Dessert', 'Other'];
 
@@ -72,7 +74,7 @@ function UpdateInfo() {
 
   const handleFileChange = async (file, path, setter) => {
     if (!file) return;
-    const storageRef = ref(storage, `uploads/${path}/${file.name}`);
+    const storageRef = ref(storage, `uploads/${currentUser.uid}/${path}/${file.name}`);
     try {
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);
